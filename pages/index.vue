@@ -1,7 +1,18 @@
 <template>
-  <Tutorial/>
+  <article>
+    <h1>{{ page.title }}</h1>
+    <nuxt-content :document="page" />
+  </article>
 </template>
 
 <script>
-export default {}
+export default {
+  async asyncData ({ $content }) {
+    const page = await $content('home').fetch()
+
+    return {
+      page
+    }
+  }
+}
 </script>
