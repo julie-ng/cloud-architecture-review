@@ -1,5 +1,33 @@
 <template>
 	<section>
+
+		<h1>Score</h1>
+		<table>
+			<tr>
+				<td>Complexity</td>
+				<td>{{ score.complexity }}</td>
+			</tr>
+			<tr>
+				<td>Operations</td>
+				<td>{{ score.operations }}</td>
+			</tr>
+			<tr>
+				<td>Security</td>
+				<td>{{ score.security }}</td>
+			</tr>
+			<tr>
+				<td>Price</td>
+				<td>{{ score.price }}</td>
+			</tr>
+		</table>
+
+		<button @click="$store.commit('update', {
+			complexity: 5,
+			operations: 2,
+			security: -2,
+			price: 1,
+		})">Test Update</button>
+
 		<h1>Questions</h1>
     <article v-for="question of questions" :key="question.slug">
       <h2>{{ question.title }}</h2>
@@ -12,6 +40,7 @@
 </template>
 
 <script>
+	// import { mapMutations } from 'vuex'
 	export default {
 		async asyncData({ $content, params}) {
 			const questions = await $content('questions')
@@ -35,6 +64,12 @@
 			return {
 				questions
 			}
-		}
+		},
+
+		computed: {
+    	score () {
+      	return this.$store.state.score
+			}
+		},
 	}
 </script>
