@@ -42,7 +42,7 @@
 <script>
 	// import { mapMutations } from 'vuex'
 	export default {
-		async asyncData({ $content, params}) {
+		async asyncData({ $content, params }) {
 			const questions = await $content('questions')
 				.sortBy('path')
 				.fetch()
