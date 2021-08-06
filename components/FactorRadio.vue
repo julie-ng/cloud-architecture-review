@@ -5,6 +5,7 @@
 			<h3>{{ factor.title }}</h3>
 			{{ factor.description }}
 		</label>
+		<!-- <pre>{{ factor.points }}</pre> -->
 	</div>
 </template>
 
@@ -18,7 +19,11 @@
 			name: {
 				type: String,
 				required: true
-			}
+			},
+			// points: {
+			// 	type: Object,
+			// 	required: true
+			// }
     }
   }
 </script>

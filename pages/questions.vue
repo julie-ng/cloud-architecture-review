@@ -1,82 +1,68 @@
 <template>
 	<section>
 
-		<h1>Score</h1>
-		<table>
-			<tr>
-				<td>Complexity</td>
-				<td>{{ score.complexity }}</td>
-			</tr>
-			<tr>
-				<td>Operations</td>
-				<td>{{ score.operations }}</td>
-			</tr>
-			<tr>
-				<td>Security</td>
-				<td>{{ score.security }}</td>
-			</tr>
-			<tr>
-				<td>Price</td>
-				<td>{{ score.price }}</td>
-			</tr>
-		</table>
-
-		<button @click="$store.commit('update', {
-			complexity: 5,
-			operations: 2,
-			security: -2,
-			price: 1,
-		})">Test Update</button>
+		<score/>
+		<hr>
 
 		<h1>Questions</h1>
-    <article v-for="question of questions" :key="question.slug">
-      <h2>{{ question.title }}</h2>
-      <p>{{ question.description }}</p>
-			<factor-radio
-				v-for="o of question.options"
-				:name=question.slug
-				:key=o.slug
-				:factor=o
-			></factor-radio>
+    <question
+			v-for="question of questions"
+			:key="question.slug"
+			:question=question
+		>
+    </question>
 
-			<!-- <pre>
-				{{ question.options }}
-			</pre> -->
-    </article>
+		<!-- <pre>{{ questions }}</pre> -->
 	</section>
 </template>
 
 <script>
-	// import { mapMutations } from 'vuex'
+	// Because nuxt content cannot process nested YAML front-matter
+	// we have to manually extra the states to create a `points` object
+	const STATS = [
+		'complexity',
+		'security',
+		'price',
+		'operations'
+	]
+
 	export default {
 		async asyncData({ $content, params }) {
+			// const factors = [] // ?
+
+			// Get Questions
 			const questions = await $content('questions')
 				.sortBy('path')
 				.fetch()
 
+			// Get Options for Each Question
 			for (const q of questions) {
-				let options = []
+				let factorData = q.factors
+				q.factors = []
 
-				for (const o of q.options) {
-					let details = await $content({ deep: true })
-						.where({ path: `/factors/${o.path}` })
+				for (const f of factorData) {
+					const file = `/factors/${f.path}`
+					const factor = await $content(file, { deep: true })
 						.without(['toc', 'body'])
 						.fetch()
-					options.push(details[0]) // dunno why where().fetch() is returning array not object
+
+					// Conslidate points into own stats object
+					let points = {}
+					STATS.forEach(s => {
+						points[s] = factor[s]
+						delete factor[s]
+					})
+					factor.stats = points
+
+					// add to question
+					q.factors.push(factor)
 				}
-				q.options = options
-				// console.log(options)
 			}
 
 			return {
 				questions
+				// factors
 			}
-		},
-
-		computed: {
-    	score () {
-      	return this.$store.state.score
-			}
-		},
+		}
 	}
 </script>
