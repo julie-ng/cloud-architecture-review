@@ -42,7 +42,7 @@
 
 				for (const f of factorData) {
 					const file = `/factors/${f.path}`
-					const factor = await $content(file, { deep: true })
+					const factor = await $content(file)
 						.without(['toc', 'body'])
 						.fetch()
 
