@@ -32,9 +32,16 @@
     <article v-for="question of questions" :key="question.slug">
       <h2>{{ question.title }}</h2>
       <p>{{ question.description }}</p>
-			<pre>
+			<factor-radio
+				v-for="o of question.options"
+				:name=question.slug
+				:key=o.slug
+				:factor=o
+			></factor-radio>
+
+			<!-- <pre>
 				{{ question.options }}
-			</pre>
+			</pre> -->
     </article>
 	</section>
 </template>
@@ -58,7 +65,7 @@
 					options.push(details[0]) // dunno why where().fetch() is returning array not object
 				}
 				q.options = options
-				console.log(options)
+				// console.log(options)
 			}
 
 			return {
