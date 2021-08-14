@@ -2,16 +2,17 @@
 	<article>
 		<h2>{{ question.title }}</h2>
 		<p>{{ question.description }}</p>
-		<p><strong>Chosen</strong>: {{ chosen }}</p>
+		<p><strong>Chosen (how to get value from child component?)</strong>: {{ chosen }}</p>
 
 		<factor-radio
 			v-for="f of question.factors"
-			:name=question.slug
+			:inputName=question.slug
 			:key=f.slug
 			:factor=f
+			:stats=f.stats
 		></factor-radio>
 
-		<!-- <pre>{{ question }}</pre> -->
+		<pre>{{ question.slug }}</pre>
 	</article>
 </template>
 

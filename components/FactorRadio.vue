@@ -1,12 +1,17 @@
 <template>
 	<div class="factor">
 		<label :for=factor.slug>
-			<input type="radio" :name=name :id=factor.slug>
+			<input type="radio" :name=inputName :id=factor.slug :value=factor.slug v-on:change="onChange" >
 			<h3>{{ factor.title }}</h3>
-			{{ factor.description }}
+			<div>{{ factor.description }}</div>
 		</label>
-		<!-- <pre>{{ factor.points }}</pre> -->
+		<!-- <pre>{{ stats }}</pre> -->
 	</div>
+<!-- <custom-input
+  v-bind:value="searchText"
+  v-on:input="searchText = $event"
+></custom-input> -->
+
 </template>
 
 <script>
@@ -16,18 +21,22 @@
         type: Object,
         required: true
       },
-			name: {
+			inputName: {
 				type: String,
 				required: true
 			},
-			// points: {
-			// 	type: Object,
-			// 	required: true
-			// }
-    }
+			stats: {
+				type: Object,
+				required: true
+			}
+    },
+		methods: {
+			onChange: function (event) {
+				console.log('oh changed!', event.target.value)
+			}
+		}
   }
 </script>
-
 
 <style>
 	.factor {
