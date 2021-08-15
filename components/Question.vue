@@ -2,7 +2,6 @@
 	<article>
 		<h2>{{ question.title }}</h2>
 		<p>{{ question.description }}</p>
-		<p><strong>Chosen (how to get value from child component?)</strong>: {{ chosen }}</p>
 
 		<factor-radio
 			v-for="f of question.factors"
@@ -10,24 +9,27 @@
 			:key=f.slug
 			:factor=f
 			:stats=f.stats
-			@selected="onChange($event)"
-		></factor-radio>
 
-		<!-- <pre>{{ question.slug }}</pre> -->
+			@selected="onSelected($event, $store, question)"
+			></factor-radio>
+
+		<div class="factor">
+			<label :for="question.slug + '-undecided'">
+				<input type="radio"
+					:name=question.slug
+					:id="question.slug + '-undecided'"
+					:key="question.slug + '-undecided'"
+					:value="undecided"
+					v-on:change="$store.commit('remove', question)"
+				>
+				<h4>Undecided</h4>
+			</label>
+		</div>
 	</article>
 </template>
 
 <script>
 	export default {
-
-		// Data
-		// ----
-    data() {
-      return {
-        chosen: 'none'
-      }
-    },
-
 		// Properties
 		// ----------
 		props: {
@@ -40,11 +42,25 @@
 		// Methods
 		// -------
 		methods: {
-			onChange(event) {
-				console.log(`QUESTION(${this.question.slug}): selected "${event.option.id}"`, event.option.stats)
+			onSelected: function (event, store, question) {
+				console.log(`--- onSelected(${event.option.id}) ---`)
 
-				// Go into state, update/remove factor
-			}
+				store.commit('update', {
+					question: question,
+					answer: {
+						id: event.option.id
+					}
+				})
+			},
 		}
 	}
 </script>
+
+
+<style>
+
+
+	.factor h4 {
+		margin-bottom: 0.5em;
+	}
+</style>

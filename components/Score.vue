@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Score (Debug)</h1>
+		<h1>Score (debug)</h1>
 		<table>
 			<tr>
 				<td>Complexity</td>
@@ -20,7 +20,7 @@
 			</tr>
 		</table>
 
-		<button @click="$store.commit('update', {
+		<button @click="$store.commit('test', {
 			complexity: 5,
 			operations: 2,
 			security: -2,

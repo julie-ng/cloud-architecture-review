@@ -4,6 +4,9 @@
 		<score/>
 		<hr>
 
+		<decisions/>
+		<hr>
+
 		<h1>Questions</h1>
 		<question
 			v-for="question of questions"
@@ -59,6 +62,24 @@
 				}
 			}
 
+
+
+			// Debug
+  		// const decisions = {
+			// 	'tenancy': {
+			// 		chosen: 'single-tenant',
+			// 		stats: {}
+			// 	},
+
+			// 	'networking-model': {
+			// 		chosen: 'azure-cni',
+			// 		stats: {}
+			// 	}
+			// }
+
+			// console.log('-- DECISIONS --', decisions)
+
+
 			return {
 				questions
 				// factors
@@ -87,6 +108,11 @@
 
 	h2 {
 		color: var(--purple-color);
+	}
+
+	pre {
+		background: #f1f1f1;
+    padding: 1em;
 	}
 
 	.page-title {

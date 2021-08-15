@@ -1,7 +1,13 @@
 <template>
 	<div class="factor">
 		<label :for=factor.slug>
-			<input type="radio" :name=inputName :id=factor.slug :value=factor.slug v-on:change="onSelected" >
+			<input type="radio"
+				:name=inputName
+				:id=factor.slug
+				:key=factor.slug
+				:value=factor.slug
+				v-on:change="onSelected"
+			>
 			<h4>{{ factor.title }}</h4>
 			<div>{{ factor.description }}</div>
 		</label>
@@ -50,10 +56,6 @@
 		position: relative;
 		padding-left: 2em;
 
-	}
-
-	.factor h4 {
-		margin-bottom: 0.5em;
 	}
 
 	input[type="radio"] {
