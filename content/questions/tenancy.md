@@ -2,7 +2,7 @@
 title: What is your tenancy model?
 description: Longer helping text if people don't understand what this question means.
 type: radio
-answer: none
+answer: unset
 factors:
 - path: 'requirements/single-tenant'
 - path: 'requirements/multi-tenant'

@@ -8,7 +8,8 @@
 		<h1>Decsisions (debug)</h1>
 
 		<pre>
-			{{ decisions }}
+			<!-- {{ decisions }} -->
+			{{ $store.getters.summary }}
 		</pre>
 
 	</div>

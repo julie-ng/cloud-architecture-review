@@ -12,6 +12,21 @@ export const state = () => ({
   decisions: []
 })
 
+export const getters = {
+  summary (state) {
+    let shortened = []
+    state.decisions.forEach((d) => {
+      const factor = d.factors.filter(f => f.slug == d.answer)[0]
+      shortened.push({
+        id: d.slug,
+        answer: d.answer,
+        score: factor.stats
+      })
+    })
+    return shortened
+  }
+}
+
 export const mutations = {
 	test (state, factor) {
 		state.score.complexity += factor.complexity || 0
