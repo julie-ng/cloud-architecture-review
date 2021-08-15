@@ -19,13 +19,6 @@
 				<td>{{ score.price }}</td>
 			</tr>
 		</table>
-
-		<!-- <button @click="$store.commit('test', {
-			complexity: 5,
-			operations: 2,
-			security: -2,
-			price: 1,
-		})">Test Update</button> -->
 	</div>
 </template>
 
