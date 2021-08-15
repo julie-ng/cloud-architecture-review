@@ -33,7 +33,6 @@
 	}
 </script>
 
-
 <style scoped>
 	td:first-child {
 		padding-right: 1em;
