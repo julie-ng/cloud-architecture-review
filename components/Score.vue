@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>[Debug] Score</h1>
+		<h1>Score (Debug)</h1>
 		<table>
 			<tr>
 				<td>Complexity</td>

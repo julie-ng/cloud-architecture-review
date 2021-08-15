@@ -12,7 +12,7 @@
 			:stats=f.stats
 		></factor-radio>
 
-		<pre>{{ question.slug }}</pre>
+		<!-- <pre>{{ question.slug }}</pre> -->
 	</article>
 </template>
 

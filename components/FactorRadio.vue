@@ -2,16 +2,11 @@
 	<div class="factor">
 		<label :for=factor.slug>
 			<input type="radio" :name=inputName :id=factor.slug :value=factor.slug v-on:change="onChange" >
-			<h3>{{ factor.title }}</h3>
+			<h4>{{ factor.title }}</h4>
 			<div>{{ factor.description }}</div>
 		</label>
 		<!-- <pre>{{ stats }}</pre> -->
 	</div>
-<!-- <custom-input
-  v-bind:value="searchText"
-  v-on:input="searchText = $event"
-></custom-input> -->
-
 </template>
 
 <script>
@@ -42,6 +37,11 @@
 	.factor {
 		position: relative;
 		padding-left: 2em;
+
+	}
+
+	.factor h4 {
+		margin-bottom: 0.5em;
 	}
 
 	input[type="radio"] {

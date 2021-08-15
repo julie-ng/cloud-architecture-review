@@ -1,16 +1,16 @@
 <template>
-	<section>
-
+	<section class="content">
+		<h1 class="page-title">Azure Kubernetes Architect</h1>
 		<score/>
 		<hr>
 
 		<h1>Questions</h1>
-    <question
+		<question
 			v-for="question of questions"
 			:key="question.slug"
 			:question=question
 		>
-    </question>
+		</question>
 
 		<!-- <pre>{{ questions }}</pre> -->
 	</section>
@@ -66,3 +66,36 @@
 		}
 	}
 </script>
+
+<style>
+	:root {
+		--purple-color: #3752c7;
+		--cherry-color: #e94d15;
+		--body-text-color: #222;
+		--body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	}
+
+	body {
+		font-family: var(--body-font);
+		font-size: 1rem;
+		color: var(--body-text-color);
+	}
+
+	h1 {
+		font-size: 1.8rem;
+	}
+
+	h2 {
+		color: var(--purple-color);
+	}
+
+	.page-title {
+		font-size: 2em;
+		color: var(--cherry-color);
+	}
+
+	.content {
+		margin: 1em auto;
+		max-width:1024px;
+	}
+</style>
