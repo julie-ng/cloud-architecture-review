@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'aks-designer',
+    title: 'Azure Kubernetes Architect',
     htmlAttrs: {
       lang: 'en'
     },
