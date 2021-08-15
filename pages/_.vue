@@ -7,7 +7,7 @@
 		<p>{{ article.createdAt }}</p>
 		<p>{{ formatDate(article.updatedAt) }}</p>
 
-    <prev-next :prev="prev" :next="next" />
+    <!-- <prev-next :prev="prev" :next="next" /> -->
   </article>
 </template>
 
