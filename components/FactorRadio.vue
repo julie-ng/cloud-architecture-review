@@ -1,7 +1,7 @@
 <template>
 	<div class="factor">
 		<label :for=factor.slug>
-			<input type="radio" :name=inputName :id=factor.slug :value=factor.slug v-on:change="onChange" >
+			<input type="radio" :name=inputName :id=factor.slug :value=factor.slug v-on:change="onSelected" >
 			<h4>{{ factor.title }}</h4>
 			<div>{{ factor.description }}</div>
 		</label>
@@ -11,6 +11,9 @@
 
 <script>
   export default {
+
+		// Properties
+		// ----------
     props: {
       factor: {
         type: Object,
@@ -25,9 +28,18 @@
 				required: true
 			}
     },
+
+		// Methods
+		// -------
 		methods: {
-			onChange: function (event) {
-				console.log('oh changed!', event.target.value)
+			onSelected: function (event) {
+				const data = {
+					id: event.target.value, // this.factor.slug
+					stats: this.factor.stats
+				}
+
+				console.log(`factor(${this.factor.slug}): selected`)
+				this.$emit('selected', { option: data })
 			}
 		}
   }

@@ -10,6 +10,7 @@
 			:key=f.slug
 			:factor=f
 			:stats=f.stats
+			@selected="onChange($event)"
 		></factor-radio>
 
 		<!-- <pre>{{ question.slug }}</pre> -->
@@ -18,15 +19,31 @@
 
 <script>
 	export default {
+
+		// Data
+		// ----
     data() {
       return {
         chosen: 'none'
       }
     },
+
+		// Properties
+		// ----------
 		props: {
 			question: {
 				type: Object,
 				required: true
+			}
+		},
+
+		// Methods
+		// -------
+		methods: {
+			onChange(event) {
+				console.log(`QUESTION(${this.question.slug}): selected "${event.option.id}"`, event.option.stats)
+
+				// Go into state, update/remove factor
 			}
 		}
 	}
