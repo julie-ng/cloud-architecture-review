@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Score (debug)</h1>
+		<h1>Score</h1>
 		<table>
 			<tbody>
 				<tr>

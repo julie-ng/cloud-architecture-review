@@ -1,22 +1,16 @@
 <template>
-	<section class="content">
-		<h1 class="page-title">Azure Kubernetes Architect</h1>
-		<score/>
-		<hr>
+	<div class="app-container">
+		<app-header/>
 
-		<decisions/>
-		<hr>
-
-		<h1>Questions</h1>
-		<question
-			v-for="question of questions"
-			:key="question.slug"
-			:question=question
-		>
-		</question>
-
-		<!-- <pre>{{ questions }}</pre> -->
-	</section>
+		<div class="app-main wrapper">
+			<div class="app-body">
+				<questions :questions=questions></questions>
+			</div>
+			<div class="app-sidebar">
+				<score/>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -101,8 +95,10 @@
 	}
 </script>
 
+
 <style>
 	:root {
+		--page-max-width: 1200px;
 		--purple-color: #3752c7;
 		--cherry-color: #e94d15;
 		--body-text-color: #222;
@@ -121,6 +117,7 @@
 
 	h2 {
 		color: var(--purple-color);
+		font-weight: 500;
 	}
 
 	pre {
@@ -133,8 +130,19 @@
 		color: var(--cherry-color);
 	}
 
-	.content {
+	.wrapper {
 		margin: 1em auto;
-		max-width:1024px;
+		max-width: var(--page-max-width);
+	}
+
+	body,
+	.content {
+		margin: 0;
+		padding: 0;
+	}
+
+	.app-main {
+		display: grid;
+		grid-template-columns: 1fr 200px;
 	}
 </style>
