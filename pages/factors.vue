@@ -21,7 +21,7 @@
 <script>
   export default {
     async asyncData({ $content, params }) {
-      const factors = await $content({ deep: true })
+      const factors = await $content('factors', { deep: true })
         .only(['title', 'description', 'slug', 'path'])
         .sortBy('slug', 'asc')
         .fetch()
