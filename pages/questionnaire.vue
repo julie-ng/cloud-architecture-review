@@ -99,15 +99,24 @@
 <style>
 	:root {
 		--page-max-width: 1200px;
+		--sidebar-width: 300px;
 		--purple-color: #3752c7;
 		--cherry-color: #e94d15;
+		--meter-color: #07bc07;
 		--body-text-color: #222;
 		--body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+		--sm-font-size: 0.9rem;
+		--md-font-size: 1.1rem;
+		--lg-font-size: 1.3rem;
+
+		--md-grey-font-color: #aaa;
 	}
 
 	body {
 		font-family: var(--body-font);
 		font-size: 1rem;
+		line-height: 1.2em;
 		color: var(--body-text-color);
 	}
 
@@ -143,6 +152,6 @@
 
 	.app-main {
 		display: grid;
-		grid-template-columns: 1fr 200px;
+		grid-template-columns: 1fr var(--sidebar-width);
 	}
 </style>
