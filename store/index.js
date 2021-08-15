@@ -1,3 +1,10 @@
+const BASELINE_SCORE = {
+  complexity: 50,
+  operations: 50,
+  security: 50,
+  price: 50
+}
+
 export const state = () => ({
 	// TODO: define opinionated default cluster baseline
   score: {
@@ -24,6 +31,18 @@ export const getters = {
       })
     })
     return shortened
+  },
+
+  overallScore (state) {
+    let score = { ...BASELINE_SCORE }
+    state.decisions.forEach((d) => {
+      const factor = d.factors.filter(f => f.slug == d.answer)[0]
+      score.complexity += factor.stats.complexity
+      score.operations += factor.stats.operations
+      score.security += factor.stats.security
+      score.price += factor.stats.price
+    })
+    return score
   }
 }
 

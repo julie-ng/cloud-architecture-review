@@ -20,12 +20,12 @@
 			</tr>
 		</table>
 
-		<button @click="$store.commit('test', {
+		<!-- <button @click="$store.commit('test', {
 			complexity: 5,
 			operations: 2,
 			security: -2,
 			price: 1,
-		})">Test Update</button>
+		})">Test Update</button> -->
 	</div>
 </template>
 
@@ -34,8 +34,15 @@
 	export default {
 		computed: {
     	score () {
-      	return this.$store.state.score
+      	return this.$store.getters.overallScore
 			}
 		}
 	}
 </script>
+
+
+<style scoped>
+	td:first-child {
+		padding-right: 1em;
+	}
+</style>
