@@ -19,6 +19,7 @@
 
 <script>
 	export default {
+
 		// Properties
 		// ----------
 		props: {
@@ -32,13 +33,18 @@
 		// -------
 		methods: {
 			onSelected: function (event, store, question) {
-				store.commit('update', {
+				const selected = event.selected
+				const mutation = selected.id.substr(selected.id.length - 9) == 'undecided'
+					? 'unsetDecision'
+					: 'updateDecision'
+
+				store.commit(mutation, {
 					question: question,
 					answer: {
-						id: event.option.id
+						id: event.selected.id
 					}
 				})
-			},
+			}
 		}
 	}
 </script>

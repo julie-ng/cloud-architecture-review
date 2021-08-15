@@ -45,7 +45,7 @@
 				}
 
 				console.log(`factor(${this.factor.slug}): selected`)
-				this.$emit('selected', { option: data })
+				this.$emit('selected', { selected: data })
 			}
 		}
   }

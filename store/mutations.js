@@ -1,29 +1,14 @@
 export default {
-	test (state, factor) {
-		state.score.complexity += factor.complexity || 0
-		state.score.operations += factor.operations || 0
-		state.score.security   += factor.security || 0
-		state.score.price      += factor.price || 0
-	},
-
-  add (state, question) {
-    state.decisions.push(question)
-  },
-
-  update (state, selected) {
-    if (state.decisions.indexOf(selected.question) == -1) {
-      state.decisions.push(selected.question)
+  updateDecision (state, factor) {
+    if (state.decisions.indexOf(factor.question) == -1) {
+      state.decisions.push(factor.question)
     }
 
-    selected.question.answer = selected.answer.id
-    // console.log(`${selected.question.answer}`)
+    factor.question.answer = factor.answer.id
   },
 
-  remove (state, { question }) {
-    state.decisions.splice(state.decisions.indexOf(question), 1)
-  }
-
-  // toggle(state, todo) {
-  //   todo.done = !todo.done
-  // }
+	unsetDecision (state, factor) {
+		const q = factor.question
+		state.decisions.splice(state.decisions.indexOf(q), 1)
+	}
 }
