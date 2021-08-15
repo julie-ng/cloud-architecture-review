@@ -2,8 +2,7 @@
 	<div>
 		<h1>Decisions (debug)</h1>
 		<pre>
-			<!-- {{ decisions }} -->
-			{{ $store.getters.summary }}
+{{ $store.getters.summary }}
 		</pre>
 
 	</div>

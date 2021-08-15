@@ -58,6 +58,10 @@
 
 	}
 
+	.factor h4 {
+		margin-bottom: 0.5em;
+	}
+
 	input[type="radio"] {
 		position: absolute;
 		top: 0;

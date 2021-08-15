@@ -12,14 +12,11 @@ export default {
 
   update (state, selected) {
     if (state.decisions.indexOf(selected.question) == -1) {
-      console.log(`[STORE] Question not found`)
       state.decisions.push(selected.question)
-    } else {
-      console.log(`[STORE] Question found`)
     }
 
     selected.question.answer = selected.answer.id
-    console.log(`==== ${selected.question.answer}`)
+    // console.log(`${selected.question.answer}`)
   },
 
   remove (state, { question }) {
