@@ -15,7 +15,9 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint .",
+    "lint:dev": "nodemon -w component -w pages -w store -w tests --exec \"eslint .\""
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
@@ -24,7 +26,11 @@
   },
   "devDependencies": {
     "@nuxt/test-utils": "^0.2.2",
+    "@nuxtjs/eslint-config": "^6.0.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^7.17.0",
     "jest": "^27.1.1",
+    "nodemon": "^2.0.12",
     "sass": "^1.39.2",
     "sass-loader": "^10.2.0"
   }
