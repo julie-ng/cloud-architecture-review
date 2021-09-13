@@ -17,5 +17,10 @@ pool:
 
 steps:
   - bash: npm ci
+    displayName: npm install
+
   - bash: npm run lint
+    displayName: linter
+
   - bash: npm run test
+    displayName: tests
