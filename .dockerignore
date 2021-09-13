@@ -1,0 +1,14 @@
+# Nuxtjs
+.nuxt/
+node_modules/
+
+# Unnecessary
+tests/
+
+# Debug
+*.azcli
+*.log
+
+# Misc
+.DS_Store
+.editorconfig
