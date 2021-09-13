@@ -15,12 +15,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - bash: npm ci
-    displayName: npm install
-
-  - bash: npm run lint
-    displayName: linter
-
-  - bash: npm run test
-    displayName: tests
+stages:
+- stage: ci
+  jobs:
+  - template: jobs/ci.yaml
