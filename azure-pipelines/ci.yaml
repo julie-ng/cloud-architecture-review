@@ -1,0 +1,21 @@
+name: $(BuildID)
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - fix/*
+    - feat/*
+    - main
+    - dev
+  paths:
+    exclude:
+    - README.md
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - bash: npm ci
+  - bash: npm run lint
+  - bash: npm run test
