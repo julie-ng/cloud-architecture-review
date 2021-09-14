@@ -1,5 +1,14 @@
 name: $(BuildID)
 
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily Midnight Build
+  always: true
+  branches:
+    include:
+    - main
+    - production
+
 trigger:
   batch: true
   branches:
