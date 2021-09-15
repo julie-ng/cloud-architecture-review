@@ -2,6 +2,7 @@
 .terraform/
 *.tfplan
 *.tfstate
+*.tfstate.backup
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
