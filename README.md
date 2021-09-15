@@ -24,6 +24,17 @@ For detailed explanation on how things work, check out the [documentation](https
 Cannot use v16 until this bug for m1 macs is fixed [docker/for-mac#5831](https://github.com/docker/for-mac/issues/5831)
 
 
+## Infrastructure
+
+The Terraform infrastructure as code performs the following:
+
+- **Azure Container Registry**  
+  just for this application (because its lifecycle should be different from the AKS clusters)
+- **RBAC - Kubelets can pull images**  
+  grants AKS cluster kubelets permission to pull images from this repo
+- **Service Principal**  
+  to use in CI/CD to push/pull images to this container registry.
+
 ## Special Directories
 
 You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
