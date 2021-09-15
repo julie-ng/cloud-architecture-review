@@ -1,0 +1,29 @@
+name: $(BuildID)
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - README.md
+
+pr: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- template: vars/global.vars.yaml
+
+stages:
+- stage: ciStage
+  jobs:
+  - template: jobs/ci.yaml
+
+- stage: buildStage
+  dependsOn: ciStage
+  jobs:
+  - template: jobs/docker.yaml
+

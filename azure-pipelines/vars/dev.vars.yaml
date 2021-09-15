@@ -1,0 +1,2 @@
+variables:
+  armConnection:    aks-architect-ci-dev-sp
