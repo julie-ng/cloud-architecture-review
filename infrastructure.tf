@@ -61,7 +61,6 @@ locals {
 
 # Resource Group
 # --------------
-
 resource "azurerm_resource_group" "rg" {
   name     = local.rg_name
   location = local.location
@@ -70,7 +69,6 @@ resource "azurerm_resource_group" "rg" {
 
 # Azure Container Registry
 # ------------------------
-
 resource "azurerm_container_registry" "acr" {
   name                = local.acr_name
   resource_group_name = azurerm_resource_group.rg.name
@@ -82,7 +80,6 @@ resource "azurerm_container_registry" "acr" {
 
 # Service Principal for CI
 # ------------------------
-
 data "azuread_client_config" "current" {}
 
 resource "azuread_application" "ci" {
@@ -90,7 +87,6 @@ resource "azuread_application" "ci" {
   display_name = local.environments[each.key].sp_name
   owners       = [data.azuread_client_config.current.object_id]
 }
-
 resource "azuread_service_principal" "ci" {
   for_each                     = local.environments
   application_id               = azuread_application.ci[each.key].application_id
@@ -98,9 +94,8 @@ resource "azuread_service_principal" "ci" {
   owners                       = [data.azuread_client_config.current.object_id]
 }
 
-# Store client secret in Key Vault so we can access it
+# Store client IDs and secrets in Key Vault so we can access it
 # and configure for Azure DevOps
-
 data "azurerm_key_vault" "cloudkube_devops" {
   name                = local.sp_key_vault_name
   resource_group_name = local.sp_key_vault_rg
@@ -111,9 +106,16 @@ resource "azuread_service_principal_password" "ci" {
   service_principal_id = azuread_service_principal.ci[each.key].object_id
 }
 
+resource "azurerm_key_vault_secret" "sp_client_id" {
+  for_each     = local.environments
+  name         = "${local.environments[each.key].sp_name}-client-id"
+  value        = azuread_service_principal.ci[each.key].application_id
+  key_vault_id = data.azurerm_key_vault.cloudkube_devops.id
+}
+
 resource "azurerm_key_vault_secret" "sp_secret" {
   for_each     = local.environments
-  name         = local.environments[each.key].sp_name
+  name         = "${local.environments[each.key].sp_name}-client-secret"
   value        = azuread_service_principal_password.ci[each.key].value
   key_vault_id = data.azurerm_key_vault.cloudkube_devops.id
 }
@@ -133,7 +135,6 @@ resource "azurerm_role_assignment" "ci_acr" {
 
 # Let our SP access to its namespace
 # https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster
-
 data "azurerm_kubernetes_cluster" "cloudkube" {
   for_each            = local.environments
   name                = each.value.cluster_name
@@ -149,6 +150,16 @@ resource "azurerm_role_assignment" "ci_namespace" {
   principal_id         = azuread_service_principal.ci[each.key].object_id
 }
 
+# Needed to list configs for az aks get-credentials
+# https://docs.microsoft.com/en-us/azure/aks/control-kubeconfig-access
+resource "azurerm_role_assignment" "cluster_user" {
+  for_each             = local.environments
+  scope                = data.azurerm_kubernetes_cluster.cloudkube[each.key].id
+  role_definition_name = "Azure Kubernetes Service Cluster User Role"
+  principal_id         = azuread_service_principal.ci[each.key].object_id
+}
+
+
 # Get reference to cluster kubelets (managed in aks iac repo)
 
 data "azurerm_user_assigned_identity" "kubelets" {
@@ -158,13 +169,13 @@ data "azurerm_user_assigned_identity" "kubelets" {
 }
 
 # Cluster kubelets can pull from that registry
-
 resource "azurerm_role_assignment" "kubelets_acr_pull" {
   for_each             = local.environments
   scope                = azurerm_container_registry.acr.id
   role_definition_name = "AcrPull"
   principal_id         = data.azurerm_user_assigned_identity.kubelets[each.key].principal_id
 }
+
 
 # =========
 #  Outputs
@@ -192,6 +203,9 @@ output "service_principal_rbac" {
     client_id    = azuread_service_principal.ci[k].application_id
     object_id    = azuread_service_principal.ci[k].object_id
     roles = [{
+      name  = "Azure Kubernetes Service Cluster User Role"
+      scope = data.azurerm_kubernetes_cluster.cloudkube[k].id
+      }, {
       name  = "Azure Kubernetes Service RBAC Writer"
       scope = "${data.azurerm_kubernetes_cluster.cloudkube[k].id}/namespaces/${local.app_namespace}"
       }, {
