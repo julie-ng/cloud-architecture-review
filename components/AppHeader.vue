@@ -15,7 +15,6 @@
 
 	.app-header h1 {
 		margin: 0;
-		font-weight: 400;
 		font-size: 1.4rem;
 	}
 </style>
