@@ -33,3 +33,5 @@ stages:
   displayName: kubectl appy
   jobs:
   - template: jobs/deploy.job.yaml
+
+- template: stages/confirm-deployment.yaml

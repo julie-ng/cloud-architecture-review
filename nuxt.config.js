@@ -39,5 +39,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  // environment variables
+  publicRuntimeConfig: {
+    commitSha: process.env.APP_BUILD_SHA || '(unset)',
+    repoUrl: process.env.REPO_URL || 'https://github.com/julie-ng/azure-kubernetes-architect'
   }
 }

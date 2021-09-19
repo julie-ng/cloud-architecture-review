@@ -6,18 +6,20 @@
 	--meter-color: #07bc07;
 	--body-text-color: #222;
 	--body-font: 'Source Sans Pro', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+	--footer-text-color: #aaa;
 
 	--sm-font-size: 0.9rem;
 	--md-font-size: 1.1rem;
 	--lg-font-size: 1.3rem;
 
 	--md-grey-font-color: #aaa;
+	--grey-border-color: #ddd;
 }
 
 body {
 	font-family: var(--body-font);
 	font-size: 1rem;
-	line-height: 1.2em;
+	line-height: 1.3em;
 	color: var(--body-text-color);
 }
 

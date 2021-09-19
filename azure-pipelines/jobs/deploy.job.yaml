@@ -8,6 +8,7 @@ jobs:
   steps:
   - template: ../steps/append-sha.yaml
   - template: ../steps/debug-vars.yaml
+  - template: ../steps/get-sha.yaml
   - template: ../steps/setup-kubelogin.yaml
 
   - bash: |
@@ -23,7 +24,8 @@ jobs:
     displayName: "kubectl apply"
     env:
       KUBECONFIG: $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
-      IMAGE_TAG:  $(imageTag)
+      IMAGE_TAG:     $(imageTag)
+      APP_BUILD_SHA: $(commitSha)
 
   - bash: |
       kubelogin remove-tokens

@@ -21,6 +21,8 @@ spec:
         env:
         - name: PORT
           value: "3000"
+        - name: APP_BUILD_SHA
+          value: ${APP_BUILD_SHA}
         resources:
           requests:
             cpu: 100m

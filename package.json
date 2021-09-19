@@ -15,10 +15,11 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "test": "jest",
+    "test": "jest tests/",
     "lint": "eslint .",
     "lint:dev": "nodemon -w component -w pages -w store -w tests --exec \"eslint .\"",
-    "preflight": "eslint . && jest"
+    "preflight": "eslint . && jest tests/",
+    "confirm-deployment": "jest ./deployment.test.js"
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",

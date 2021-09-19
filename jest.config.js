@@ -93,7 +93,7 @@ module.exports = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: '@nuxt/test-utils',
+  preset: '@nuxt/test-utils'
 
   // Run tests from one or more projects
   // projects: undefined,
