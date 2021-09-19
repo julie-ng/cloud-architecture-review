@@ -1,0 +1,16 @@
+steps:
+- bash: |
+    echo ''
+    echo '===== Conditions ====='
+    echo 'isMain:         $(isMain)'
+    echo 'isTag:          $(isTag)'
+    echo 'isProduction:   $(isProduction)'
+    echo 'isFork:         $(isFork)'
+    echo 'isPR:           $(isPR)'
+    echo 'isScheduled:    $(isScheduled)'
+    echo 'isTrustedCI:    $(isTrustedCI)'
+    echo ''
+
+    echo '===== DOCKER ====='
+    echo 'imageTag:       $(imageTag)'
+  displayName: Debug - variables

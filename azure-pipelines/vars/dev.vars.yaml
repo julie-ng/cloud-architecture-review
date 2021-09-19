@@ -1,2 +1,6 @@
 variables:
-  armConnection:    aks-architect-ci-dev-sp
+  appNamespace:            aks-architect
+  armConnection:           aks-architect-ci-dev-sp
+  imageTag:                dev
+  aksClusterName:          cloudkube-dev-r9er-cluster
+  aksClusterResourceGroup: cloudkube-dev-r9er-rg

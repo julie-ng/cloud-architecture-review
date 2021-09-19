@@ -1,0 +1,30 @@
+jobs:
+- job: Deploy
+  displayName: Deploy
+  variables:
+  - group: mask-subscription-ids
+  - group: aks-credentials-kv-group
+
+  steps:
+  - template: ../steps/append-sha.yaml
+  - template: ../steps/debug-vars.yaml
+  - template: ../steps/setup-kubelogin.yaml
+
+  - bash: |
+
+      # confirm it works
+      kubectl get pods --namespace $(appNamespace)
+
+      # now apply
+      cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
+      cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
+      cat ./k8s-manifests/ingress.yaml | envsubst | kubectl apply -f -
+
+    displayName: "kubectl apply"
+    env:
+      KUBECONFIG: $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
+      IMAGE_TAG:  $(imageTag)
+
+  - bash: |
+      kubelogin remove-tokens
+    displayName: kubelogin - clear cache

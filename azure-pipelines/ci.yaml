@@ -7,19 +7,23 @@ schedules:
   branches:
     include:
     - main
+    - dev
     - production
 
 trigger:
   batch: true
-  branches:
+  branches: # main, dev have own ci jobs
     include:
     - fix/*
     - feat/*
-    - main
-    - dev
   paths:
     exclude:
     - README.md
+
+pr:
+  branches:
+  - main
+  - dev
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -27,4 +31,4 @@ pool:
 stages:
 - stage: ci
   jobs:
-  - template: jobs/ci.yaml
+  - template: jobs/ci.job.yaml
