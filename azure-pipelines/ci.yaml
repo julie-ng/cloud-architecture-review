@@ -21,9 +21,8 @@ trigger:
     - README.md
 
 pr:
-  branches:
-  - main
-  - dev
+- main
+- dev
 
 pool:
   vmImage: 'ubuntu-latest'
