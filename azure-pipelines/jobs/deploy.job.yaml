@@ -17,9 +17,9 @@ jobs:
       kubectl get pods --namespace $(appNamespace)
 
       # now apply
-      cat ./k8s-manifests/deployment.yaml | envsubst | kubectl apply -f -
-      cat ./k8s-manifests/service.yaml | envsubst | kubectl apply -f -
-      cat ./k8s-manifests/ingress.yaml | envsubst | kubectl apply -f -
+      cat ./manifests/deployment.yaml | envsubst | kubectl apply -f -
+      cat ./manifests/service.yaml | envsubst | kubectl apply -f -
+      cat ./manifests/ingress.yaml | envsubst | kubectl apply -f -
 
     displayName: "kubectl apply"
     env:
