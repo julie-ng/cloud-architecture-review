@@ -56,5 +56,10 @@ export default {
   color: #999;
   margin: 0;
 }
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+}
 </style>
 
