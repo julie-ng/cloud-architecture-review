@@ -1,9 +1,9 @@
 <template>
-	<div class="app-header">
+	<header class="app-header">
 		<div class="wrapper">
 			<h1>Azure Kubernetes Architect</h1>
 		</div>
-	</div>
+	</header>
 </template>
 
 <style>

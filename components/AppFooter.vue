@@ -31,7 +31,7 @@ export default {
 		padding: 2rem 0;
 	}
 
-	p {
+	.app-footer p {
 		margin: 0;
 	}
 

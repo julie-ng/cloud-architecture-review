@@ -41,6 +41,11 @@ export default {
   build: {
   },
 
+  // Don't pre-fetch because site is large.
+  router: {
+    prefetchLinks: false
+  },
+
   // environment variables
   publicRuntimeConfig: {
     commitSha: process.env.APP_BUILD_SHA || '(unset)',

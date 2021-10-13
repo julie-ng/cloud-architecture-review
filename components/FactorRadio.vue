@@ -8,7 +8,8 @@
 				:value=factor.slug
 				v-on:change="onSelected"
 			>
-			<h4>{{ factor.title }}</h4>
+			<h4 v-if=isUndecided()>{{ factor.title }}</h4>
+			<h4 v-else><NuxtLink :to=factor.path>{{ factor.title }}</NuxtLink></h4>
 			<div>{{ factor.description }}</div>
 		</label>
 		<!-- <pre>{{ stats }}</pre> -->
@@ -17,9 +18,6 @@
 
 <script>
   export default {
-
-		// Properties
-		// ----------
     props: {
       factor: {
         type: Object,
@@ -35,9 +33,12 @@
 			}
     },
 
-		// Methods
-		// -------
 		methods: {
+			isUndecided: function () {
+				const parts = this.factor.slug.split('-')
+				return parts[parts.length - 1] === 'undecided'
+			},
+
 			onSelected: function (event) {
 				const data = {
 					id: event.target.value, // this.factor.slug
