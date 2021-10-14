@@ -3,7 +3,7 @@
 		<div class="wrapper">
 			<p>Designed and made with &hearts; in Munich</p>
 			<p v-if=isLocal>(Local Development)</p>
-			<a v-else :href=treeUrl id="js-build-no" class="commit">Version {{ commitSha }}</a>
+			<a v-else :href=treeUrl id="js-build-no" class="commit">Version</a>
 		</div>
 	</footer>
 </template>
