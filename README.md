@@ -1,5 +1,9 @@
 # aks-designer
 
+| Environment | Status |
+|:--|:--|
+| [dev]([https://](https://aks-architect.dev.cloudkube.io/)) | [![Build Status](https://dev.azure.com/julie-msft/aks-architecct/_apis/build/status/dev?branchName=dev)](https://dev.azure.com/julie-msft/aks-architecct/_build/latest?definitionId=47&branchName=dev) |
+
 ## Build Setup
 
 ```bash
