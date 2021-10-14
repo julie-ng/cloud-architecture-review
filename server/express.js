@@ -9,7 +9,7 @@ const graceful = require('./shutdown')
 const healthcheck = require('./routes/health')
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
-const PORT = process.env.PORT || '3100'
+const PORT = process.env.PORT || '3000'
 
 app.use(pino)
 app.use(helmet())
