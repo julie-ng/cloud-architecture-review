@@ -1,7 +1,6 @@
 variables:
   kubeloginVersion: v0.0.10 # see https://github.com/Azure/kubelogin/releases
 
-
   # Container Registry
   acrConnection:    aksarchitect-acr
 
