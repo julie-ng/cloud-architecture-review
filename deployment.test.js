@@ -28,7 +28,9 @@ describe(`Deployment to ${testUrl}`, () => {
 
   test('has correct Build #', async () => {
     await driver.get(testUrl)
-    const footerBuildNo = await driver.findElement(By.css('#js-build-no')).getText()
-    expect(footerBuildNo).toEqual(buildNo)
+    const commitEl = await driver.findElement(By.css('#js-build-no')).getAttribute('href')
+    const url = commitEl.split('/')
+    const sha = url[url.length - 1]
+    expect(sha).toEqual(buildNo)
   })
 })

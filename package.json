@@ -15,12 +15,13 @@
     "nuxt:start": "nuxt start",
     "nuxt:generate": "nuxt generate",
     "express": "node server/express.js",
-    "express:dev": "nodemon -w server --exec 'NODE_ENV=development node server/express.js | pino-pretty --ignore req.headers,res.headers'",
+    "express:dev": "nodemon -w server --exec 'APP_BUILD_SHA=b442611 node server/express.js | pino-pretty --ignore req.headers,res.headers'",
+    "express:prod-test": "nodemon -w server --exec 'APP_BUILD_SHA=b442611 NODE_ENV=production node server/express.js | pino-pretty --ignore req.headers,res.headers'",
     "test": "jest tests/",
     "lint": "eslint .",
     "lint:dev": "nodemon -w component -w pages -w store -w tests --exec \"eslint .\"",
     "preflight": "eslint . && jest tests/",
-    "confirm-deployment": "jest ./deployment.test.js"
+    "confirm-deployment": "APP_BUILD_SHA=b442611 jest ./deployment.test.js"
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
