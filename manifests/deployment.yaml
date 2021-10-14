@@ -23,6 +23,8 @@ spec:
           value: "3000"
         - name: APP_BUILD_SHA
           value: ${APP_BUILD_SHA}
+        - name: NODE_ENV
+          value: production
         resources:
           requests:
             cpu: 100m
