@@ -6,7 +6,7 @@ EXPOSE ${PORT:-80}
 WORKDIR /usr/src/app
 COPY . /usr/src/app
 
-RUN npm ci --production && npm run build
+RUN npm ci --production && npm run nuxt:build
 
 USER node
-CMD ["npm", "start"]
+CMD ["node", "server/express.js"]

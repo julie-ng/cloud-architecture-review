@@ -25,6 +25,7 @@ const start = async function () {
 
   try {
     server = app.listen(PORT)
+    pino.logger.info(`Server up and listening on ${PORT}`)
   } catch (err) {
     pino.logger.error(err)
     process.exit(1)
