@@ -41,12 +41,26 @@ The Terraform infrastructure as code performs the following:
 - **Azure Container Registry**  
   just for this application (because its lifecycle should be different from the AKS clusters)
 
-- **RBAC - Kubelets can pull images**  
-  grants AKS cluster kubelets permission to pull images from this repo
-
-- **Service Principal**  
+- **Service Principals**  
   - to use in CI/CD to push/pull images to _this_ container registry `aksarchitect` 
   - contributor access to `aks-architect` namespace in shared cluster
+
+### Role Based Access Control (RBAC)
+
+The following are managed in *this* repository's Infrastructure as Code.
+
+| Security Principal | Role | Scope |
+|:--|:--|:--|
+| `cloudkube-dev-r9er-cluster-agentpool` | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
+|`cloudkube-staging-d7c-cluster-agentpool`  | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
+| `aks-architect-ci-dev-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
+| `aks-architect-ci-staging-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
+| `aks-architect-ci-dev-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-dev-r9er-cluster` |
+| `aks-architect-ci-staging-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-staging-d7c-cluster` |
+| `aks-architect-ci-dev-sp` | [AKS RBAC Writer](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster) | `aks-architect` namespace in dev cluster |
+| `aks-architect-ci-staging-sp` | [AKS RBAC Writer](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster) | `aks-architect` namespace in staging cluster |
+
+_[*Required read-only role for non-interactive cluster login](https://docs.microsoft.com/azure/aks/control-kubeconfig-access)_
 
 ### Governance Considerations
 
@@ -54,64 +68,8 @@ The Terraform infrastructure as code performs the following:
   
 - This IaC is designed to be run by an Administrator with elevated permissions not just for this repository, but also for the corresponding Kubernetes clusters, [which are managed in a different repository](https://github.com/julie-ng/cloudkube-aks-clusters).
 
-### Terraform Output
-
-```
-azure_container_registry = {
-  "admin_enabled" = false
-  "login_server" = "aksarchitect.azurecr.io"
-  "name" = "aksarchitect"
-  "sku" = "Basic"
-}
-kubelet_rbac = [
-  {
-    "principal_id" = "5c6fc67c-xxxx-xxxx-xxxx…"
-    "role_definition_name" = "AcrPull"
-    "scope" = "/subscriptions/<redacted>/resourceGroups/aks-architect-rg/providers/Microsoft.ContainerRegistry/registries/aksarchitect"
-  },
-  {
-    "principal_id" = "25299f3c-xxxx-xxxx-xxxx…"
-    "role_definition_name" = "AcrPull"
-    "scope" = "/subscriptions/<redacted>/resourceGroups/aks-architect-rg/providers/Microsoft.ContainerRegistry/registries/aksarchitect"
-  },
-]
-resource_group = {
-  "location" = "northeurope"
-  "name" = "aks-architect-rg"
-}
-service_principal_rbac = [
-  {
-    "client_id" = "124957cb-xxxx-xxxx-xxxx…"
-    "display_name" = "aks-architect-ci-dev-sp"
-    "object_id" = "09f8a6d6-xxxx-xxxx-xxxx…"
-    "roles" = [
-      {
-        "name" = "Azure Kubernetes Service RBAC Writer"
-        "scope" = "/subscriptions/<redacted>/resourcegroups/cloudkube-dev-r9er-rg/providers/Microsoft.ContainerService/managedClusters/cloudkube-dev-r9er-cluster/namespaces/aks-architect"
-      },
-      {
-        "name" = "AcrPush"
-        "scope" = "/subscriptions/<redacted>/resourceGroups/aks-architect-rg/providers/Microsoft.ContainerRegistry/registries/aksarchitect"
-      },
-    ]
-  },
-  {
-    "client_id" = "f73964c7-xxxx-xxxx-xxxx…"
-    "display_name" = "aks-architect-ci-staging-sp"
-    "object_id" = "765d2e4f-xxxx-xxxx-xxxx…"
-    "roles" = [
-      {
-        "name" = "Azure Kubernetes Service RBAC Writer"
-        "scope" = "/subscriptions/<redacted>/resourcegroups/cloudkube-staging-d7c-rg/providers/Microsoft.ContainerService/managedClusters/cloudkube-staging-d7c-cluster/namespaces/aks-architect"
-      },
-      {
-        "name" = "AcrPush"
-        "scope" = "/subscriptions/<redacted>/resourceGroups/aks-architect-rg/providers/Microsoft.ContainerRegistry/registries/aksarchitect"
-      },
-    ]
-  },
-]
-```
+- The Azure Container Registry's [admin accoutn is disabled](https://docs.microsoft.com/azure/container-registry/container-registry-authentication?tabs=azure-cli#admin-account).
+- The AKS clusters are AAD integrated and [local accounts are disabled](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview).
 
 ## NuxtJS App Structure
 

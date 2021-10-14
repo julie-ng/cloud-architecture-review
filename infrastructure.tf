@@ -142,7 +142,6 @@ data "azurerm_kubernetes_cluster" "cloudkube" {
 }
 
 #  $AKS_ID/namespaces/<namespace-name>
-
 resource "azurerm_role_assignment" "ci_namespace" {
   for_each             = local.environments
   scope                = "${data.azurerm_kubernetes_cluster.cloudkube[each.key].id}/namespaces/${local.app_namespace}"
@@ -161,7 +160,6 @@ resource "azurerm_role_assignment" "cluster_user" {
 
 
 # Get reference to cluster kubelets (managed in aks iac repo)
-
 data "azurerm_user_assigned_identity" "kubelets" {
   for_each            = local.environments
   name                = each.value.kubelet_mi_name
