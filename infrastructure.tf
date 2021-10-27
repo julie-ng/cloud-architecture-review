@@ -87,6 +87,7 @@ resource "azuread_application" "ci" {
   display_name = local.environments[each.key].sp_name
   owners       = [data.azuread_client_config.current.object_id]
 }
+
 resource "azuread_service_principal" "ci" {
   for_each                     = local.environments
   application_id               = azuread_application.ci[each.key].application_id
@@ -141,7 +142,6 @@ data "azurerm_kubernetes_cluster" "cloudkube" {
   resource_group_name = each.value.cluster_rg
 }
 
-#  $AKS_ID/namespaces/<namespace-name>
 resource "azurerm_role_assignment" "ci_namespace" {
   for_each             = local.environments
   scope                = "${data.azurerm_kubernetes_cluster.cloudkube[each.key].id}/namespaces/${local.app_namespace}"
@@ -157,7 +157,6 @@ resource "azurerm_role_assignment" "cluster_user" {
   role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = azuread_service_principal.ci[each.key].object_id
 }
-
 
 # Get reference to cluster kubelets (managed in aks iac repo)
 data "azurerm_user_assigned_identity" "kubelets" {
