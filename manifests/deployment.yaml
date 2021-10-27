@@ -13,6 +13,8 @@ spec:
       labels:
         app: aks-architect-nuxtjs
     spec:
+      nodeSelector:
+        workloadType: user
       containers:
       - name: aks-architect-nuxtjs
         image: aksarchitect.azurecr.io/aks-archtitect:${IMAGE_TAG}
