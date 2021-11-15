@@ -15,13 +15,13 @@
     "nuxt:start": "nuxt start",
     "nuxt:generate": "nuxt generate",
     "express": "node server/express.js",
-    "express:dev": "nodemon -w server --exec 'APP_BUILD_SHA=b442611 node server/express.js | pino-pretty --ignore req.headers,res.headers'",
+    "express:dev": "nodemon -w server --exec 'node server/express.js | pino-pretty --ignore req.headers,res.headers'",
     "express:prod-test": "nodemon -w server --exec 'APP_BUILD_SHA=b442611 NODE_ENV=production node server/express.js | pino-pretty --ignore req.headers,res.headers'",
-    "test": "jest tests/",
+    "jasmine": "jasmine",
     "lint": "eslint .",
     "lint:dev": "nodemon -w component -w pages -w store -w tests --exec \"eslint .\"",
-    "preflight": "eslint . && jest tests/",
-    "confirm-deployment": "APP_BUILD_SHA=b442611 jest ./deployment.test.js"
+    "preflight": "eslint . && jasmine",
+    "confirm-deployment": "APP_BUILD_SHA=b442611 jasmine"
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
@@ -39,10 +39,10 @@
   "devDependencies": {
     "@nuxt/test-utils": "^0.2.2",
     "@nuxtjs/eslint-config": "^6.0.1",
-    "chromedriver": "^93.0.1",
+    "chromedriver": "^95.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^7.17.0",
-    "jest": "^27.1.1",
+    "jasmine": "^3.10.0",
     "nodemon": "^2.0.13",
     "selenium-webdriver": "^4.0.0-rc-1"
   },

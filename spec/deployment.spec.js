@@ -1,7 +1,11 @@
 const { Builder, By } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
+const jasmine = require('jasmine')
+require('chromedriver')
 
-const testUrl = process.env.SELENIUM_TARGET_URL || 'http://localhost:3000'
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 20 * 1000
+
+const testUrl = process.env.SELENIUM_TARGET_URL || 'http://localhost:3000/'
 const buildNo = process.env.APP_BUILD_SHA || '(Local Development)'
 
 describe(`Deployment to ${testUrl}`, () => {
@@ -26,11 +30,17 @@ describe(`Deployment to ${testUrl}`, () => {
     await driver.quit()
   }, 15000)
 
-  test('has correct Build #', async () => {
+  it('has correct Build #', async () => {
+    let versionNo
     await driver.get(testUrl)
-    const commitEl = await driver.findElement(By.css('#js-build-no')).getAttribute('href')
-    const url = commitEl.split('/')
-    const sha = url[url.length - 1]
-    expect(sha).toEqual(buildNo)
+
+    if (testUrl.startsWith('http://localhost')) {
+      versionNo = await driver.findElement(By.css('#js-build-no')).getText()
+    } else {
+      const el = await driver.findElement(By.css('#js-build-no')).getAttribute('href')
+      const url = el.split('/')
+      versionNo = url[url.length - 1]
+    }
+    expect(versionNo).toEqual(buildNo)
   })
 })
