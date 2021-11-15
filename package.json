@@ -22,7 +22,7 @@
     "lint": "eslint .",
     "lint:dev": "nodemon -w component -w pages -w store -w tests --exec \"eslint .\"",
     "preflight": "eslint . && jasmine",
-    "confirm-deployment": "APP_BUILD_SHA=b442611 jasmine"
+    "confirm-deployment": "jasmine"
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
