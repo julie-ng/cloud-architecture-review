@@ -12,7 +12,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 const PORT = process.env.PORT || '3000'
 
 app.use(pino)
-app.use(helmet())
+app.use(helmet({ contentSecurityPolicy: false })) // nuxt triggers too many csp issues
 app.use('/health', healthcheck)
 
 let server
