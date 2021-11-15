@@ -1,6 +1,6 @@
 ---
 title: Azure CNI
-description: Standard Plugin
+description: Use Azure Networking
 complexity: 5
 security: 10
 price: 0

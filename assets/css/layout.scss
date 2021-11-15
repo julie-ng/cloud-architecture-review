@@ -14,6 +14,7 @@
 
 	--md-grey-font-color: #aaa;
 	--grey-border-color: #ddd;
+	--light-grey-bg-color: #f8f8fa;
 }
 
 body {
@@ -21,6 +22,7 @@ body {
 	font-size: 1rem;
 	line-height: 1.3em;
 	color: var(--body-text-color);
+	background: var(--light-grey-bg-color);
 }
 
 h1 {

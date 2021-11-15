@@ -1,6 +1,6 @@
 <template>
 	<article>
-		<h2>{{ question.title }}</h2>
+		<h2 class="question-title">{{ question.title }}</h2>
 		<p>{{ question.description }}</p>
 		<!-- <pre>
 {{ question }}
@@ -52,6 +52,11 @@
 
 <style>
 	article {
+		background-color: white;
 		margin-bottom: 3em;
+		/* border: 1px solid var(--grey-border-color); */
+		box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
+		border-radius: 0.5em;
+		padding: 1em 1.5em 2em;
 	}
 </style>

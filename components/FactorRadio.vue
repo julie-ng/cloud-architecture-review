@@ -61,6 +61,7 @@
 
 	.factor h4 {
 		margin-bottom: 0.5em;
+		font-weight: normal;
 	}
 
 	input[type="radio"] {

@@ -4,7 +4,15 @@
 
 		<div class="app-main wrapper">
 			<div class="app-body">
-				<questions :questions=questions></questions>
+				<category
+					v-for="cat of questionnaire"
+					:title=cat.name
+					:key=cat.name
+					:questions=cat.questions
+				>
+				</category>
+
+				<!-- <pre>{{ questionnaire }}</pre> -->
 			</div>
 			<div class="app-sidebar">
 				<score/>
@@ -17,34 +25,54 @@
 <script>
 	export default {
 		async asyncData({ $content, params }) {
+
+			// Categories
+			// Load order for ./contents/questions folder
+			const categoryDirs = [
+				'requirements',
+				'networking'
+			]
+			const categoryContent = []
+
 			const undecidedTemplate = await $content('factors/undecided').fetch()
 
-			// Fetch Questions
-			const questions = await $content('questions')
-				.sortBy('path')
-				.without(['toc'])
-				.fetch()
+			for (const c of categoryDirs) {
+				const questions = await $content(`questions/${c}`)
+					.sortBy('path')
+					.without(['toc', 'body'])
+					.fetch()
 
-			// Fetch possible answers ("Factors") for each Question
-			for (const q of questions) {
-				const factors  = q.factors // required
-				q.factors = []
+				// Fetch possible answers ("Factors") for each Question
+				for (const q of questions) {
+					const factors  = q.factors // required
+					q.factors = []
 
-				for (const f of factors) {
-					let factor = await $content(`/factors/${f.path}`)
-						.without(['toc', 'body'])
-						.fetch()
+					for (const f of factors) {
+						let factor = await $content(`/factors/${f.path}`)
+							.without(['toc', 'body'])
+							.fetch()
 
-					// add to possible answers
-					q.factors.push(_formatStats(factor))
+						// add to possible answers
+						q.factors.push(_formatStats(factor))
+					}
+
+					// add "undecided" option
+					q.factors.push(_createUndecided(q, undecidedTemplate))
 				}
 
-				// add "undecided" option
-				q.factors.push(_createUndecided(q, undecidedTemplate))
+				categoryContent.push(questions)
 			}
 
+			let questionnaire = []
+			categoryDirs.forEach((c, i) => {
+				questionnaire.push({
+					name: c,
+					questions: categoryContent[i]
+				})
+			})
+
 			return {
-				questions
+				questionnaire
 			}
 		},
 	}
