@@ -19,7 +19,7 @@
 				:value=factor.slug
 				v-on:change="onSelected"
 			>
-			<h4><NuxtLink :to=factor.path>{{ factor.title }}</NuxtLink></h4>
+			<h4>{{ factor.title }}</h4>
 			<p>{{ factor.description }}</p>
 		</label>
 

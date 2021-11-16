@@ -1,6 +1,6 @@
 <template>
 	<article class="question-box">
-		<h2 class="question-title">{{ question.title }}</h2>
+		<h2 class="question-title"><NuxtLink :to=question.path>{{ question.title }}</NuxtLink></h2>
 		<p>{{ question.description }}</p>
 		<!-- <pre>
 {{ question }}
@@ -48,13 +48,3 @@
 		}
 	};
 </script>
-
-<style>
-	article {
-		background-color: white;
-		margin-bottom: 3em;
-		box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
-		border-radius: 0.5em;
-		padding: 1em 1.5em 2em;
-	}
-</style>

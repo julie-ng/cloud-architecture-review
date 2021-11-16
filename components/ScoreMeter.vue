@@ -46,14 +46,27 @@
 	meter {
 		display: block;
 		width: 200px;
-		height: 30px;
+		height: 36px;
 		/* appearance: none; */
 	}
+
+	meter::-webkit-meter-bar {
+		background: #fff;
+		border: 1px solid #e1e1e1;
+		border-radius: 0;
+	}
+
+	/* meter::-webkit-meter-horizontal-bar {
+		border: none;
+	} */
 
 	/* Chrome, Safari */
 	meter::-webkit-meter-optimum-value {
 		background-color: var(--meter-color);
 	}
 
+	meter::-webkit-meter-inner-element {
+		border: none;
+	}
 </style>
 

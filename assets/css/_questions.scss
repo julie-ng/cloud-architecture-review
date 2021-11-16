@@ -1,5 +1,17 @@
+article {
+	background: white;
+}
+
+.article-page,
+.question-box {
+	padding: 1em 1.5em 2em;
+}
+
 .question-box {
 	position: relative;
+	margin-bottom: 3em;
+	box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
+	border-radius: 0.5em;
 }
 
 .label-undecided {
@@ -40,6 +52,10 @@
 		display: inline;
 		margin-bottom: 0.5em;
 		font-weight: 500;
+	}
+
+	a {
+		text-decoration: none;
 	}
 
 	p {
