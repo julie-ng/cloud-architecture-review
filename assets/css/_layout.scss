@@ -1,0 +1,21 @@
+@import './vars';
+
+body {
+	background: var(--light-grey-bg-color);
+}
+
+body,
+.content {
+	margin: 0;
+	padding: 0;
+}
+
+.wrapper {
+	margin: 1em auto;
+	max-width: var(--page-max-width);
+}
+
+.app-main {
+	display: grid;
+	grid-template-columns: 1fr var(--sidebar-width);
+}
