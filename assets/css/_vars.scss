@@ -1,16 +1,21 @@
 :root {
 	--page-max-width: 1200px;
-	--sidebar-width: 300px;
-	--purple-color: #3752c7;
-	--cherry-color: #e94d15;
-	--meter-color: #07bc07;
-	--body-text-color: #222;
-	--body-font: 'Source Sans Pro', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-	--footer-text-color: #aaa;
+	--sidebar-width: 360px;
+
+	--body-font: 'Roboto', 'Source Sans Pro', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
 
 	--sm-font-size: 0.9rem;
 	--md-font-size: 1.1rem;
 	--lg-font-size: 1.3rem;
+
+	--space-cadet-color: #1a2238;
+	--outrageous-orange-color: #ff6a3d;
+
+	--purple-color: #3752c7;
+	--cherry-color: #e94d15;
+	--meter-color: #07bc07;
+	--body-text-color: #222;
+	--footer-text-color: var(--md-grey-font-color);
 
 	--md-grey-font-color: #aaa;
 	--grey-border-color: #ddd;

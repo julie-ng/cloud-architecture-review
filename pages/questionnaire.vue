@@ -23,51 +23,60 @@
 </template>
 
 <script>
+	const content = [] // content db
+
+	// Setup: Load order for ./contents/questions folder
+	const categoryDirs = [
+		'requirements',
+		'networking'
+	]
+
 	export default {
+		/**
+		 * Fetch and load Markdown Content
+		 * Loads only title and metadata without body
+		 * Sort order set in `categoryDirs` above. Also easer than
+		 * traversing directory and prefixing everything with numbers
+		 *
+		 * @async
+		 * @returns {Array} of all questions and questions per defined sort order
+		 */
 		async asyncData({ $content, params }) {
-
-			// Categories
-			// Load order for ./contents/questions folder
-			const categoryDirs = [
-				'requirements',
-				'networking'
-			]
-			const categoryContent = []
-
 			const undecidedTemplate = await $content('factors/undecided').fetch()
 
+			// --- Questions per Category ---
 			for (const c of categoryDirs) {
 				const questions = await $content(`questions/${c}`)
 					.sortBy('path')
 					.without(['toc', 'body'])
 					.fetch()
 
-				// Fetch possible answers ("Factors") for each Question
+				// --- Answers per Question ---
 				for (const q of questions) {
-					const factors  = q.factors // required
+					const factors  = q.factors // required, defined in question markdown
 					q.factors = []
-
 					for (const f of factors) {
 						let factor = await $content(`/factors/${f.path}`)
 							.without(['toc', 'body'])
 							.fetch()
 
-						// add to possible answers
+						// Add to possible answers
 						q.factors.push(_formatStats(factor))
 					}
 
-					// add "undecided" option
+					// Add "undecided" option
 					q.factors.push(_createUndecided(q, undecidedTemplate))
 				}
 
-				categoryContent.push(questions)
+				// Add to content db
+				content.push(questions)
 			}
 
 			let questionnaire = []
 			categoryDirs.forEach((c, i) => {
 				questionnaire.push({
 					name: c,
-					questions: categoryContent[i]
+					questions: content[i]
 				})
 			})
 

@@ -15,7 +15,21 @@ body,
 	max-width: var(--page-max-width);
 }
 
+.app-main,
+.app-sidebar {
+	box-sizing: border-box;
+}
+
 .app-main {
 	display: grid;
 	grid-template-columns: 1fr var(--sidebar-width);
+}
+
+.app-sidebar {
+	padding-left: 1em;
+	.score {
+		position: sticky;
+		top: 0;
+		left: 0;
+	}
 }

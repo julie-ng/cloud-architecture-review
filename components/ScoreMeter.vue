@@ -35,7 +35,7 @@
 	label {
 		display: block;
 		text-transform: capitalize;
-		font-weight: 500;
+		/* font-weight: 500; */
 	}
 
 	label span {

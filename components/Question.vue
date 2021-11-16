@@ -54,7 +54,6 @@
 	article {
 		background-color: white;
 		margin-bottom: 3em;
-		/* border: 1px solid var(--grey-border-color); */
 		box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.08);
 		border-radius: 0.5em;
 		padding: 1em 1.5em 2em;

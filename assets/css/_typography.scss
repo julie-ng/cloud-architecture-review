@@ -1,9 +1,24 @@
 body {
+	font-weight: 400;
 	font-family: var(--body-font);
-	font-size: 1rem;
+	font-size: 0.96rem;
 	line-height: 1.3em;
 	color: var(--body-text-color);
 	background: var(--light-grey-bg-color);
+}
+
+a {
+	&:link {
+		color: var(--purple-color);
+	}
+
+	&:visited {
+		color: #6267b3; //var(--space-cadet-color);
+	}
+
+	&:hover, &:active {
+		color: #34c1cd; //var(--outrageous-orange-color);
+	}
 }
 
 h1 {
