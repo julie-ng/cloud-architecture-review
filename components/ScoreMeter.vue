@@ -35,7 +35,6 @@
 	label {
 		display: block;
 		text-transform: capitalize;
-		/* font-weight: 500; */
 	}
 
 	label span {
@@ -56,11 +55,6 @@
 		border-radius: 0;
 	}
 
-	/* meter::-webkit-meter-horizontal-bar {
-		border: none;
-	} */
-
-	/* Chrome, Safari */
 	meter::-webkit-meter-optimum-value {
 		background-color: var(--meter-color);
 	}

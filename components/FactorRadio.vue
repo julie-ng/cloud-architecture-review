@@ -1,5 +1,6 @@
 <template>
 	<div class="factor">
+		<!-- Reset Button -->
 		<label v-if=isUndecided() :for=factor.slug class="label-undecided">
 			<input ref="input" type="radio"
 				:name=inputName
@@ -11,6 +12,7 @@
 			<h4>Reset</h4>
 		</label>
 
+		<!-- Radio Input -->
 		<label v-else :for=factor.slug class="label-factor">
 			<input ref="input" type="radio"
 				:name=inputName
