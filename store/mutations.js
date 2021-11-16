@@ -1,14 +1,23 @@
 export default {
-  updateDecision (state, factor) {
-    if (state.decisions.indexOf(factor.question) === -1) {
-      state.decisions.push(factor.question)
-    }
+  updateDecision (state, decision) {
+    // console.log(`Existing Decisions ${state.decisions.length}`, state.decisions)
 
-    factor.question.answer = factor.answer.id
+    const i = _findDecisionByQuestion(state, decision.question.slug)
+    if (i === -1) {
+      state.decisions.push(decision)
+    } else {
+      state.decisions[i].answer = decision.answer
+    }
   },
 
-  unsetDecision (state, factor) {
-    const q = factor.question
-    state.decisions.splice(state.decisions.indexOf(q), 1)
+  unsetDecision (state, decision) {
+    const i = _findDecisionByQuestion(state, decision.question.slug)
+    if (i !== -1) {
+      state.decisions.splice(i, 1)
+    }
   }
+}
+
+const _findDecisionByQuestion = function (state, slug) {
+  return state.decisions.findIndex(el => el.question.slug === slug)
 }

@@ -4,7 +4,7 @@ export default {
   overallScore (state) {
     const score = { ...defaults['BASELINE_SCORE'] }
     state.decisions.forEach((d) => {
-      const factor = d.factors.filter(f => f.slug === d.answer)[0]
+      const factor = d.answer
       score.complexity += factor.stats.complexity
       score.operations += factor.stats.operations
       score.security += factor.stats.security

@@ -33,6 +33,10 @@
 		// -------
 		methods: {
 			onSelected: function (event, store, question) {
+				/**
+				 * event.selected.id ==> slug
+				 * event.selected.stats
+				 */
 				const selected = event.selected
 				const mutation = selected.id.substr(selected.id.length - 9) == 'undecided'
 					? 'unsetDecision'
@@ -40,9 +44,7 @@
 
 				store.commit(mutation, {
 					question: question,
-					answer: {
-						id: event.selected.id
-					}
+					answer: event.selected
 				})
 			}
 		}
