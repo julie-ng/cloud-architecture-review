@@ -1,5 +1,5 @@
 <template>
-	<article>
+	<article class="question-box">
 		<h2 class="question-title">{{ question.title }}</h2>
 		<p>{{ question.description }}</p>
 		<!-- <pre>
@@ -48,7 +48,6 @@
 		}
 	};
 </script>
-
 
 <style>
 	article {

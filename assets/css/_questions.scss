@@ -1,0 +1,48 @@
+.question-box {
+	position: relative;
+}
+
+.label-undecided {
+	margin-top: 2em;
+	h4 {
+		display: inline-block;
+		box-sizing: border-box;
+		border-radius: 4px;
+		margin: 0;
+		padding: 0.25em 0.6em;
+		cursor: pointer;
+		font-weight: 400 !important;
+		font-size: 0.85em;
+		text-align: right;
+		position: absolute;
+		top: 2em;
+		right: 2em;
+
+		border: 1px solid var(--grey-border-color);
+		color: var(--md-grey-font-color);
+
+		&:hover {
+			background: var(--light-grey-bg-color);
+		}
+	}
+	input[type="radio"] {
+		display: none;
+	}
+}
+
+.label-factor {
+	input[type="radio"] {
+		width: 20px;
+		display: inline-block;
+	}
+
+	h4 {
+		display: inline;
+		margin-bottom: 0.5em;
+		font-weight: 500;
+	}
+
+	p {
+		margin: 0.4em 0 1em 32px;
+	}
+}

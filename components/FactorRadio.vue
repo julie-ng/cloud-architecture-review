@@ -1,17 +1,28 @@
 <template>
 	<div class="factor">
-		<label :for=factor.slug>
-			<input type="radio"
+		<label v-if=isUndecided() :for=factor.slug class="label-undecided">
+			<input ref="input" type="radio"
 				:name=inputName
 				:id=factor.slug
 				:key=factor.slug
 				:value=factor.slug
 				v-on:change="onSelected"
 			>
-			<h4 v-if=isUndecided()>{{ factor.title }}</h4>
-			<h4 v-else><NuxtLink :to=factor.path>{{ factor.title }}</NuxtLink></h4>
-			<div>{{ factor.description }}</div>
+			<h4>Reset</h4>
 		</label>
+
+		<label v-else :for=factor.slug class="label-factor">
+			<input ref="input" type="radio"
+				:name=inputName
+				:id=factor.slug
+				:key=factor.slug
+				:value=factor.slug
+				v-on:change="onSelected"
+			>
+			<h4><NuxtLink :to=factor.path>{{ factor.title }}</NuxtLink></h4>
+			<p>{{ factor.description }}</p>
+		</label>
+
 		<!-- <pre>{{ stats }}</pre> -->
 	</div>
 </template>
@@ -41,32 +52,12 @@
 
 			onSelected: function (event) {
 				const data = {
-					id: event.target.value, // this.factor.slug
+					id: event.target.value,
 					stats: this.factor.stats
 				}
-
 				console.log(`factor(${this.factor.slug}): selected`)
 				this.$emit('selected', { selected: data })
 			}
 		}
   }
 </script>
-
-<style>
-	.factor {
-		position: relative;
-		padding-left: 2em;
-
-	}
-
-	.factor h4 {
-		margin-bottom: 0.5em;
-		font-weight: 500;
-	}
-
-	input[type="radio"] {
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-</style>
