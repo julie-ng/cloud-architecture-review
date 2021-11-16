@@ -24,10 +24,6 @@
 		computed: {
     	scores () {
       	return this.$store.getters.overallScore
-			},
-
-			complexity () {
-				return 50
 			}
 		}
 	}

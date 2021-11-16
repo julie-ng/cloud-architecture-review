@@ -1,19 +1,6 @@
 import defaults from './defaults'
 
 export default {
-  summary (state) {
-    const shortened = []
-    state.decisions.forEach((d) => {
-      const factor = d.factors.filter(f => f.slug === d.answer)[0]
-      shortened.push({
-        id: d.slug,
-        answer: d.answer,
-        score: factor.stats
-      })
-    })
-    return shortened
-  },
-
   overallScore (state) {
     const score = { ...defaults['BASELINE_SCORE'] }
     state.decisions.forEach((d) => {
