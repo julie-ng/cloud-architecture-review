@@ -5,6 +5,7 @@ trigger:
   branches:
     include:
     - main
+    - dev
   paths:
     exclude:
     - README.md
@@ -16,7 +17,11 @@ pool:
 
 variables:
 - template: vars/global.vars.yaml
-- template: vars/staging.vars.yaml # Staging
+
+- ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/dev') }}:
+  - template: vars/dev.vars.yaml
+- ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+  - template: vars/staging.vars.yaml
 
 stages:
 - stage: ciStage
@@ -26,6 +31,7 @@ stages:
 
 - stage: buildStage
   displayName: Docker - Build and Push
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
   jobs:
   - template: jobs/docker.job.yaml
 
