@@ -32,7 +32,6 @@ stages:
 
 - stage: buildStage
   displayName: Docker - Build and Push
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
   jobs:
   - template: jobs/docker.job.yaml
 
