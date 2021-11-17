@@ -42,4 +42,3 @@ stages:
   - template: jobs/deploy.job.yaml
 
 - template: stages/confirm-deployment.yaml
-  continueOnError: true # treat flakey e2e tests as optional

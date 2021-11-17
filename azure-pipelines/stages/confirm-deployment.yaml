@@ -21,6 +21,7 @@ stages:
   - job: finalAttempt
     dependsOn: secondTry
     condition: eq(dependencies.secondTry.result,'SucceededWithIssues') # only if 2nd attempt fails
+    continueOnError: true # treat flakey e2e tests as optional
     displayName: 'Final Attempt'
     steps:
     - template: ../steps/check-website.yaml
