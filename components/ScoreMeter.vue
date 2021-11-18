@@ -26,7 +26,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 
 	div {
 		margin-bottom: 0.5rem;
@@ -41,7 +41,11 @@
 		font-weight: 400;
 		color: var(--md-grey-font-color);
 	}
+</style>
 
+
+
+<style>
 	meter {
 		display: block;
 		width: 200px;

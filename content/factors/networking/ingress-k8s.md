@@ -4,5 +4,5 @@ description: Any non Azure controller, e.g. nginx, traefik
 complexity: 5
 security: 0
 price: 0
-operations: 0
+operations: 5
 ---
