@@ -32,6 +32,13 @@
 	line-height: 1.4em;
 }
 
+blockquote {
+	background: #fafafa;
+	padding: 1em 2em;
+	border-left: 10px solid #eee;
+	margin: 1em 0;
+}
+
 
 // --- Score ---
 
@@ -41,9 +48,9 @@
 	background-color: #f8f8f8;
 }
 
-p {
-	font-size: var(--sm-font-size);
-}
+// p {
+// 	font-size: var(--sm-font-size);
+// }
 
 h1 {
 	font-size: var(--lg-font-size);

@@ -6,7 +6,7 @@
         <article class="article-page">
           <header class="article-header">
             <h1>{{ article.title }}</h1>
-            <p class="article-date"><time :datetime="formatAriaDate(article.createdAt)">{{ formatDate(article.createdAt) }}</time></p>
+            <!-- <p class="article-date"><time :datetime="formatAriaDate(article.createdAt)">{{ formatDate(article.createdAt) }}</time></p> -->
           </header>
           <nuxt-content :document="article" />
 

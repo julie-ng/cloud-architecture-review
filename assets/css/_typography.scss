@@ -1,8 +1,8 @@
 body {
 	font-weight: 400;
 	font-family: var(--body-font);
-	font-size: 0.96rem;
-	line-height: 1.3em;
+	// font-size: 0.96rem;
+	line-height: 1.4em;
 	color: var(--body-text-color);
 	background: var(--light-grey-bg-color);
 }
@@ -46,4 +46,11 @@ pre {
 
 .question-title {
 	font-size: 1.3rem;
+}
+
+.article-header {
+	h1 {
+		font-size: 2em;
+		text-transform: capitalize;
+	}
 }
