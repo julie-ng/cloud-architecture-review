@@ -1,7 +1,7 @@
 <template>
 	<header class="app-header">
 		<div class="wrapper">
-			<h1>Azure Kubernetes Architect</h1>
+			<h1><a href="/">Azure Kubernetes Architect</a></h1>
 		</div>
 	</header>
 </template>

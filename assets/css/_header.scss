@@ -1,0 +1,14 @@
+.app-header {
+	a {
+		text-decoration: none;
+
+		&:link, &:visited {
+			color: #fff;
+		}
+
+		&:hover, &:active {
+			color: #fff;
+			text-decoration: underline;
+		}
+	}
+}

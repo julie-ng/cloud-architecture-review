@@ -30,20 +30,12 @@
 </script>
 
 <style scoped>
-	td:first-child {
-		padding-right: 1em;
-	}
+td:first-child {
+	padding-right: 1em;
+}
 
-	.score {
-		background-color: #f8f8f8;
-		padding: 0.5rem 1rem;
-	}
-
-	p {
-		font-size: var(--sm-font-size);
-	}
-
-	h1 {
-		font-size: var(--lg-font-size);
-	}
+.score {
+	background-color: #f8f8f8;
+	padding: 0.5rem 1rem;
+}
 </style>

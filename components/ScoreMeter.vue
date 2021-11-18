@@ -26,7 +26,7 @@
 	}
 </script>
 
-<style scoped>
+<style>
 
 	div {
 		margin-bottom: 0.5rem;

@@ -3,10 +3,21 @@
 		<app-header/>
 
 		<div class="wrapper">
-			<h1>Welcome to the App</h1>
-			<a href="/questionnaire">Go to Questions &rarr;</a>
+			 <nuxt-content :document="homepage" />
 		</div>
 
 		<app-footer/>
 	</div>
 </template>
+
+
+<script>
+  export default {
+    async asyncData({ $content, params }) {
+      const homepage = await $content('home').fetch()
+      return {
+        homepage
+      }
+    }
+  }
+</script>
