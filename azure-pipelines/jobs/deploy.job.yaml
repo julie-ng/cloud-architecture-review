@@ -30,6 +30,7 @@ jobs:
       KUBECONFIG: $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
       IMAGE_TAG:     $(imageTag)
       APP_BUILD_SHA: $(commitSha)
+      INGRESS_HOSTNAME: $(ingressHostname)
 
   - bash: |
       kubelogin remove-tokens

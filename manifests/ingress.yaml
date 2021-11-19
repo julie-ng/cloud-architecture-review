@@ -7,7 +7,7 @@ metadata:
     name: aks-architect-ingress
 spec:
   rules:
-  - host: aks-architect.dev.cloudkube.io
+  - host: ${INGRESS_HOSTNAME}
     http:
       paths:
       - pathType: Prefix

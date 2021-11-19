@@ -5,3 +5,4 @@ variables:
   aksClusterName:          cloudkube-dev-r9er-cluster
   aksClusterResourceGroup: cloudkube-dev-r9er-rg
   deploymentUrl:           'https://aks-architect.dev.cloudkube.io/'
+  ingressHostname:         'aks-architect.dev.cloudkube.io'
