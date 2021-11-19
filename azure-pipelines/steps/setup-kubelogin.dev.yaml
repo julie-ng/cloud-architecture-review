@@ -49,6 +49,7 @@ steps:
   displayName: kubelogin - aks-credentials to kubecontext
   env:
     AZ_TENANT_ID:                        $(tenant-id)
+    KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
     AAD_SERVICE_PRINCIPAL_CLIENT_ID:     $(aks-architect-ci-dev-sp-client-id)
     AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: $(aks-architect-ci-dev-sp-client-secret)
-    KUBECONFIG:                          $(Build.SourcesDirectory)/.kubeconfig-$(aksClusterName)
+
