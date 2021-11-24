@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<label :for=id>{{ title }} <span>({{ score }})</span></label>
+		<label :for=id>
+				{{ title }} <span>({{ score }})</span>
+		</label>
 		<meter :id=id min="0" max="100" :value=score>
 				at {{ score }}/100
 		</meter>

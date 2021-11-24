@@ -68,7 +68,7 @@ _[*Required read-only role for non-interactive cluster login](https://docs.micro
   
 - This IaC is designed to be run by an Administrator with elevated permissions not just for this repository, but also for the corresponding Kubernetes clusters, [which are managed in a different repository](https://github.com/julie-ng/cloudkube-aks-clusters).
 
-- The Azure Container Registry's [admin accoutn is disabled](https://docs.microsoft.com/azure/container-registry/container-registry-authentication?tabs=azure-cli#admin-account).
+- The Azure Container Registry's [admin account is disabled](https://docs.microsoft.com/azure/container-registry/container-registry-authentication?tabs=azure-cli#admin-account).
 - The AKS clusters are AAD integrated and [local accounts are disabled](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview).
 
 ## NuxtJS App Structure

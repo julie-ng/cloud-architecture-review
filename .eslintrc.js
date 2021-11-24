@@ -20,6 +20,7 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     'comma-dangle': ['warn', 'never'],
     'dot-notation': ['error', { allowPattern: '^[A-Z]+' }],
-    'unicorn/prefer-includes': 'off'
+    'unicorn/prefer-includes': 'off',
+    'no-console': 'off'
   }
 }

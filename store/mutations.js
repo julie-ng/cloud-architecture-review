@@ -1,25 +1,81 @@
-export default {
-  updateDecision (state, decision) {
-    // console.log(`Existing Decisions ${state.decisions.length}`, state.decisions)
+const config = require('./../app.config')
 
-    const i = _findDecisionByQuestion(state, decision.question.slug)
-    if (i === -1) {
-      state.decisions.push(decision)
-    } else {
-      state.decisions[i].answer = decision.answer
-    }
+export default {
+  /**
+   * Load existing decision data from browser's sessionStorage
+   * @param {Array|Observable?} state
+   */
+  LOAD_DECISIONS (state) {
+    console.log('[LOAD_DECISIONS]')
+    state.decisions = JSON.parse(sessionStorage.getItem(config.storageKey))
   },
 
-  unsetDecision (state, decision) {
-    const i = _findDecisionByQuestion(state, decision.question.slug)
-    if (i !== -1) {
-      state.decisions.splice(i, 1)
+  /**
+   * Populate the state with the form data
+   *
+   * @param {Array|Observable?} state
+   * @param {Array} formCategories
+   */
+  SET_FORM (state, formCategories) {
+    console.log('[SET_FORM]', formCategories)
+    state.form = formCategories
+  },
+
+  /**
+   * Sync decision to session storage
+   *
+   * @param {Array|Observable?} state
+   * @param {Object} decision
+   * @param {Object} decision.answer
+   * @param {Object} decision.question
+   */
+  UPDATE_DECISION (state, decision) {
+    console.log('[UPDATE_DECISION]: sync state with sessionStorage')
+    // console.log(decision)
+    const q = decision.question
+    const a = decision.answer
+    const cat = decision.category
+
+    state.decisions = {
+      ...state.decisions,
+      [`${cat}-${q.slug}`]: {
+        factor_id: a.factor_id,
+        stats: a.stats
+      }
     }
+
+    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
+  },
+
+  /**
+   * Remove decision from state
+   * re-sync with session storage
+   *
+   * @param {Array|Observable?} state
+   * @param {Object} decision
+   * @param {Object} decision.answer
+   * @param {Object} decision.question
+   */
+  REMOVE_DECISION (state, decision) {
+    console.log('[REMOVE_DECISION]: sync state with sessionStorage')
+
+    const q = decision.question
+    const cat = decision.category
+    const copy = { ...state.decisions }
+    delete copy[`${cat}-${q.slug}`]
+    state.decisions = copy // re-assign for re-activity
+
+    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
+  },
+
+  /**
+   * Clear session storage and empties decisions.
+   *
+   * @param {Array|Observable?} state
+   */
+  RESET_DATA (state) {
+    console.log('[RESET_DATA]: clearing session storage')
+    sessionStorage.clear()
+    state.decisions = {}
   }
-}
-
-// force ADO to rebuild 🙄
-
-const _findDecisionByQuestion = function (state, slug) {
-  return state.decisions.findIndex(el => el.question.slug === slug)
 }

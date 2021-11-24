@@ -1,3 +1,4 @@
 export default () => ({
-  decisions: []
+  form: [],
+  decisions: {}
 })

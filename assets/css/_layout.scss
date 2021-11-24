@@ -33,3 +33,28 @@ body,
 		left: 0;
 	}
 }
+
+.app-header {
+	background: var(--purple-color);
+	color: #fff;
+	padding: 0.5rem 0;
+}
+
+.app-header h1 {
+	margin: 0;
+	font-size: 1.4rem;
+}
+
+.app-header {
+	a {
+		text-decoration: none;
+
+		&:link, &:visited {
+			color: #fff;
+		}
+
+		&:hover, &:active {
+			color: var(--yellow-color);
+		}
+	}
+}
