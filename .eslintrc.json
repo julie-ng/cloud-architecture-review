@@ -1,0 +1,48 @@
+{
+  "env": {
+    "browser": "true",
+    "node": "true"
+  },
+  "plugins": [
+    "vue"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "@nuxtjs"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 13,
+    "sourceType": "module"
+  },
+  "rules": {
+    "indent": [
+      "error",
+      "tab"
+    ],
+    "no-tabs": [
+      "error", {
+        "allowIndentationTabs": true
+      }
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "comma-dangle": [
+      "warn",
+      "never"
+    ],
+    "dot-notation": [
+      "error",
+      {
+        "allowPattern": "^[A-Z]+"
+      }
+    ],
+    "unicorn/prefer-includes": "off",
+    "no-console": "off"
+  }
+}
