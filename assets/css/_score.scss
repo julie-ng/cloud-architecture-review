@@ -4,9 +4,36 @@
 
 .score {
 	position: sticky;
-	top: 90px;
+	top: 110px;
+	font-size: var(--sm-font-size);
+
+	h3 {
+		color: var(--purple-color);
+	}
 }
 
-.score-details {
-	font-size: var(--sm-font-size);
+.score-meter {
+	p {
+		margin-top: 0;
+		margin-bottom: 0.25em;
+		text-transform: capitalize;
+	}
+
+	span {
+		font-weight: 400;
+		color: var(--md-grey-font-color);
+	}
+}
+
+.meter-container {
+	width: 200px;
+	height: 18px;
+	margin-bottom: 1em;
+	overflow: hidden;
+	background: var(--light-grey-bg-color);
+	border: 1px solid #cfd7f9; //var(--grey-border-color);
+
+	.meter-bar {
+		background-color: var(--meter-color);
+	}
 }

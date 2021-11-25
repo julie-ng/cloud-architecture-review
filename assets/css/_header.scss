@@ -3,7 +3,7 @@
 	top: 0;
 	left: 0;
 	z-index: 1000;
-	background: rgba(255, 255, 255, 0.85);
+	background: rgba(255, 255, 255, 0.93);
 
 	border-top: 5px solid var(--purple-color);
 	border-bottom: 1px solid var(--layout-border-color);
@@ -21,11 +21,8 @@
 			}
 
 			&:hover, &:active {
-				// color: var(--yellow-color);
-				// color: var(--cherry-color);
 				text-decoration: underline;
 			}
 		}
 	}
-
 }
