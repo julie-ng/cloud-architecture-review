@@ -7,25 +7,25 @@
 
 	border-top: 5px solid var(--purple-color);
 	border-bottom: 1px solid var(--layout-border-color);
-	padding: 0.5rem 0;
+	padding: 0.2rem 0;
 
 	h1 {
 		margin: 0;
 		font-size: 1.4rem;
-		// font-weight: 400;
+
+		a {
+			text-decoration: none;
+
+			&:link, &:visited {
+				color: var(--purple-color);
+			}
+
+			&:hover, &:active {
+				// color: var(--yellow-color);
+				// color: var(--cherry-color);
+				text-decoration: underline;
+			}
+		}
 	}
 
-	a {
-		text-decoration: none;
-
-		&:link, &:visited {
-			color: var(--purple-color);
-		}
-
-		&:hover, &:active {
-			// color: var(--yellow-color);
-			// color: var(--cherry-color);
-			text-decoration: underline;
-		}
-	}
 }
