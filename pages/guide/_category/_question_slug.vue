@@ -31,7 +31,7 @@ export default {
 	},
 
   async asyncData ({ $content, app, params, error }) {
-    const path = `/questions/${params.category}/${params.question_slug}`
+    const path = `/guide/${params.category}/${params.question_slug}`
     const [article] = await $content({ deep: true }).where({ path }).fetch()
 
     // console.log(article)
@@ -40,13 +40,14 @@ export default {
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
     }
-    else if (article.hasOwnProperty('factors') && article.factors.length > 0) {
+    else if (article.hasOwnProperty('options') && article.options.length > 0) {
       let factors = []
-      for (const f of article.factors) {
-        let factor = await $content(`/factors/${f.path}`)
+      for (const f of article.options) {
+        // console.log('f', f)
+        let data = await $content(`${article.dir}/factors/${f.slug}`)
           .without(['toc'])
           .fetch()
-        factors.push(factor)
+        factors.push(data)
       }
 
       content = { article, factors } // append factors

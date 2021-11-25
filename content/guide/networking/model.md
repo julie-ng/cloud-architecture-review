@@ -4,9 +4,9 @@ short_title: Networking Model
 description: Azure CNI vs Kubenet...longer helping text if people don't understand what this question means.
 type: radio
 answer: unset
-factors:
-- path: 'networking/azure-cni'
-- path: 'networking/kubenet'
+options:
+- slug: 'azure-cni'
+- slug: 'kubenet'
 ---
 
 In this introduction paragraph explain why this decision is critical and common gotchas, best practices e.g. IP address planning, etc. The goal of this page is not to be comprehensive but to provide an overview of common factors to consider when making this decision. Instead of repeating the content, we provide deep links into the Azure docs.

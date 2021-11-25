@@ -1,16 +1,16 @@
 import defaults from './defaults'
 
 export default {
-  scoreCache () {
-    const schema = {}
-    defaults.CATEGORIES.forEach((c) => {
-      schema[c] = {
-        higher: {},
-        lower: {}
-      }
-    })
-    return schema
-  }
+	scoreCache () {
+		const schema = {}
+		defaults.CATEGORIES.forEach((c) => {
+			schema[c] = {
+				higher: {},
+				lower: {}
+			}
+		})
+		return schema
+	}
 }
 
 // Use factor slug as key to avoid having to sort later

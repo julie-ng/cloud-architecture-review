@@ -32,7 +32,7 @@
 				type: String,
 				required: true
 			},
-			stats: {
+			points: {
 				type: Object,
 				required: true
 			}
@@ -47,7 +47,7 @@
 				set (value) {
 					const data = {
 						factor_id: value,
-						stats: this.factor.stats
+						points: this.factor.points
 					}
 				// console.log(`factor(${this.factor.slug}): selected`)
 				this.$emit('selected', { selected: data })
@@ -75,7 +75,7 @@
 			onSelected: function (event) {
 				const data = {
 					factor_id: event.target.value,
-					stats: this.factor.stats
+					points: this.factor.points
 				}
 				console.log(`factor(${this.factor.slug}): selected`)
 				this.$emit('selected', { selected: data })

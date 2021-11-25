@@ -3,9 +3,9 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', healthcheck({
-  version: process.env.npm_package_version,
-  description: process.env.npm_package_description,
-  includeEnv: ['NODE_ENV', 'HOST']
+	version: process.env.npm_package_version,
+	description: process.env.npm_package_description,
+	includeEnv: ['NODE_ENV', 'HOST']
 }))
 
 module.exports = router

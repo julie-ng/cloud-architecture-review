@@ -3,14 +3,7 @@
 </template>
 
 <script>
-	import helper from '~/utils/stats-formatter'
-	const formContent = [] // TODO: cache on server side
-
-	// Load order for ./contents/questions folder
-	const categoryDirs = [
-		'requirements',
-		'networking'
-	]
+	import Experience from '~/architect/experience'
 
 	export default {
 		/**
@@ -23,45 +16,16 @@
 		 * @returns {Array} of all questions and questions per defined sort order
 		 */
 		async asyncData({ $content, params, store }) {
-			const undecidedTemplate = await $content('factors/undecided').fetch()
 
-			// --- Questions per Category --- //
-			for (const c of categoryDirs) {
-				const questions = await $content(`questions/${c}`)
-					.sortBy('path')
-					.without(['toc', 'body'])
-					.fetch()
-
-				// --- Answers per Question --- //
-				for (const q of questions) {
-					const factors  = q.factors // required, defined in question markdown
-					q.factors = []
-					for (const f of factors) {
-						let factor = await $content(`/factors/${f.path}`)
-							.without(['toc', 'body'])
-							.fetch()
-
-						// Add to possible answers
-						q.factors.push(helper.groupStats(factor))
-					}
-
-					// Add "undecided" option
-					q.factors.push(helper.createUndecided(q, undecidedTemplate))
-				}
-
-				// Add to content db
-				formContent.push(questions)
-			}
-
-			let categories = []
-			categoryDirs.forEach((c, i) => {
-				categories.push({
-					name: c,
-					questions: formContent[i]
-				})
+			const experience = new Experience({
+				$content: $content
 			})
 
-			store.commit('form/set', categories)
+			const data = await experience.load()
+			console.log('Experience Loaded', data)
+
+			store.commit('form/set', data)
+
 			return
 		},
 	}

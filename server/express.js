@@ -17,25 +17,25 @@ app.use('/health', healthcheck)
 
 let server
 const start = async function () {
-  const nuxt = await loadNuxt(isDevelopment ? 'dev' : 'start')
-  app.use(nuxt.render)
-  if (isDevelopment) {
-    build(nuxt)
-  }
+	const nuxt = await loadNuxt(isDevelopment ? 'dev' : 'start')
+	app.use(nuxt.render)
+	if (isDevelopment) {
+		build(nuxt)
+	}
 
-  try {
-    server = app.listen(PORT)
-    pino.logger.info(`Server up and listening on ${PORT}`)
-  } catch (err) {
-    pino.logger.error(err)
-    process.exit(1)
-  }
+	try {
+		server = app.listen(PORT)
+		pino.logger.info(`Server up and listening on ${PORT}`)
+	} catch (err) {
+		pino.logger.error(err)
+		process.exit(1)
+	}
 }
 
 const onShutdown = async function (signal) {
-  pino.logger.warn(`Received signal to terminate: ${signal}`)
-  await server.close()
-  process.exit()
+	pino.logger.warn(`Received signal to terminate: ${signal}`)
+	await server.close()
+	process.exit()
 }
 
 start()

@@ -30,7 +30,10 @@
 	export default {
 		computed: {
     	scores () {
-      	return this.$store.getters['decisions/overallScore']
+				// const data = this.$store.getters['decisions/overallScore']
+				// console.log('Scores Data', data)
+				// return data
+      	return this.$store.getters['decisions/score']
 			}
 		},
 

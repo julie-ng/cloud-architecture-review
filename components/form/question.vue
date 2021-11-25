@@ -8,7 +8,7 @@
 			:question=question
 			:key=f.slug
 			:factor=f
-			:stats=f.stats
+			:points=f.points
 
 			@selected="onSelected($event, $store, category, question)"
 			></form-input-radio>
@@ -43,7 +43,7 @@
 			onSelected: function (event, store, category, question) {
 				/**
 				 * event.selected.id ==> answer slug
-				 * event.selected.stats
+				 * event.selected.points
 				 */
 				const selected = event.selected
 				const mutation = selected.factor_id.substr(selected.factor_id.length - 9) == 'undecided'
