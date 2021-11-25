@@ -1,6 +1,6 @@
 <template>
 	<article class="question-box">
-		<h2 class="question-title"><NuxtLink :to=question.path>{{ question.title }}</NuxtLink></h2>
+		<h2 class="question-title"><NuxtLink :to=guideLink()>{{ question.title }}</NuxtLink></h2>
 		<p>{{ question.description }}</p>
 		<form-input-radio
 			v-for="f of question.factors"
@@ -36,6 +36,10 @@
 		},
 
 		methods: {
+			guideLink: function () {
+				return `guide/${this.category}/${this.question.slug}`
+			},
+
 			onSelected: function (event, store, category, question) {
 				/**
 				 * event.selected.id ==> answer slug
@@ -43,8 +47,8 @@
 				 */
 				const selected = event.selected
 				const mutation = selected.factor_id.substr(selected.factor_id.length - 9) == 'undecided'
-					? 'REMOVE_DECISION'
-					: 'UPDATE_DECISION'
+					? 'decisions/remove'
+					: 'decisions/update'
 
 				store.commit(mutation, {
 					category: category,

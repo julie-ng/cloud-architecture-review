@@ -1,5 +1,6 @@
 ---
 title: What is your Ingress Controller?
+short_title: Ingress
 description: 
 type: radio
 answer: unset

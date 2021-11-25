@@ -1,5 +1,6 @@
 ---
 title: What is your tenancy model?
+short_title: Tenancy Model
 description: Longer helping text if people don't understand what this question means.
 type: radio
 answer: unset

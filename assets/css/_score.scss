@@ -1,0 +1,12 @@
+.app-scoreboard {
+	padding: 0.5rem var(--gutter-width);
+}
+
+.score {
+	position: sticky;
+	top: 90px;
+}
+
+.score-details {
+	font-size: var(--sm-font-size);
+}

@@ -1,24 +1,39 @@
 :root {
-	--page-max-width: 1200px;
-	--sidebar-width: 360px;
+	--page-max-width: 1600px;
+	--sidebar-width: 300px;
+	--nav-width: 320px;
+	--gutter-width: 20px;
+	--gutter-width-2x: 40px;
 
-	--body-font: 'Roboto', 'Source Sans Pro', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+	--heading-font:  'Outfit', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+	--body-font:  'Rubik', 'Source Sans Pro', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
 
-	--sm-font-size: 0.9rem;
+	--sm-font-size: 0.85rem; // scoreboard
 	--md-font-size: 1.1rem;
-	--lg-font-size: 1.3rem;
+	--lg-font-size: 1.9rem;
 
 	--space-cadet-color: #1a2238;
 	--outrageous-orange-color: #ff6a3d;
-
+	--visited-link-color: #c1c4f7;
+	--dark-purple-color: #1a2238;
 	--purple-color: #3752c7;
+	--purple-lighter-color: #516ee9;
 	--yellow-color: #f4db7d;
 	--cherry-color: #e94d15;
 	--meter-color: #19d7a0;
+	--teal-color: #34c1cd;
+
+	--body-bg-color: #fff;
 	--body-text-color: #222;
 	--footer-text-color: var(--md-grey-font-color);
 
 	--md-grey-font-color: #aaa;
-	--grey-border-color: #ddd;
+	--grey-border-color: #eee;
 	--light-grey-bg-color: #f8f8fa;
+	--background-color: var(--light-grey-bg-color);
+	--layout-border-color: #eee;
+
+	--primary-color: var(--purple-color);
+	--primary-hover-color: var(--purple-lighter-color);
+	--secondary-color: var(--teal-color);
 }

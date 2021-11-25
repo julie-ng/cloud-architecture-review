@@ -1,30 +1,24 @@
 <template>
-	<div class="app-container">
-		<app-header/>
-    <main class="app-main wrapper">
-			<div class="app-body">
-        <article class="article-page">
-          <header class="article-header">
-            <h1>{{ article.title }}</h1>
-            <!-- <p class="article-date"><time :datetime="formatAriaDate(article.createdAt)">{{ formatDate(article.createdAt) }}</time></p> -->
-          </header>
-          <nuxt-content :document="article" />
+	<div>
+    <article class="article-page">
+      <header class="article-header">
+        <h1>{{ article.title }}</h1>
+        <!-- <p class="article-date"><time :datetime="formatAriaDate(article.createdAt)">{{ formatDate(article.createdAt) }}</time></p> -->
+      </header>
+      <nuxt-content :document="article" />
 
-          <section v-if="factors.length > 0">
-            <h2>Factors</h2>
-            <article v-for="f of factors" v-bind:key="f.path">
-              <h3>{{ f.title }}</h3>
-              <nuxt-content :document="f" />
-            </article>
-          </section>
-
-          <!-- <pre>{{ factors }}</pre> -->
-          <hr>
-          <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
+      <section v-if="factors.length > 0">
+        <h2>Factors</h2>
+        <article v-for="f of factors" v-bind:key="f.path">
+          <h3>{{ f.title }}</h3>
+          <nuxt-content :document="f" />
         </article>
-  		</div>
-    </main>
-		<app-footer/>
+      </section>
+
+      <!-- <pre>{{ factors }}</pre> -->
+      <hr>
+      <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
+    </article>
 	</div>
 </template>
 
@@ -37,10 +31,10 @@ export default {
 	},
 
   async asyncData ({ $content, app, params, error }) {
-    const path = `/${params.pathMatch || 'index'}`
+    const path = `/questions/${params.category}/${params.question_slug}`
     const [article] = await $content({ deep: true }).where({ path }).fetch()
 
-    console.log(article)
+    // console.log(article)
     let content = { article } // default content
 
     if (!article) {

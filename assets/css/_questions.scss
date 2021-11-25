@@ -2,7 +2,7 @@ article {
 	background: white;
 }
 
-.article-page,
+.article-page, /// TODO
 .question-box {
 	padding: 1em 1.5em 2em;
 }
@@ -16,6 +16,7 @@ article {
 
 .label-undecided {
 	margin-top: 2em;
+
 	h4 {
 		display: inline-block;
 		box-sizing: border-box;
@@ -37,8 +38,9 @@ article {
 			background: var(--light-grey-bg-color);
 		}
 	}
+
 	input[type="radio"] {
-		display: none;
+		display: none; // hide undecided
 	}
 }
 
@@ -51,7 +53,6 @@ article {
 	h4 {
 		display: inline;
 		margin-bottom: 0.5em;
-		font-weight: 500;
 	}
 
 	a {

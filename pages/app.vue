@@ -1,18 +1,5 @@
 <template>
-	<div class="app-container">
-		<app-header/>
-		<!-- <app-debugger/> -->
-		<div class="app-main wrapper">
-			<div class="app-body">
-				<form-main/>
-			</div>
-			<div class="app-sidebar">
-				<score/>
-			</div>
-		</div>
-
-		<app-footer/>
-	</div>
+	<app-form/>
 </template>
 
 <script>
@@ -74,7 +61,7 @@
 				})
 			})
 
-			store.commit('SET_FORM', categories)
+			store.commit('form/set', categories)
 			return
 		},
 	}

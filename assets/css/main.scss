@@ -1,57 +1,12 @@
 @import 'vars';
+@import 'normalize';
 @import 'layout';
 @import 'typography';
-@import 'questions';
+@import 'buttons';
+@import 'forms';
 @import 'header';
-
-
-.btn {
-	background-color: var(--outrageous-orange-color);
-	padding: 0.6em 1.1em 0.5em;
-	border-radius: 4px;
-	text-decoration: none;
-
-	&:link, &:visited {
-		color: #fff;
-	}
-
-	&:hover, &:active {
-		color: #111;
-		background-color: #f4db7d;
-	}
-}
-
-.btn-lrg {
-	font-size: 1.3em;
-}
-
-.lead {
-	font-weight: 300;
-	font-size: 1.6em;
-	max-width: 700px;
-	line-height: 1.4em;
-}
-
-blockquote {
-	background: #fafafa;
-	padding: 1em 2em;
-	border-left: 10px solid #eee;
-	margin: 1em 0;
-}
-
-
-// --- Score ---
-
-
-
-.score {
-	background-color: #f8f8f8;
-}
-
-// p {
-// 	font-size: var(--sm-font-size);
-// }
-
-h1 {
-	font-size: var(--lg-font-size);
-}
+@import 'footer';
+@import 'navigation';
+@import 'questions';
+@import 'articles';
+@import 'score';

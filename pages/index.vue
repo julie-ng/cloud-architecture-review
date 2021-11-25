@@ -1,18 +1,12 @@
 <template>
-	<div class="app-container">
-		<app-header/>
-
-		<div class="wrapper">
-			 <nuxt-content :document="homepage" />
-		</div>
-
-		<app-footer/>
-	</div>
+	<nuxt-content :document="homepage" />
 </template>
 
 
 <script>
   export default {
+    layout: 'basic',
+
     async asyncData({ $content, params }) {
       const homepage = await $content('home').fetch()
       return {

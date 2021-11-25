@@ -14,7 +14,7 @@
 	export default {
 		computed: {
     	categories () {
-      	return this.$store.getters.form
+      	return this.$store.getters['form/categories']
 			}
 		}
 	}

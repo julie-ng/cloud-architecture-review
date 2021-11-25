@@ -1,0 +1,19 @@
+.app-footer {
+	// border-top: 1px solid var(--layout-border-color);
+	color: var(--footer-text-color);
+	text-align: center;
+	font-size: 0.85rem;
+
+	.wrapper {
+		padding: 1rem 0;
+	}
+}
+
+.app-footer p {
+	margin: 0;
+}
+
+.commit:link,
+.commit:visited {
+	color: #ccc;
+}

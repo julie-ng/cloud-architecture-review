@@ -1,0 +1,40 @@
+.app-navigation {
+	padding-right: var(--gutter-width-2x);
+	line-height: 1.7;
+
+	ul,
+	li {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+
+	a {
+		&:link, &:visited {
+			text-decoration: none;
+		}
+
+		&:hover, &:active {
+			text-decoration: underline;
+		}
+	}
+}
+
+.app-navigation-category {
+	border-bottom: 1px solid var(--grey-border-color);
+
+	& > li {
+		padding-top: 1em;
+		padding-bottom: 1em;
+
+		&:first-child {
+			padding-top: 0;
+		}
+	}
+}
+
+.app-navigation-title {
+	text-transform: capitalize;
+	margin-bottom: 0.4em;
+}
+

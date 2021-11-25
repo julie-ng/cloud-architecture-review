@@ -1,24 +1,11 @@
-const config = require('./../app.config')
-
 export default {
   /**
    * Load existing decision data from browser's sessionStorage
    * @param {Array|Observable?} state
    */
-  LOAD_DECISIONS (state) {
-    console.log('[LOAD_DECISIONS]')
-    state.decisions = JSON.parse(sessionStorage.getItem(config.storageKey))
-  },
-
-  /**
-   * Populate the state with the form data
-   *
-   * @param {Array|Observable?} state
-   * @param {Array} formCategories
-   */
-  SET_FORM (state, formCategories) {
-    console.log('[SET_FORM]', formCategories)
-    state.form = formCategories
+  load (state) {
+    console.log('MUTATION[decisions/load]')
+    state.decisions = JSON.parse(sessionStorage.getItem('decisions'))
   },
 
   /**
@@ -29,8 +16,8 @@ export default {
    * @param {Object} decision.answer
    * @param {Object} decision.question
    */
-  UPDATE_DECISION (state, decision) {
-    console.log('[UPDATE_DECISION]: sync state with sessionStorage')
+  update (state, decision) {
+    console.log('MUTATION[decisions/update]: sync state with sessionStorage')
     // console.log(decision)
     const q = decision.question
     const a = decision.answer
@@ -44,7 +31,7 @@ export default {
       }
     }
 
-    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
+    sessionStorage.setItem('decisions', JSON.stringify(state.decisions))
   },
 
   /**
@@ -56,8 +43,8 @@ export default {
    * @param {Object} decision.answer
    * @param {Object} decision.question
    */
-  REMOVE_DECISION (state, decision) {
-    console.log('[REMOVE_DECISION]: sync state with sessionStorage')
+  remove (state, decision) {
+    console.log('MUTATION[decisions/remove]: sync state with sessionStorage')
 
     const q = decision.question
     const cat = decision.category
@@ -65,7 +52,7 @@ export default {
     delete copy[`${cat}-${q.slug}`]
     state.decisions = copy // re-assign for re-activity
 
-    sessionStorage.setItem(config.storageKey, JSON.stringify(state.decisions))
+    sessionStorage.setItem('decisions', JSON.stringify(state.decisions))
   },
 
   /**
@@ -73,8 +60,8 @@ export default {
    *
    * @param {Array|Observable?} state
    */
-  RESET_DATA (state) {
-    console.log('[RESET_DATA]: clearing session storage')
+  reset (state) {
+    console.log('MUTATION[decisions/reset]: clearing session storage')
     sessionStorage.clear()
     state.decisions = {}
   }

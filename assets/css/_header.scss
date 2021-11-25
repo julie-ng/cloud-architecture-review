@@ -1,13 +1,30 @@
 .app-header {
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	background: rgba(255, 255, 255, 0.85);
+
+	border-top: 5px solid var(--purple-color);
+	border-bottom: 1px solid var(--layout-border-color);
+	padding: 0.5rem 0;
+
+	h1 {
+		margin: 0;
+		font-size: 1.4rem;
+		// font-weight: 400;
+	}
+
 	a {
 		text-decoration: none;
 
 		&:link, &:visited {
-			color: #fff;
+			color: var(--purple-color);
 		}
 
 		&:hover, &:active {
-			color: #fff;
+			// color: var(--yellow-color);
+			// color: var(--cherry-color);
 			text-decoration: underline;
 		}
 	}

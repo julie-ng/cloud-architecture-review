@@ -19,24 +19,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-	footer {
-		color: var(--footer-text-color);
-		text-align: center;
-	}
-
-	footer .wrapper {
-		margin-top: 2em;
-		padding: 2rem 0;
-	}
-
-	.app-footer p {
-		margin: 0;
-	}
-
-	.commit:link,
-	.commit:visited {
-		color: #ccc;
-	}
-</style>
