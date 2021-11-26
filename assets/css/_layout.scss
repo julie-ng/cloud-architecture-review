@@ -31,3 +31,8 @@ body,
 .app-sidebar {
 	padding-left: 1em;
 }
+
+.app-body {
+	padding-left: 30px;
+	padding-right: 30px; // TODO: calculate proper grid
+}

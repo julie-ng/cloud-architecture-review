@@ -22,11 +22,21 @@
 			})
 
 			const data = await experience.load()
-			console.log('Experience Loaded', data)
+			// console.log('Experience Loaded', data)
 
 			store.commit('form/set', data)
 
 			return
 		},
+
+		// anchor does not exist until fully rendered
+		// see in main.scss for offset value
+		// document.querySelector('#dr').scrollIntoView({behavior: 'smooth'})
+		async mounted () {
+			if (location.hash) {
+				await new Promise(r => setTimeout(r, 10)) // needed 😬
+				document.querySelector(location.hash).scrollIntoView({ behavior: 'smooth' })
+			}
+		}
 	}
 </script>

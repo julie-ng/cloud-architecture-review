@@ -2,9 +2,14 @@
 	<div>
 		<app-header/>
 		<main class="app-grid container-wrapper">
-			<app-navigation/>
+			<div class="app-nav-col">
+				<app-tab-nav/>
+				<app-navigation/>
+			</div>
 
-			<Nuxt/>
+			<div class="app-body">
+				<Nuxt/>
+			</div>
 
 			<app-scoreboard/>
 		</main>

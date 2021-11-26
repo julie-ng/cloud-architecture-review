@@ -1,6 +1,6 @@
 <template>
 	<article class="question-box">
-		<h2 class="question-title"><NuxtLink :to=guideLink()>{{ question.title }}</NuxtLink></h2>
+		<h2 class="question-title has-scroll-anchor" :id=question.slug><NuxtLink :to=guideLink()>{{ question.title }}</NuxtLink></h2>
 		<p>{{ question.description }}</p>
 		<form-input-radio
 			v-for="f of question.factors"
