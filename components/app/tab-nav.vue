@@ -14,7 +14,7 @@ export default {
 		return {
 			links: [
 				{
-					title: 'App',
+					title: 'Design Review',
 					path: '/app'
 				},
 				{

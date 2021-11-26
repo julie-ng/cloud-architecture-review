@@ -12,7 +12,7 @@
 			</score-meter>
 			<div class="score-details">
 				<div>
-					<a href="#" class="btn btn-primary">Understand Your Score</a>
+					<a href="#" class="btn btn-primary">Understand Your Scores</a>
 				</div>
 				<div>
 					<button class="btn btn-primary-outline" @click="onClear">Reset All Answers</button>

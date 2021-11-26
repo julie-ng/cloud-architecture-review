@@ -47,7 +47,6 @@
 	ul,
 	li {
 		list-style-type: none;
-		// margin: 0;
 	}
 
 	ul {
@@ -57,15 +56,9 @@
 	}
 
 	li {
-		// border-width: 1px;
-		// border-color: transparent;
-		// border-style: solid;
-		// border-bottom-width: 6px;
-		// border-bottom-color: blue;
 		display: inline-block;
-		padding: 0.4em 1em 0.8em;
-		// font-size: 1.2em;
-		// margin-bottom: -3px;
+		padding: 0.4em 0;
+		margin-right: 1.5em;
 
 		a {
 			color: #888;
