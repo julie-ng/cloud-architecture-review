@@ -3,10 +3,9 @@
     <article class="article-page">
       <header class="article-header">
         <h1>{{ article.title }}</h1>
-        <!-- <p class="article-date"><time :datetime="formatAriaDate(article.createdAt)">{{ formatDate(article.createdAt) }}</time></p> -->
       </header>
-      <nuxt-content :document="article" />
 
+      <nuxt-content :document="article" />
       <section v-if="factors.length > 0">
         <h2>Factors</h2>
         <article v-for="f of factors" v-bind:key="f.path">
@@ -15,8 +14,8 @@
         </article>
       </section>
 
-      <!-- <pre>{{ article }}</pre> -->
-      <hr>
+      <pre>{{ article }}</pre>
+
       <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
     </article>
 	</div>
@@ -32,19 +31,23 @@ export default {
 
   async asyncData ({ $content, app, params, error }) {
     const path = `/guide/${params.category}/${params.question_slug}`
-    const [article] = await $content({ deep: true }).where({ path }).fetch()
-
-    let content = { article } // default content
+    const [article] = await $content({ deep: true })
+      .where({ path })
+      .fetch()
 
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
     }
-    else if (article.hasOwnProperty('options') && article.options.length > 0) {
-      const factors = await _fetchFactorContent($content, article.dir, article.options)
-      content = { article, factors } // append factors
-    }
 
-    return content
+    else if (article.hasOwnProperty('options') && article.options.length > 0) {
+      const categoryTitle = params.category
+      const factors = await _fetchFactorContent($content, article.dir, article.options)
+      return {
+        article,
+        factors,
+        categoryTitle
+      }
+    }
   },
 
 	methods: {
