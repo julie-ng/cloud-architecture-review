@@ -71,20 +71,3 @@ async function _fetchFactorContent ($content, basePath, factors) {
 }
 </script>
 
-
-<style>
-.article-header {
-  margin: 1em 0 2em;
-}
-
-.article-date {
-  color: #999;
-  margin: 0;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid #ddd;
-}
-</style>
-
