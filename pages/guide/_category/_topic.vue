@@ -30,7 +30,7 @@ export default {
 	},
 
   async asyncData ({ $content, app, params, error }) {
-    const path = `/guide/${params.category}/${params.question_slug}`
+    const path = `/guide/${params.category}/${params.topic}`
     const [article] = await $content({ deep: true })
       .where({ path })
       .fetch()
