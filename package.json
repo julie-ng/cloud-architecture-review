@@ -18,11 +18,11 @@
     "express": "node server/express.js",
     "express:dev": "nodemon -w server --exec 'node server/express.js | pino-pretty --ignore req.headers,res.headers'",
     "express:prod-test": "nodemon -w server --exec 'APP_BUILD_SHA=b442611 NODE_ENV=production node server/express.js | pino-pretty --ignore req.headers,res.headers'",
-    "jasmine": "jasmine",
+    "jasmine": "JASMINE_CONFIG_PATH=tests/jasmine.config.json jasmine",
     "lint": "eslint .",
-    "lint:dev": "nodemon -w component -w pages -w store -w tests --exec \"eslint .\"",
-    "preflight": "eslint . && jasmine",
-    "confirm-deployment": "jasmine"
+    "lint:dev": "nodemon -w component -w pages -w store --exec \"eslint .\"",
+    "preflight": "eslint . && npm run jasmine",
+    "confirm-deployment": "npm run jasmine"
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
