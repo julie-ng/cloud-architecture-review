@@ -9,7 +9,6 @@ operations: 10
 
 More information about Azure CNI, why Microsoft recommends it, etc.
 
-![Diagram](https://docs.microsoft.com/en-us/azure/aks/media/concepts-network/advanced-networking-diagram.png)
 
 > With Azure CNI, every pod gets an IP address from the subnet and can be accessed directly. These IP addresses must be planned in advance and unique across your network space. Each node has a configuration parameter for the maximum number of pods it supports. The equivalent number of IP addresses per node are then reserved up front. Without planning, this approach can lead to IP address exhaustion or the need to rebuild clusters in a larger subnet as your application demands grow.
 
