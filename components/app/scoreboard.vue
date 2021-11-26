@@ -15,7 +15,7 @@
 					<a href="#" class="btn btn-primary">Understand Your Score</a>
 				</div>
 				<div>
-					<button class="btn btn-primary-outline" @click="onClear">Reset All Values</button>
+					<button class="btn btn-primary-outline" @click="onClear">Reset All Answers</button>
 				</div>
 			</div>
 		</div>
@@ -26,9 +26,6 @@
 	export default {
 		computed: {
     	scores () {
-				// const data = this.$store.getters['decisions/overallScore']
-				// console.log('Scores Data', data)
-				// return data
       	return this.$store.getters['decisions/score']
 			}
 		},

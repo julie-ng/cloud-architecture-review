@@ -1,15 +1,15 @@
 .app-scoreboard {
 	padding: 0.5rem var(--gutter-width);
+
+	h3 {
+		font-size: 1.1rem; // TODO
+	}
 }
 
 .score {
 	position: sticky;
 	top: 110px;
 	font-size: var(--sm-font-size);
-
-	h3 {
-		color: var(--purple-color);
-	}
 }
 
 .score-meter {
@@ -21,7 +21,7 @@
 
 	span {
 		font-weight: 400;
-		color: var(--md-grey-font-color);
+		color: #bbb;
 	}
 }
 
@@ -30,10 +30,10 @@
 	height: 18px;
 	margin-bottom: 1em;
 	overflow: hidden;
-	background: var(--light-grey-bg-color);
-	border: 1px solid #cfd7f9; //var(--grey-border-color);
+	background: #f6f7fd;
+	border: 1px solid #aeb6d7;
 
 	.meter-bar {
-		background-color: var(--meter-color);
+		background-color: #8fa4ff;
 	}
 }
