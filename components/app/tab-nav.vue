@@ -15,7 +15,7 @@ export default {
 			links: [
 				{
 					title: 'Design Review',
-					path: '/app'
+					path: '/review'
 				},
 				{
 					title: 'Guide',
@@ -40,7 +40,7 @@ export default {
 			const currentSection = this.$route.name.split('-')[0]
 			const targetSection = link.path.split('/')[1]
 
-			if (targetSection === 'app' && currentSection !== 'app') {
+			if (targetSection === 'review' && currentSection !== 'review') {
 				const anchor = this.$route.path.split('/').pop()
 				return `${link.path}#${anchor}`
 			} else if (hasPrev && prevPath.includes(targetSection)) {
