@@ -20,7 +20,8 @@
       "tab"
     ],
     "no-tabs": [
-      "error", {
+      "error",
+      {
         "allowIndentationTabs": true
       }
     ],
@@ -43,6 +44,10 @@
       }
     ],
     "unicorn/prefer-includes": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "object-shorthand": [
+      "error",
+      "consistent-as-needed"
+    ]
   }
 }
