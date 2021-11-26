@@ -12,27 +12,21 @@ const SCORE_DIMENSIONS = [
 
 export default class ContentLoader {
 	/**
-	 *
 	 * @param {String} opts.dir content directory
-	 * @param {String} opts.undecidedTemplate defaults to 'undecided-default'
 	 * @param {*} opts.content nuxt $content
 	 */
 	constructor (opts = {}) {
 		this.$content = opts.$content
 		this.dir = opts.dir || 'guide'
-		this.undecidedTemplate = opts.undecidedTemplate || 'undecided-default'
 	}
 
 	async load () {
-		// console.log('load()')
-		this.undecidedDefault = await this.$content(`${this.dir}/${this.undecidedTemplate}`).fetch()
-
 		const categories = []
 		for (const category of CATEGORIES_ORDERED) {
-			const topics = await this.#fetchTopics(category)
+			const questions = await this.#fetchQuestions(category)
 			categories.push({
 				name: category,
-				questions: topics // TODO rename questions
+				questions: questions
 			})
 		}
 
@@ -41,39 +35,38 @@ export default class ContentLoader {
 	}
 
 	/**
-	 * Gets all topics, e.g. tenancy for a given category, e.g. requirements
+	 * Gets all questions, e.g. tenancy for a given category, e.g. requirements
 	 *
 	 * @param {String} category
 	 * @returns {Array}
 	 */
-	async #fetchTopics (category) {
-		const topics = await this.$content(`${this.dir}/${category}`)
+	async #fetchQuestions (category) {
+		const questions = await this.$content(`${this.dir}/${category}`)
 			.sortBy('path')
 			.without(['toc', 'body'])
 			.fetch()
 
-		// console.log('#fetchTopics()', topics)
-		for (const topic of topics) {
-			const options = await this.#fetchFactors(topic)
-			options.push(this.#newUndecided({ prefix: topic.slug }))
-			topic.factors = options
+		// console.log('#fetchQuestions()', questions)
+		for (const question of questions) {
+			const factors = await this.#fetchFactors(question)
+			question.factors = factors
 		}
 
-		return topics
+		return questions
 	}
 
 	/**
 	 *
-	 * @param {Object} topic
+	 * @param {Object} question
 	 * @returns {Array}
 	 */
-	async #fetchFactors (topic) {
-		// console.log('#fetchFactors()', topic)
+	async #fetchFactors (question) {
+		// console.log('#fetchFactors()', question)
 
-		const options = topic.options // front matter uses 'options' key
+		// const factors = question.factors // front matter uses 'factors' key
 		const factors = []
-		for (const opt of options) {
-			const data = await this.$content(`${topic.dir}/factors/${opt.slug}`)
+		for (const f of question.factors) {
+			const data = await this.$content(`${question.dir}/factors/${f.slug}`)
 				.without(['toc', 'body'])
 				.fetch()
 			factors.push(this.#adjustPointsSchema(data))
@@ -101,20 +94,6 @@ export default class ContentLoader {
 		return {
 			...factor,
 			points
-		}
-	}
-
-	/**
-	 * All factors need a unique slug
-	 * Create a new object by prefix
-	 *
-	 * @param {String} opts.prefix - slug of topic
-	 */
-	#newUndecided (opts) {
-		const copy = { ...this.undecidedDefault }
-		return {
-			...this.#adjustPointsSchema(copy),
-			slug: `${opts.prefix}-undecided`
 		}
 	}
 }

@@ -4,6 +4,7 @@ import StoreLogger from '~/store/logger.util'
 const logger = new StoreLogger()
 
 export default {
+
 	async clientInit ({ commit, state }, { req }) {
 		const isEmptyState = (state.categories.length === 0)
 		const sessionCached = sessionStorage.getItem('categories')

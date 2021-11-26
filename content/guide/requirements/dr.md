@@ -4,7 +4,7 @@ short_title: Disaster Recovery
 description: Although unlikely what is your strategy in the event that an Azure region is unavailable?
 type: radio
 answer: unset
-options:
+factors:
 - slug: 'dr-active-active'
 - slug: 'dr-active-passive'
 - slug: 'dr-redeploy'

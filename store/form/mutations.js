@@ -8,10 +8,9 @@ export default {
 		state.categories = JSON.parse(sessionStorage.getItem('categories'))
 	},
 
-	// triggered server-side (no access to sessionStorage)
+	// triggered server-side
 	set (state, formCategories) {
 		logger.mutation('form/set')
-		// console.log(formCategories)
 		state.categories = formCategories
 	},
 

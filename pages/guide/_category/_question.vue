@@ -14,7 +14,7 @@
         </article>
       </section>
 
-      <pre>{{ article }}</pre>
+      <!-- <pre>{{ article }}</pre> -->
 
       <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
     </article>
@@ -30,7 +30,7 @@ export default {
 	},
 
   async asyncData ({ $content, app, params, error }) {
-    const path = `/guide/${params.category}/${params.topic}`
+    const path = `/guide/${params.category}/${params.question}`
     const [article] = await $content({ deep: true })
       .where({ path })
       .fetch()
@@ -38,14 +38,11 @@ export default {
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
     }
-
-    else if (article.hasOwnProperty('options') && article.options.length > 0) {
-      const categoryTitle = params.category
-      const factors = await _fetchFactorContent($content, article.dir, article.options)
+    else if (article.hasOwnProperty('factors') && article.factors.length > 0) {
+      const factors = await _fetchFactorContent($content, article.dir, article.factors)
       return {
         article,
-        factors,
-        categoryTitle
+        factors
       }
     }
   },

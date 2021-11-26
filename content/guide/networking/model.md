@@ -4,7 +4,7 @@ short_title: Networking Model
 description: Azure CNI vs Kubenet...longer helping text if people don't understand what this question means.
 type: radio
 answer: unset
-options:
+factors:
 - slug: 'azure-cni'
 - slug: 'kubenet'
 ---

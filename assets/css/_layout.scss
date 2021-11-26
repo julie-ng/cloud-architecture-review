@@ -19,10 +19,6 @@ body,
 	max-width: var(--page-max-width);
 }
 
-// .app-navigation {
-// 	border-right: 1px solid var(--layout-border-color);
-// }
-
 .app-grid {
 	display: grid;
 	grid-template-columns: var(--nav-width) 1fr var(--sidebar-width);

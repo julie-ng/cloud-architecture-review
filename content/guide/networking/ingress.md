@@ -4,7 +4,7 @@ short_title: Ingress
 description: 
 type: radio
 answer: unset
-options:
+factors:
 - slug: 'ingress-agic'
 - slug: 'ingress-k8s'
 ---

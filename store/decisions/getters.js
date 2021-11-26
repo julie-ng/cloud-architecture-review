@@ -4,16 +4,13 @@ export default {
 	score (state) {
 		const score = { ...defaults['BASELINE_SCORE'] }
 
-		// shit, need points too.
-		for (const k in state.decisions) {
-			const factor = state.decisions[k]
+		for (const inputName in state.decisions) {
+			const factor = state.decisions[inputName].factor
 			score.complexity += factor.points.complexity
 			score.operations += factor.points.operations
 			score.security += factor.points.security
 			score.price += factor.points.price
 		}
-
-		// console.log('decision/getters/score', score)
 		return score
 	},
 
@@ -21,10 +18,10 @@ export default {
 		return state.decisions
 	},
 
-	answerByQuestion: state => (questionSlug) => {
-		const cond = Object.prototype.hasOwnProperty.call(state.decisions, questionSlug)
-		return cond
-			? state.decisions[questionSlug]
-			: `${questionSlug}-undecided`
+	answerByQuestion: state => (inputName) => {
+		const exists = Object.prototype.hasOwnProperty.call(state.decisions, inputName)
+		return exists
+			? state.decisions[inputName]
+			: 'no-decision'
 	}
 }

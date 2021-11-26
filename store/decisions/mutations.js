@@ -5,7 +5,7 @@ const logger = new StoreLogger()
 export default {
 	/**
    * Load existing decision data from browser's sessionStorage
-   * @param {Array|Observable?} state
+   * @param {*} state
    */
 	load (state) {
 		logger.mutation('decisions/load')
@@ -15,23 +15,21 @@ export default {
 	/**
    * Sync decision to session storage
    *
-   * @param {Array|Observable?} state
+   * @param {*} state
    * @param {Object} decision
-   * @param {Object} decision.answer
-   * @param {Object} decision.question
+   * @param {Object} decision.selected
+   * @param {String} decision.inputName
+	 * @param {String} decision.inputValue
    */
 	update (state, decision) {
-		logger.mutation('decisions/update', 'sync state with sessionStorage')
+		logger.mutation('decisions/update', `update ${decision.inputName} sync state with sessionStorage`)
 
-		const q = decision.question
-		const a = decision.answer
-		const cat = decision.category
-
+		const factor = decision.selected
 		state.decisions = {
 			...state.decisions,
-			[`${cat}-${q.slug}`]: {
-				factor_id: a.factor_id,
-				points: a.points
+			[decision.inputName]: {
+				inputValue: decision.inputValue,
+				factor: factor
 			}
 		}
 
@@ -42,18 +40,14 @@ export default {
    * Remove decision from state
    * re-sync with session storage
    *
-   * @param {Array|Observable?} state
-   * @param {Object} decision
-   * @param {Object} decision.answer
-   * @param {Object} decision.question
+   * @param {*} state
+   * @param {String} inputName
    */
-	remove (state, decision) {
-		logger.mutation('decisions/remove', 'delete and sync with session storage')
+	remove (state, inputName) {
+		logger.mutation('decisions/remove', `delete ${inputName} and sync with session storage`)
 
-		const q = decision.question
-		const cat = decision.category
 		const copy = { ...state.decisions }
-		delete copy[`${cat}-${q.slug}`]
+		delete copy[inputName]
 		state.decisions = copy // re-assign for re-activity
 
 		sessionStorage.setItem('decisions', JSON.stringify(state.decisions))
@@ -62,7 +56,7 @@ export default {
 	/**
    * Clear session storage and empties decisions.
    *
-   * @param {Array|Observable?} state
+   * @param {*} state
    */
 	reset (state) {
 		logger.mutation('decisions/reset', 'clearing decisions from session storage')

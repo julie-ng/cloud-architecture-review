@@ -1,8 +1,3 @@
-article {
-	background: white;
-}
-
-// .article-page, /// TODO
 .question-box {
 	padding: 1em 1.5em 2em;
 }
@@ -14,33 +9,26 @@ article {
 	border-radius: 0.5em;
 }
 
-.label-undecided {
-	margin-top: 2em;
+.question-reset-btn {
+	display: inline-block;
+	position: absolute;
+	top: 2em;
+	right: 2em;
+	margin: 2em 0 0;
+	padding: 0.4em 0.7em;
+	border: 1px solid var(--grey-border-color);
+	box-sizing: border-box;
+	border-radius: 4px;
+	font-weight: 400 !important;
+	font-size: 0.85em;
+	text-align: right;
+	cursor: pointer;
+	color: var(--md-grey-font-color);
 
-	h4 {
-		display: inline-block;
-		box-sizing: border-box;
-		border-radius: 4px;
-		margin: 0;
-		padding: 0.25em 0.6em;
-		cursor: pointer;
-		font-weight: 400 !important;
-		font-size: 0.85em;
-		text-align: right;
-		position: absolute;
-		top: 2em;
-		right: 2em;
+	background: none;
 
-		border: 1px solid var(--grey-border-color);
-		color: var(--md-grey-font-color);
-
-		&:hover {
-			background: var(--light-grey-bg-color);
-		}
-	}
-
-	input[type="radio"] {
-		display: none; // hide undecided
+	&:hover {
+		background: var(--light-grey-bg-color);
 	}
 }
 

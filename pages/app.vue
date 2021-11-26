@@ -1,5 +1,5 @@
 <template>
-	<app-form/>
+	<review-form/>
 </template>
 
 <script>
