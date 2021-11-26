@@ -12,7 +12,6 @@ export default {
 		if (isCachedOnClient) {
 			logger.action('form/clientInit', 'loading from sessionStorage…')
 			commit('load')
-
 		} else if (isEmptyState) {
 			logger.action('form/clientInit', 'loading from $content…')
 			commit('load')

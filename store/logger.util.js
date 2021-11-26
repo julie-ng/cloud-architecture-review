@@ -22,7 +22,7 @@ export default class StoreLogger {
 		if (msg.length > 0) {
 			str = str + `- ${msg}`
 		}
-		console.log(str);
+		console.log(str)
 	}
 
 	#isRendered () {
