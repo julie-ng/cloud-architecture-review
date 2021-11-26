@@ -1,17 +1,28 @@
+import ContentLoader from '~/architect/content'
+import StoreLogger from '~/store/logger.util'
+
+const logger = new StoreLogger()
+
 export default {
-	clientInit ({ commit, state }, { req }) {
-		console.log('ACTION[form/clientInit]')
+	async clientInit ({ commit, state }, { req }) {
+		const isEmptyState = (state.categories.length === 0)
+		const sessionCached = sessionStorage.getItem('categories')
+		const isCachedOnClient = sessionCached !== null && sessionCached !== ''
 
-		// save categories from /app page
-		// TODO/BUG - if user accesses /guide/pages first before hitting /app there will be no navigation
-		// At least not in dev. verify what happens if we build page.
-		// want to avoid all the asyncData() SSR logic that is in app.
-		if (state.categories.length > 0) {
-			commit('save')
-		}
-
-		if (sessionStorage.getItem('categories')) {
+		if (isCachedOnClient) {
+			logger.action('form/clientInit', 'loading from sessionStorage…')
 			commit('load')
+
+		} else if (isEmptyState) {
+			logger.action('form/clientInit', 'loading from $content…')
+			commit('load')
+			const loader = new ContentLoader({ $content: this.$content })
+			const data = await loader.load()
+
+			commit('set', data)
+			commit('save')
+		} else {
+			logger.action('form/clientInit', 'already have categories')
 		}
 	}
 }

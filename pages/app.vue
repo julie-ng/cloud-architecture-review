@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import Experience from '~/architect/experience'
+	import ContentLoader from '~/architect/content'
 
 	export default {
 		/**
@@ -16,14 +16,9 @@
 		 * @returns {Array} of all questions and questions per defined sort order
 		 */
 		async asyncData({ $content, params, store }) {
-
-			const experience = new Experience({
-				$content: $content
-			})
-
-			const data = await experience.load()
-			// console.log('Experience Loaded', data)
-
+			// Prefer SSR load
+			const loader = new ContentLoader({ $content: $content })
+			const data = await loader.load()
 			store.commit('form/set', data)
 
 			return

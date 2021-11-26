@@ -1,10 +1,14 @@
+import StoreLogger from '~/store/logger.util'
+
+const logger = new StoreLogger()
+
 export default {
 	/**
    * Load existing decision data from browser's sessionStorage
    * @param {Array|Observable?} state
    */
 	load (state) {
-		console.log('MUTATION[decisions/load]')
+		logger.mutation('decisions/load')
 		state.decisions = JSON.parse(sessionStorage.getItem('decisions'))
 	},
 
@@ -17,8 +21,8 @@ export default {
    * @param {Object} decision.question
    */
 	update (state, decision) {
-		console.log('MUTATION[decisions/update]: sync state with sessionStorage')
-		// console.log(decision)
+		logger.mutation('decisions/update', 'sync state with sessionStorage')
+
 		const q = decision.question
 		const a = decision.answer
 		const cat = decision.category
@@ -44,7 +48,7 @@ export default {
    * @param {Object} decision.question
    */
 	remove (state, decision) {
-		console.log('MUTATION[decisions/remove]: sync state with sessionStorage')
+		logger.mutation('decisions/remove', 'delete and sync with session storage')
 
 		const q = decision.question
 		const cat = decision.category
@@ -61,8 +65,9 @@ export default {
    * @param {Array|Observable?} state
    */
 	reset (state) {
-		console.log('MUTATION[decisions/reset]: clearing session storage')
-		sessionStorage.clear()
+		logger.mutation('decisions/reset', 'clearing decisions from session storage')
+
 		state.decisions = {}
+		sessionStorage.removeItem('decisions')
 	}
 }

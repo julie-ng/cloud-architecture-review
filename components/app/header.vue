@@ -5,7 +5,7 @@
 				<h1><a href="/">Azure Kubernetes Architect</a></h1>
 			</div>
 			<div>
-				<a href="/app" class="btn btn-sm btn-primary-outline">Measure your Cluster</a>
+				<NuxtLink to="/app" class="btn btn-sm btn-primary-outline">Measure your Cluster</NuxtLink>
 			</div>
 		</div>
 	</header>

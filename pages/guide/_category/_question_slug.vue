@@ -15,7 +15,7 @@
         </article>
       </section>
 
-      <!-- <pre>{{ factors }}</pre> -->
+      <!-- <pre>{{ article }}</pre> -->
       <hr>
       <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
     </article>
@@ -34,22 +34,13 @@ export default {
     const path = `/guide/${params.category}/${params.question_slug}`
     const [article] = await $content({ deep: true }).where({ path }).fetch()
 
-    // console.log(article)
     let content = { article } // default content
 
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
     }
     else if (article.hasOwnProperty('options') && article.options.length > 0) {
-      let factors = []
-      for (const f of article.options) {
-        // console.log('f', f)
-        let data = await $content(`${article.dir}/factors/${f.slug}`)
-          .without(['toc'])
-          .fetch()
-        factors.push(data)
-      }
-
+      const factors = await _fetchFactorContent($content, article.dir, article.options)
       content = { article, factors } // append factors
     }
 
@@ -66,6 +57,17 @@ export default {
       return new Date(date).toISOString().slice(0, 10);
     }
 	}
+}
+
+async function _fetchFactorContent ($content, basePath, factors) {
+  const content = []
+  for (const f of factors) {
+    const body = await $content(`${basePath}/factors/${f.slug}`)
+      .without(['toc'])
+      .fetch()
+    content.push(body)
+  }
+  return content
 }
 </script>
 

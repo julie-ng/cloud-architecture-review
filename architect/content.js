@@ -10,7 +10,7 @@ const SCORE_DIMENSIONS = [
 	'operations'
 ]
 
-export default class Experience {
+export default class ContentLoader {
 	/**
 	 *
 	 * @param {String} opts.dir content directory
