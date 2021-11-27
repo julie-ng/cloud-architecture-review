@@ -24,14 +24,9 @@ export default {
 	update (state, decision) {
 		logger.mutation('decisions/update', `update ${decision.inputName} sync state with sessionStorage`)
 
-		const factor = decision.selected
 		state.decisions = {
 			...state.decisions,
-			[decision.inputName]: {
-				inputValue: decision.inputValue,
-				question: decision.question,
-				factor: factor
-			}
+			[decision.key]: decision
 		}
 
 		sessionStorage.setItem('decisions', JSON.stringify(state.decisions))
@@ -42,13 +37,13 @@ export default {
    * re-sync with session storage
    *
    * @param {*} state
-   * @param {String} inputName
+   * @param {String} key maps to <input> name for question
    */
-	remove (state, inputName) {
-		logger.mutation('decisions/remove', `delete ${inputName} and sync with session storage`)
+	remove (state, key) {
+		logger.mutation('decisions/remove', `delete ${key} and sync with session storage`)
 
 		const copy = { ...state.decisions }
-		delete copy[inputName]
+		delete copy[key]
 		state.decisions = copy // re-assign for re-activity
 
 		sessionStorage.setItem('decisions', JSON.stringify(state.decisions))

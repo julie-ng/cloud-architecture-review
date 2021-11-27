@@ -2,8 +2,6 @@
 title: What is your Ingress Controller?
 shortTitle: Ingress
 description: 
-type: radio
-answer: unset
 factors:
 - slug: 'ingress-agic'
 - slug: 'ingress-k8s'

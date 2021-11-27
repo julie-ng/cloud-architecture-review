@@ -3,13 +3,13 @@
 		<div class="score">
 			<h3>Your Architecture Scores</h3>
 			<p>How does an Azure Kubernetes Cluster with the selected criteria measure relatively?</p>
-			<score-meter v-for="(score, category) in scores"
+			<score-pillar v-for="(score, category) in scores"
 				:id=category
 				:key=category
 				:title=category
 				:score=score
 			>
-			</score-meter>
+			</score-pillar>
 			<div class="score-details">
 				<div>
 					<NuxtLink to="/review/score" class="btn btn-primary">Understand Your Scores</NuxtLink>

@@ -1,5 +1,5 @@
 <template>
-	<div class="score-meter" :for=id>
+	<div class="score-pillar" :for=id>
 		<p>
 			{{ title }} <span>({{ score }})</span>
 		</p>

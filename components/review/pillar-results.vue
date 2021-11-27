@@ -6,8 +6,8 @@
 		<ul>
 			<li v-for="factor of sortDescending(factors)" :key=factor.slug>
 				<h4>
-					<NuxtLink :to=factor.question.path>{{ factor.question.shortTitle }}</NuxtLink> -
-					{{ factor.title }}
+					{{ factor.question.shortTitle }} -
+					<NuxtLink :to=factor.question.path>{{ factor.title }}</NuxtLink>
 					<span class="score-delta">({{ formatDelta(factor.delta) }})</span>
 				</h4>
 				<p>{{ factor.description }}</p>

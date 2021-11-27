@@ -2,8 +2,6 @@
 title: What is your tenancy model?
 shortTitle: Tenancy Model
 description: Longer helping text if people don't understand what this question means.
-type: radio
-answer: unset
 factors:
 - slug: 'single-tenant'
 - slug: 'multi-tenant'

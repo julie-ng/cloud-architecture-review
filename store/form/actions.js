@@ -1,4 +1,4 @@
-import ContentLoader from '~/architect/content'
+import FormLoader from '~/app/form-loader'
 import StoreLogger from '~/store/logger.util'
 
 const logger = new StoreLogger()
@@ -16,7 +16,7 @@ export default {
 		} else if (isEmptyState) {
 			logger.action('form/clientInit', 'loading from $content…')
 			commit('load')
-			const loader = new ContentLoader({ $content: this.$content })
+			const loader = new FormLoader({ $content: this.$content })
 			const data = await loader.load()
 
 			commit('set', data)

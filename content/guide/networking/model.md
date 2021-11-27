@@ -2,8 +2,6 @@
 title: What is your networking model?
 shortTitle: Networking Model
 description: Azure CNI vs Kubenet...longer helping text if people don't understand what this question means.
-type: radio
-answer: unset
 factors:
 - slug: 'azure-cni'
 - slug: 'kubenet'

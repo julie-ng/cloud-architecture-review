@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import ContentLoader from '~/architect/content'
+	import FormLoader from '~/app/form-loader'
 
 	export default {
 		/**
@@ -17,7 +17,7 @@
 		 */
 		async asyncData({ $content, params, store }) {
 			// Prefer SSR load
-			const loader = new ContentLoader({ $content: $content })
+			const loader = new FormLoader({ $content: $content })
 			const data = await loader.load()
 			store.commit('form/set', data)
 

@@ -6,19 +6,20 @@
 		<p>{{ question.description }}</p>
 		<review-radio-input
 			v-for="factor of question.factors"
-			:name=inputName
+			:name=question.inputName
 			:key=factor.slug
-			:factor=factor
+			:factor=normalizeFactor(factor)
 			@selected="updateDecision($event, $store, question)"
 		></review-radio-input>
 
 		<button class="question-reset-btn" @click="removeDecision($store, question)">Reset</button>
-
-		<!-- <pre>{{ question }}</pre> -->
 	</article>
 </template>
 
 <script>
+const FactorSchema = require('../../schemas/factor')
+const DecisionSchema = require('../../schemas/decision')
+
 	export default {
 		props: {
 			question: {
@@ -27,28 +28,19 @@
 			}
 		},
 
-		computed: {
-			inputName () {
-				return this.question.path.replace('/guide/', '').split('/').join('-')
-			}
-		},
-
 		methods: {
+			normalizeFactor: function (factorObj) {
+				return FactorSchema.normalize(factorObj)
+			},
+
 			removeDecision: function (store, question) {
-				store.commit('decisions/remove', this.inputName)
+				store.commit('decisions/remove', question.inputName)
 			},
 
 			updateDecision: function (event, store, question) {
-				const factor = event.factor
-				const decision = {
-					inputName: this.inputName,
-					inputValue: factor.slug,
-					question: {
-						path: question.path,
-						shortTitle: question.short_title
-					},
-					selected: event.factor
-				}
+				// console.log('🔴 question.vue - decision')
+				// console.log(decision)
+				const decision = DecisionSchema.normalize(question, event.factor)
 				store.commit('decisions/update', decision)
 			}
 		}

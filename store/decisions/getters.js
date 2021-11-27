@@ -61,10 +61,10 @@ export default {
 		return results
 	},
 
-	answerByQuestion: state => (inputName) => {
-		const exists = Object.prototype.hasOwnProperty.call(state.decisions, inputName)
+	answerByQuestion: state => (key) => {
+		const exists = Object.prototype.hasOwnProperty.call(state.decisions, key)
 		return exists
-			? state.decisions[inputName]
+			? state.decisions[key].value
 			: 'no-decision'
 	}
 }

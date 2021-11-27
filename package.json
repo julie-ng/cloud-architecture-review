@@ -22,7 +22,8 @@
     "lint": "eslint .",
     "lint:dev": "nodemon -w component -w pages -w store --exec \"eslint .\"",
     "preflight": "eslint . && npm run jasmine",
-    "confirm-deployment": "npm run jasmine"
+    "confirm-deployment": "npm run jasmine tests/**/*test.js",
+    "unit-tests": "jasmine schemas/**/*test.js"
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",

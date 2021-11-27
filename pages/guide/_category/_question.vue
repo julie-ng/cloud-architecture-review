@@ -63,7 +63,7 @@ async function _fetchFactorContent ($content, basePath, factors) {
   const content = []
   for (const f of factors) {
     const body = await $content(`${basePath}/factors/${f.slug}`)
-      .without(['toc'])
+      .without(['toc', 'extension', 'createdAt', 'updatedAt'])
       .fetch()
     content.push(body)
   }
