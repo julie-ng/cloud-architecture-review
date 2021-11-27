@@ -1,7 +1,7 @@
 <template>
 	<div class="app-scoreboard">
 		<div class="score">
-			<h3>Your Configuration Score</h3>
+			<h3>Your Architecture Scores</h3>
 			<p>How does an Azure Kubernetes Cluster with the selected criteria measure relatively?</p>
 			<score-meter v-for="(score, category) in scores"
 				:id=category
@@ -12,7 +12,7 @@
 			</score-meter>
 			<div class="score-details">
 				<div>
-					<a href="#" class="btn btn-primary">Understand Your Scores</a>
+					<NuxtLink to="/review/score" class="btn btn-primary">Understand Your Scores</NuxtLink>
 				</div>
 				<div>
 					<button class="btn btn-primary-outline" @click="onClear">Reset All Answers</button>
@@ -26,7 +26,7 @@
 	export default {
 		computed: {
     	scores () {
-      	return this.$store.getters['decisions/score']
+      	return this.$store.getters['decisions/scores']
 			}
 		},
 

@@ -3,7 +3,7 @@
 		<app-header/>
 		<main class="app-grid container-wrapper">
 			<div class="app-nav-col">
-				<app-tab-nav/>
+				<!-- <app-tab-nav/> -->
 				<app-navigation/>
 			</div>
 

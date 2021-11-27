@@ -1,0 +1,41 @@
+.review-results-pillar {
+	display: grid;
+	grid-template-columns: 150px 1fr;
+	padding: 1rem 0;
+
+	ul {
+		margin: 0;
+		li:first-child {
+			h4 {
+				margin-top: 0;
+				line-height: 1.2rem;
+			}
+		}
+	}
+
+	h3 {
+		margin-top: 0;
+		line-height: 1.2rem;
+	}
+}
+
+.review-results-heading {
+	&:after {
+		display: inline-block;
+		padding: 0 0.5em;
+		color: var(--teal-color);
+	}
+
+	&.is-increases {
+		&:after {
+			content: '↗';
+		}
+	}
+
+	&.is-decreases {
+		&:after {
+			content: '↘';
+		}
+	}
+
+}

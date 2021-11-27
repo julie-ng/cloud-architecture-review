@@ -43,6 +43,10 @@
 				const decision = {
 					inputName: this.inputName,
 					inputValue: factor.slug,
+					question: {
+						path: question.path,
+						shortTitle: question.short_title
+					},
 					selected: event.factor
 				}
 				store.commit('decisions/update', decision)

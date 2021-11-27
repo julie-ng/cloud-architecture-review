@@ -29,6 +29,7 @@ export default {
 			...state.decisions,
 			[decision.inputName]: {
 				inputValue: decision.inputValue,
+				question: decision.question,
 				factor: factor
 			}
 		}
