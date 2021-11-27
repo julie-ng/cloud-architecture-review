@@ -1,0 +1,51 @@
+@media print {
+	.app-grid {
+		display: grid;
+		width: 100%;
+		grid-template-columns: 1fr;
+		grid-template-areas: "meters"
+												 "results";
+
+		&.container-wrapper {
+			// background: red;
+			margin: 0;
+			// padding: 0;
+			width: 100%;
+		}
+	}
+
+	// unset css grid
+	.review-results-pillar {
+		display: block;
+	}
+
+	.app-nav-col {
+		display: none;
+	}
+
+	body {
+		font-size: 12px;
+	}
+
+	.app-body {
+		// background: red;
+		width: 100%;
+		padding: 0;
+		grid-area: results;
+	}
+
+	.app-scoreboard {
+		width: 100%;
+		margin-bottom: 3em;
+		padding: 0;
+		grid-area: meters;
+
+		.btn {
+			display: none;
+		}
+
+		h3 {
+			font-size: var(--lg-font-size);
+		}
+	}
+}
