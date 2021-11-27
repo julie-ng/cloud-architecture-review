@@ -70,4 +70,3 @@ async function _fetchFactorContent ($content, basePath, factors) {
   return content
 }
 </script>
-

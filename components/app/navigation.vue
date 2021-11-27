@@ -5,7 +5,7 @@
 				<h3 class="app-navigation-title">{{ category.name }}</h3>
 				<ul v-for="question of category.questions" :key=question.id class="app-navigation-questions">
 					<li>
-						<NuxtLink :to=guideLink(category.name,question.slug)>{{ question.short_title }}</NuxtLink>
+						<NuxtLink :to=guideLink(category.name,question.slug)>{{ question.shortTitle }}</NuxtLink>
 					</li>
 				</ul>
 			</li>
