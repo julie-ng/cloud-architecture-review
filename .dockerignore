@@ -4,6 +4,15 @@ node_modules/
 
 # Unnecessary
 tests/
+coverage/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+.terraform.lock.hcl
+infrastructure.tf
 
 # Debug
 *.azcli
@@ -12,3 +21,5 @@ tests/
 # Misc
 .DS_Store
 .editorconfig
+.eslintignore
+.eslintrc.json
