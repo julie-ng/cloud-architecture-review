@@ -1,16 +1,17 @@
 <template>
-	<label :for=factor.slug class="form-control label-factor">
-		<!-- <pre>{{ factor }}</pre> -->
-		<input ref="input" type="radio"
-			:name=name
-			:id=factor.inputValue
-			:key=factor.inputValue
-			:value=factor.inputValue
-			v-model=answer
-		>
-		<h4>{{ factor.title }}</h4>
-		<p>{{ factor.description }}</p>
-	</label>
+	<article v-bind:class="classObject">
+		<label :for=factor.slug class="form-control label-factor">
+			<input ref="input" type="radio"
+				:name=name
+				:id=factor.inputValue
+				:key=factor.inputValue
+				:value=factor.inputValue
+				v-model=answer
+			>
+			<h4>{{ factor.title }}</h4>
+			<p>{{ factor.description }}</p>
+		</label>
+	</article>
 </template>
 
 <script>
@@ -23,7 +24,7 @@
 				required: true
 			},
 
-      factor: { // already normalized
+      factor: {
         type: Object,
         required: true
       }
@@ -39,6 +40,21 @@
 					this.$emit('selected', { factor: this.factor })
 				}
 			},
+
+ 			classObject: function () {
+				return {
+					'factor-container': true,
+					'is-selected': this.answer === this.factor.inputValue
+				}
+			}
+		},
+
+		// manually highligh selected element because SSR won't have populated it
+		mounted () {
+			if (this.factor.slug === this.answer) {
+				const selector = '#' + this.factor.slug
+				document.querySelector(selector).parentElement.parentElement.classList.add('is-selected')
+			}
 		}
   }
 </script>
