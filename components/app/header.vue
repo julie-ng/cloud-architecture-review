@@ -5,7 +5,13 @@
 				<h1><a href="/">Azure Kubernetes Architect</a></h1>
 			</div>
 			<div>
-				<NuxtLink to="/review" class="btn btn-sm btn-primary-outline">Review your Cluster</NuxtLink>
+				<nav>
+					<ul>
+						<li><NuxtLink to="/about">About</NuxtLink></li>
+						<li><NuxtLink to="/getting-started">Getting Started</NuxtLink></li>
+						<li><NuxtLink to="/review" class="btn btn-sm btn-primary-outline">Review your Design</NuxtLink></li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</header>
