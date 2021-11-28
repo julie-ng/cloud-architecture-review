@@ -16,7 +16,7 @@
     "nuxt:start": "nuxt start",
     "nuxt:generate": "nuxt generate",
     "express": "node server/express.js",
-    "express:dev": "nodemon -w server --exec 'node server/express.js | pino-pretty --ignore req.headers,res.headers'",
+    "express:dev": "nodemon -w server --exec 'APP_BUILD_SHA=abc123 node server/express.js | pino-pretty --ignore req.headers,res.headers'",
     "express:prod-test": "nodemon -w server --exec 'APP_BUILD_SHA=b442611 NODE_ENV=production node server/express.js | pino-pretty --ignore req.headers,res.headers'",
     "jasmine": "JASMINE_CONFIG_PATH=tests/jasmine.config.json jasmine",
     "lint": "eslint .",
