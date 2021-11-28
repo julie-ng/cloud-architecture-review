@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<section v-for="c of categories" :key=c.name>
-			<!-- <pre>{{ c.questions }}</pre> -->
 			<!-- <pre>{{ categories }}</pre> -->
 			<h1 class="category-title">{{ c.name }}</h1>
 			<review-question

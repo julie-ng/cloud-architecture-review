@@ -31,7 +31,8 @@ class QuestionSchema {
 		const copy = { ...attrs }
 		for (const f of copy.factors) {
 			f.path = copy.dir + '/factors/' + f.slug
-			delete f.slug
+			// delete f.slug	// 🐞 used later for factor IDs, form name
+												// 🐞 keep for now. otherwise vuex throws errors
 		}
 
 		return copy

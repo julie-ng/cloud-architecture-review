@@ -21,10 +21,15 @@ class FactorSchema {
 		let result = { ...attrs }
 
 		result = this.#sanitize(result)
+
 		if (!this.#hasPoints(result)) {
 			result = this.#adjustPoints(result)
 		}
-		result.inputValue = attrs.slug
+
+		result.inputValue = _.hasProp(attrs, 'slug')
+			? attrs.slug
+			: result.path.split('/').pop()
+
 		return result
 	}
 

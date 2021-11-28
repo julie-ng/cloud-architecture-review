@@ -16,7 +16,10 @@ const expectedOutput = {
 	description: "Azure CNI vs Kubenet...longer helping text if people don't understand what this question means.",
 	title: 'What is your networking model?',
 	shortTitle: 'Networking Model',
-	factors: [{ path: '/guide/networking/factors/azure-cni' }, { path: '/guide/networking/factors/kubenet' }],
+	factors: [
+    { path: '/guide/networking/factors/azure-cni', slug: 'azure-cni' },
+    { path: '/guide/networking/factors/kubenet', slug: 'kubenet' }
+  ],
 	dir: '/guide/networking',
 	path: '/guide/networking/model',
 	inputName: 'networking-model'

@@ -3,8 +3,8 @@
 		<!-- <pre>{{ factor }}</pre> -->
 		<input ref="input" type="radio"
 			:name=name
-			:id=factor.slug
-			:key=factor.slug
+			:id=factor.inputValue
+			:key=factor.inputValue
 			:value=factor.inputValue
 			v-model=answer
 		>
