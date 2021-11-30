@@ -6,8 +6,11 @@
       </header>
 
       <nuxt-content :document="article" />
-      <section v-if="factors.length > 0">
+
+      <section class="article-factors" v-if="factors.length > 0">
         <h2>Factors</h2>
+        <p class="grey-text">(TODO - add radio buttons here for user to toggle and update score.)</p>
+
         <article v-for="f of factors" v-bind:key="f.path">
           <h3>{{ f.title }}</h3>
           <nuxt-content :document="f" />
