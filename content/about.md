@@ -2,7 +2,7 @@
 
 ## Real Life Experience
 
-Hi 👋 my name is [Julie Ng](https://julie.io/who/). I am a [speaker](https://julie.io/who/speaker/), failed entrepreneur, former UX designer and full stack engineer. After running out of money, I joined Allianz Germany as they started their cloud migration in 2016. Because of my cloud-native background, I quickly jumped from engineering to Enterprise Architecture and mentored dozens of teams and hundreds of developers in the Agile Training Centers across Munich and Stuttgart. 
+Hi 👋 my name is [**Julie Ng**](https://julie.io/who/). I am a [speaker](https://julie.io/who/speaker/), failed entrepreneur, former UX designer and full stack engineer. After running out of money, I joined [Allianz Germany](https://allianz.de) as they started their cloud migration in 2016. Because of my cloud-native background, I quickly jumped from engineering to Enterprise Architecture and mentored dozens of teams and hundreds of developers in the Agile Training Centers across Munich and Stuttgart. 
 
 It was exciting and a privilege to be a part of the agile transformation of a multi-billion euro insurance company. If you're curious about what I did, check out my 2018 confernece talk [DIY Full-Stack JavaScript CI CD](https://speakerdeck.com/jng/enterjs-diy-full-stack-javascript-ci-cd).
 
@@ -12,7 +12,7 @@ In 2019 Microsoft recruited me and today I am a FastTrack Engineer at Microsoft 
 
 I enjoy talking with engineers and architects about the challenges they face when deploying to the cloud. But sometimes it can be repetitive. More importantly, I felt everyone deserves this guidance and the value of my expertise, not just select Microsoft customers. How can I teach and enable more people? 
 
-As a [YouTuber](https://www.youtube.com/c/JulieNgTech) I started by publishing video walkthroughs, focussing on CI/CD automation and pipelines. While videos are engaging, they are not interactive.
+As a [**YouTuber**](https://www.youtube.com/c/JulieNgTech) I started by publishing video walkthroughs, focussing on CI/CD automation and pipelines. While videos are engaging, they are not interactive.
 
 ## Experience is not a Checklist
 
