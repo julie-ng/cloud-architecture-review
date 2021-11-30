@@ -20,7 +20,7 @@
     "jasmine": "JASMINE_CONFIG_PATH=tests/jasmine.config.json jasmine",
     "lint": "eslint .",
     "lint:dev": "nodemon -w component -w pages -w store --exec \"eslint .\"",
-    "preflight": "eslint . && npm run jasmine",
+    "preflight": "eslint . && npm run test && npm run jasmine",
     "confirm-deployment": "npm run jasmine tests/**/*test.js",
     "test": "jasmine schemas/**/*test.js"
   },

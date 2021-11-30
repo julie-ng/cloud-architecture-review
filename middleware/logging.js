@@ -1,4 +1,4 @@
-export default  function (context) {
+export default function (context) {
 	if (process.env.NODE_ENV !== 'production') {
 		const log = {
 			path: context.route.path,
@@ -11,8 +11,8 @@ export default  function (context) {
 		console.log('[Logging] Route Changed', log)
 
 		// if (context.server) {
-		// 	console.log('Got Request')
-		// 	console.log(context.req.url, context.req.method, context.req.headers)
+		//   console.log('Got Request')
+		//   console.log(context.req.url, context.req.method, context.req.headers)
 		// }
 	}
 }
