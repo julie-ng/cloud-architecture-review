@@ -26,6 +26,7 @@ a {
 }
 
 h1, h2, h3 {
+	margin: 1em 0;
 	font-family: var(--heading-font);
 }
 
@@ -36,6 +37,12 @@ h1 {
 h2 {
 	font-size: 1.7rem;
 	color: var(--purple-color);
+}
+
+table + h2,
+table + h3,
+table + h4 {
+	margin-top: 2em;
 }
 
 pre {

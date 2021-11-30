@@ -12,6 +12,11 @@ body,
 	padding: 0;
 }
 
+img,
+table {
+	max-width: 100%;
+}
+
 .container-wrapper {
 	margin: 1em auto;
 	padding-left: var(--gutter-width);
