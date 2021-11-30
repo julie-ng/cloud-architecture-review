@@ -33,3 +33,8 @@ body,
 	padding-right: 30px; // TODO: calculate proper grid
 	overflow: scroll;
 }
+
+hr {
+	border: 0;
+	border-top: 1px solid var(--grey-border-color);
+}
