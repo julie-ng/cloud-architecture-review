@@ -86,6 +86,8 @@ button:not(:disabled) {
 }
 
 .btn-orange {
+	background: var(--outrageous-orange-color);
+
 	&:link, &:visited {
 		color: #fff;
 	}

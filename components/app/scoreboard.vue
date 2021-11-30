@@ -12,7 +12,7 @@
 			</score-pillar>
 			<div class="score-details">
 				<div>
-					<NuxtLink to="/review/score" class="btn btn-primary">Understand Your Scores</NuxtLink>
+					<NuxtLink to="/review/score" class="btn btn-primary">Understand Your Scores &rarr;</NuxtLink>
 				</div>
 				<div>
 					<button class="btn btn-primary-outline" @click="onClear">Reset All Answers</button>
