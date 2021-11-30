@@ -3,7 +3,7 @@ title: Kubenet
 description: Standard Plugin
 complexity: -10
 security: 0
-price: 0
+cost: 0
 operations: -10
 ---
 

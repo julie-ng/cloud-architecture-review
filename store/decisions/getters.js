@@ -5,7 +5,7 @@ const CATEGORIES = [
 	'complexity',
 	'operations',
 	'security',
-	'price'
+	'cost'
 ]
 
 export default {
@@ -17,7 +17,7 @@ export default {
 			score.complexity += factor.points.complexity
 			score.operations += factor.points.operations
 			score.security += factor.points.security
-			score.price += factor.points.price
+			score.cost += factor.points.cost
 		}
 		return score
 	},

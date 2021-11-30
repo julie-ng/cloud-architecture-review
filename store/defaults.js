@@ -3,13 +3,13 @@ export default {
 		'complexity',
 		'operations',
 		'security',
-		'price'
+		'cost'
 	],
 
 	BASELINE_SCORE: {
 		complexity: 50,
 		operations: 50,
 		security: 50,
-		price: 50
+		cost: 50
 	}
 }

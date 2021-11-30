@@ -17,7 +17,7 @@ const normalizedFactor = {
 	dir: '/guide/requirements/factors',
 	extension: '.md',
 	path: '/guide/requirements/factors/multi-tenant',
-	points: { complexity: 100, security: -25, price: 0, operations: 100 },
+	points: { complexity: 100, security: -25, cost: 0, operations: 100 },
 	title: 'Mult-tenant Cluster',
 	createdAt: '2021-11-27T19:26:39.611Z',
 	updatedAt: '2021-11-27T19:24:38.000Z',
@@ -56,7 +56,7 @@ describe('DecisionSchema', () => {
 			description: 'Cluster is used to host multiple workloads and/or multiple teams',
 			inputValue: 'multi-tenant',
 			title: 'Mult-tenant Cluster',
-			points: { complexity: 100, security: -25, price: 0, operations: 100 }
+			points: { complexity: 100, security: -25, cost: 0, operations: 100 }
 		}
 		expect(normalized.factor).toEqual(expected)
 	})

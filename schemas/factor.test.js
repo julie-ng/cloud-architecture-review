@@ -6,7 +6,7 @@ const input = {
 	title: 'Kubenet',
 	complexity: -10,
 	security: 0,
-	price: 0,
+	cost: 0,
 	operations: -10,
 	dir: '/guide/networking/factors',
 	path: '/guide/networking/factors/kubenet',
@@ -23,7 +23,7 @@ const expectedOutput = {
 	points: {
 		complexity: -10,
 		security: 0,
-		price: 0,
+		cost: 0,
 		operations: -10
 	},
 	dir: '/guide/networking/factors',

@@ -3,7 +3,7 @@ title: Azure CNI
 description: Use Azure Networking
 complexity: 10
 security: 10
-price: 0
+cost: 0
 operations: 10
 ---
 

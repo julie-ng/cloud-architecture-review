@@ -9,7 +9,7 @@ module.exports = {
 	scoreDimensions: [
 		'complexity',
 		'security',
-		'price',
+		'cost',
 		'operations'
 	],
 

@@ -3,7 +3,7 @@ title: Active/Active Setup
 description: I always have redudant infrastructure running in production.
 complexity:  20
 security: 0
-price: 20
+cost: 20
 operations: 20
 ---
 
