@@ -47,7 +47,10 @@ export default {
 
 	// Don't pre-fetch because site is large.
 	router: {
-		prefetchLinks: false
+		prefetchLinks: false,
+		middleware: [
+			'logging'
+		]
 	},
 
 	// environment variables
