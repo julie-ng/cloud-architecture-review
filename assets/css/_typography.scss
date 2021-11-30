@@ -6,6 +6,10 @@ body {
 	color: var(--body-text-color);
 }
 
+.app-body {
+	line-height: 1.6em;
+}
+
 a {
 	&:link {
 		color: var(--purple-color);
