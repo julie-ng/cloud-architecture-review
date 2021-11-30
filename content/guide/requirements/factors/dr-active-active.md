@@ -1,10 +1,10 @@
 ---
 title: Active/Active Setup
-description: I always have redudant infrastructure running in production.
+description: I need always ready redudant infrastructure running in production.
 complexity:  20
 security: 0
 cost: 20
 operations: 20
 ---
 
-More information about this really complex topic
+My compute _and_ state are geo-replicated, always on and configured to automatically failover.

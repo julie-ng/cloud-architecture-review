@@ -1,5 +1,5 @@
 ---
-title: I will wait
+title: I can wait
 description: I accept the risks.
 complexity:  0
 security: 0
