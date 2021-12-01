@@ -3,7 +3,7 @@
 		<h2 class="question-title has-scroll-anchor" :id=question.slug>
 			<NuxtLink :to=question.path>{{ question.title }}</NuxtLink>
 		</h2>
-		<p>{{ question.description }} <NuxtLink :to=question.path>Learn more</NuxtLink></p>
+		<p>{{ question.description }} <NuxtLink :to=question.path>Learn more…</NuxtLink></p>
 		<review-radio-input
 			v-for="factor of question.factors"
 			:name=question.inputName

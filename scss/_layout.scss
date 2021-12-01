@@ -43,3 +43,15 @@ hr {
 	border: 0;
 	border-top: 1px solid var(--grey-border-color);
 }
+
+figure {
+	display: block;
+	margin: 1em auto;
+	text-align: center;
+}
+
+figcaption {
+	color: #999;
+	font-size: var(--sm-font-size);
+	font-style: italic;
+}

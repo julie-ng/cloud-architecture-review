@@ -46,7 +46,7 @@ Your SLA decision is not to be taken lightly. Although 99% sounds great, it stil
 
 ### In Real Life… you don't need to throw more technology at the problem
 
-Ask yourself - are you required to have a specific SLA? Most of us are neither Microsoft nor Netflix. and it is okay if our services are not 99%+ available. 
+Ask yourself - are you required to have a specific SLA? Most of us are neither Microsoft nor Netflix. And it's okay if our services are not 99%+ available. 
 
 Additionally some of those numbers can come from deployments. In my career both at startups and large corporations, it was common to deploy outside of business hours e.g. at 5AM to minimize impact to users. You can run database maintenance at night. 
 

@@ -18,6 +18,7 @@
 							:factors=pillar[delta]>
 						</review-pillar-results>
 					</article>
+					<hr>
 				</section>
 			</div>
 		</client-only>
