@@ -6,7 +6,7 @@ require('chromedriver')
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20 * 1000
 
 const testUrl = process.env.SELENIUM_TARGET_URL || 'http://localhost:3000/'
-const buildNo = process.env.APP_BUILD_SHA || '(Local Development)'
+const buildNo = process.env.APP_BUILD_SHA || 'b442611-test' // hash defined in package.json
 
 describe(`Deployment to ${testUrl}`, () => {
 	let driver
@@ -15,11 +15,22 @@ describe(`Deployment to ${testUrl}`, () => {
 	// -------------
 	// Note: in build agents, the browsers must run headlessly
 	// for security reasons. For details, see:
-	// https://stackoverflow.com/questions/50642308/webdriverexception-unknown-error-devtoolsactiveport-file-doesnt-exist-while-t
+	// https://stackoverflow.com/q/50642308/6906366
+	//
+	// Why No-Sandbox?
+	// ---------------
+	// For security reasons chrome is unable to provide sandboxing
+	// when it is running in container-based environments, see:
+	// https://stackoverflow.com/a/59154049/6906366
+	// This seems to also apply for running in WSL1
 	beforeAll(async () => {
+		const options = new chrome.Options().addArguments(
+			'--headless',
+			'--no-sandbox'
+		)
 		driver = await new Builder()
 			.forBrowser('chrome')
-			.setChromeOptions(new chrome.Options().headless())
+			.setChromeOptions(options)
 			.build()
 	})
 
@@ -31,16 +42,14 @@ describe(`Deployment to ${testUrl}`, () => {
 	}, 15000)
 
 	it('has correct Build #', async () => {
-		let versionNo
-		await driver.get(testUrl)
+		// prevent double slashes at end of url
+		const healthEndpoint = testUrl.replace(/\/$/, '') + '/health'
 
-		if (testUrl.startsWith('http://localhost')) {
-			versionNo = await driver.findElement(By.css('#js-build-no')).getText()
-		} else {
-			const el = await driver.findElement(By.css('#js-build-no')).getAttribute('href')
-			const url = el.split('/')
-			versionNo = url[url.length - 1]
-		}
-		expect(versionNo).toEqual(buildNo)
+		await driver.get(healthEndpoint)
+
+		const content = await driver.findElement(By.css('pre')).getText()
+		const healtData = JSON.parse(content)
+
+		expect(healtData.details.env.APP_BUILD_SHA).toEqual(buildNo)
 	})
 })
