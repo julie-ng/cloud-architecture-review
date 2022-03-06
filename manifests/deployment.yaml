@@ -15,6 +15,13 @@ spec:
     spec:
       nodeSelector:
         workloadType: user
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: aks-architect-nuxtjs
       containers:
       - name: aks-architect-nuxtjs
         image: aksarchitect.azurecr.io/aks-archtitect:${IMAGE_TAG}
