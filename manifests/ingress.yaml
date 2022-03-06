@@ -1,6 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
   name: aks-architect-ingress
   namespace: aks-architect
   labels:
@@ -10,8 +12,8 @@ spec:
   - host: ${INGRESS_HOSTNAME}
     http:
       paths:
-      - pathType: Prefix
-        path: "/"
+      - path: /
+        pathType: Prefix
         backend:
           service:
             name: aks-architect-service
