@@ -10,10 +10,10 @@ jobs:
   - template: ../steps/debug-vars.yaml
   - template: ../steps/get-sha.yaml
   # TODO - refactor shared-infra iac to generate key vaults per environment
-  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/dev') }}:
-    - template: ../steps/setup-kubelogin.dev.yaml
   - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
-    - template: ../steps/setup-kubelogin.staging.yaml
+    - template: ../steps/setup-kubelogin.dev.yaml
+  # - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+  #   - template: ../steps/setup-kubelogin.staging.yaml
 
   - bash: |
 
