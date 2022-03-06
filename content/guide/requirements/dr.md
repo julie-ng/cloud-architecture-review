@@ -9,6 +9,8 @@ factors:
 - slug: 'dr-wait'
 ---
 
+## When do you need Disaster Recovery?
+
 (Work in Progress. Some of this is business continuity, not just disaster recovery.)
 
 Not everyone needs redudant infrastructure. It can be expensive and it increases the complexity of your architecture and deployments. There are two major reasons for redundancy

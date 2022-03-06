@@ -7,6 +7,8 @@ factors:
 - slug: 'kubenet'
 ---
 
+## Networking Models in AKS
+
 In this introduction paragraph explain why this decision is critical and common gotchas, best practices e.g. IP address planning, etc. The goal of this page is not to be comprehensive but to provide an overview of common factors to consider when making this decision. Instead of repeating the content, we provide deep links into the Azure docs.
 
 Note: the paragraphs below are copy and paste frome Azure docs.

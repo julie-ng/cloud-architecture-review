@@ -3,11 +3,22 @@
     <article class="article-page">
       <header class="article-header">
         <h1>{{ article.title }}</h1>
+        <p class="article-lead">{{ article.description }}</p>
       </header>
+
+      <review-radio-input
+        v-for="f of factors"
+        :name=inputName
+        :key=f.slug
+        :factor=f
+        @selected="updateDecision($event, $store, article)"
+      ></review-radio-input>
+
+      <hr>
 
       <nuxt-content :document="article" />
 
-      <section class="article-factors" v-if="factors.length > 0">
+      <section v-if="factors.length > 0">
         <h2>Factors</h2>
         <p class="grey-text">(TODO - add radio buttons here for user to toggle and update score.)</p>
 
@@ -25,6 +36,10 @@
 </template>
 
 <script>
+const FactorSchema = require('../../../schemas/factor')
+const QuestionSchema = require('../../../schemas/question')
+const DecisionSchema = require('../../../schemas/decision')
+
 export default {
 	data () {
 		return {
@@ -38,6 +53,8 @@ export default {
       .where({ path })
       .fetch()
 
+    const inputName = QuestionSchema.extractInputName({ path: path })
+
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
     }
@@ -45,7 +62,8 @@ export default {
       const factors = await _fetchFactorContent($content, article.dir, article.factors)
       return {
         article,
-        factors
+        factors,
+        inputName
       }
     }
   },
@@ -58,6 +76,12 @@ export default {
 
     formatAriaDate(date) {
       return new Date(date).toISOString().slice(0, 10);
+    },
+
+    updateDecision: function (event, store, question) {
+      question.inputName = this.inputName
+      const decision = DecisionSchema.normalize(question, event.factor)
+      store.commit('decisions/update', decision)
     }
 	}
 }
@@ -65,10 +89,10 @@ export default {
 async function _fetchFactorContent ($content, basePath, factors) {
   const content = []
   for (const f of factors) {
-    const body = await $content(`${basePath}/factors/${f.slug}`)
+    const data = await $content(`${basePath}/factors/${f.slug}`)
       .without(['toc', 'extension', 'createdAt', 'updatedAt'])
       .fetch()
-    content.push(body)
+    content.push(FactorSchema.normalize(data))
   }
   return content
 }

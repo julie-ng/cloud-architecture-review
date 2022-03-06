@@ -7,4 +7,6 @@ factors:
 - slug: 'ingress-k8s'
 ---
 
+## What is an Ingress Controller?
+
 Hello World Ingress Controller Doc

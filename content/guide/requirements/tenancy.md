@@ -7,6 +7,8 @@ factors:
 - slug: 'multi-tenant'
 ---
 
+## What is Tenancy?
+
 Idea - dunno option should always trigger more text.
 
 As a container *orchestration* system, Kubernetes clusters generally run multiple workloads. 
