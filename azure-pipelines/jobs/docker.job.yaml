@@ -1,7 +1,7 @@
 jobs:
 - job: DockerPush
   displayName: Push
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   steps:
 
   - task: Docker@2
