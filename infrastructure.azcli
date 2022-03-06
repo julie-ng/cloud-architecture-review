@@ -1,0 +1,42 @@
+# =================
+#  ACR Housekeeping
+# =================
+# https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auto-purge
+#
+# Clean up images in Azure Container Registry. Purge
+# - older than 30 days
+# - but keep last 5
+
+# Setup
+# -----
+
+ACR_REGISTRY=aksarchitect
+PURGE_DEV="acr purge --filter 'aks-archtitect:dev-*' --untagged --ago 30d --keep 5"
+PURGE_STAGING="acr purge --filter 'aks-archtitect:staging-*' --untagged --ago 30d --keep 5"
+
+# One-Time purge (dev)
+
+az acr run \
+  --cmd "$PURGE_DEV" \
+  --registry $ACR_REGISTRY \
+  /dev/null
+
+
+# Cronjobs
+# --------
+
+# DEV
+
+az acr task create --name purgeDev \
+  --cmd "$PURGE_DEV" \
+  --schedule "0 0 * * *" \
+  --registry $ACR_REGISTRY \
+  --context /dev/null
+
+# Staging
+
+az acr task create --name purgeStaging \
+  --cmd "$PURGE_STAGING" \
+  --schedule "0 0 * * *" \
+  --registry $ACR_REGISTRY \
+  --context /dev/null
