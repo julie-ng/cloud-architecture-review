@@ -19,10 +19,10 @@ variables:
 - template: vars/global.vars.yaml
 
 # Cannot use nicer isMain, isProduction syntax at this global scope
-- ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/dev') }}:
-  - template: vars/dev.vars.yaml
 - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
-  - template: vars/staging.vars.yaml
+  - template: vars/dev.vars.yaml
+# - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+#   - template: vars/staging.vars.yaml
 
 stages:
 - stage: ciStage
