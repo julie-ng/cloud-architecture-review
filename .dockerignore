@@ -23,3 +23,7 @@ infrastructure.tf
 .editorconfig
 .eslintignore
 .eslintrc.json
+
+# CI/CD
+.github/
+azure-pipelines/
