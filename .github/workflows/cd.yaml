@@ -5,6 +5,12 @@ on:
     branches:
     - main
     - staging
+    paths-ignore:
+    - 'content/**'
+    - 'manifests/**'
+    - 'scss/**'
+    - 'static/**'
+    - '**/*.md'
 
 permissions:
   id-token: write

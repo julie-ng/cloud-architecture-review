@@ -10,7 +10,7 @@ on:
     - 'manifests/**'
     - 'scss/**'
     - 'static/**'
-    - '*.md'
+    - '**/*.md'
   pull_request:
     branches:
     - main
