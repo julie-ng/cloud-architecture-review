@@ -1,4 +1,0 @@
-steps:
-- script: |
-    echo "##vso[task.setvariable variable=commitSha]$(git rev-parse --short HEAD)"
-  displayName: Get commit sha

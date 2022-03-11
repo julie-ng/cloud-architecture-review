@@ -1,0 +1,39 @@
+name: e2e-tests
+
+on:
+  workflow_call:
+    inputs:
+      url:
+        required: true
+        type: string
+      build-sha:
+        required: true
+        type: string
+
+jobs:
+  confirm-deployed:
+    runs-on: ubuntu-latest
+    env:
+      SELENIUM_TARGET_URL: ${{ inputs.url }}
+      APP_BUILD_SHA: ${{ inputs.build-sha }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: |
+        npm ci
+        npm install chromedriver --chromedriver_version=LATEST
+
+    - id: first-try
+      name: 'E2E Tests - first attempt'
+      run: npm run confirm-deployment
+      continue-on-error: true
+
+    - id: second-try
+      name: 'E2E Tests - second attempt'
+      run: npm run confirm-deployment
+      continue-on-error: true
+
+    - name: "Allow failures because GitHub does not support 'warn' builds."
+      run: true

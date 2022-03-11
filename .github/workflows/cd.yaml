@@ -1,0 +1,58 @@
+name: dev
+
+on:
+  push:
+    branches:
+    - main
+    - staging
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  config:
+    uses: ./.github/workflows/_config.yaml
+
+  output-vars:
+    needs: config
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "Target Environment - ${{ needs.config.outputs.target }}"
+    - run: echo "AKS cluster - ${{ needs.config.outputs.cluster }}"
+    - run: echo "git sha ${{ needs.config.outputs.git-sha }}"
+    - run: echo "Docker tag ${{ needs.config.outputs.docker-tag }}"
+
+  docker:
+    needs: config
+    uses: ./.github/workflows/_docker.yaml
+    with:
+      environment:  ${{ needs.config.outputs.target }}
+      git-sha:      ${{ needs.config.outputs.git-sha }}
+    secrets:
+      AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  deploy:
+    needs: config
+    uses: ./.github/workflows/_deploy.yaml
+    with:
+      environment:    ${{ needs.config.outputs.target }}
+      git-sha:        ${{ needs.config.outputs.git-sha }}
+      image-tag:      ${{ needs.config.outputs.docker-tag }}
+      resource-group: ${{ needs.config.outputs.resource-group }}
+      cluster-name:   ${{ needs.config.outputs.cluster }}
+      hostname:       ${{ needs.config.outputs.hostname }}
+      overlays:       ./manifests/overlays/${{ needs.config.outputs.target }}
+    secrets:
+      AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+  e2e:
+    needs: [config, docker, deploy]
+    uses: ./.github/workflows/_e2e.yaml
+    with:
+      url:       ${{ needs.config.outputs.url }}
+      build-sha: ${{ needs.config.outputs.git-sha }}

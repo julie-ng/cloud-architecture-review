@@ -1,8 +1,0 @@
-variables:
-  appNamespace:            aks-architect
-  armConnection:           aks-architect-ci-staging-sp
-  imageTag:                dev # re-use image
-  aksClusterName:          cloudkube-staging-d7c-cluster
-  aksClusterResourceGroup: cloudkube-staging-d7c-rg
-  deploymentUrl:           'https://aks-architect.staging.cloudkube.io/'
-  ingressHostname:         'aks-architect.staging.cloudkube.io'

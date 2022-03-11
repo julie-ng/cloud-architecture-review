@@ -1,0 +1,15 @@
+name: 'Cluster Logout'
+description: 'Logs out of k8s cluster and clears token cache'
+inputs:
+  kubeconfig:
+    description: 'Path to location of kubeconfig to remove'
+    required: true
+    type: string
+
+runs:
+  using: 'composite'
+  steps:
+  - shell: bash
+    run: |
+      rm ${{ github.workspace }}/${{ inputs.kubeconfig }}
+      kubelogin remove-tokens

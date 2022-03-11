@@ -1,0 +1,88 @@
+name: config
+
+# CONFIG GOES HERE
+env:
+  dev-cluster:            cloudkube-dev-r9er-cluster
+  dev-resource-group:     cloudkube-dev-r9er-rg
+  dev-url:                'https://aks-architect.dev.cloudkube.io/'
+  dev-hostname:           aks-architect.dev.cloudkube.io
+
+  staging-cluster:        cloudkube-staging-d7c-cluster
+  staging-resource-group: cloudkube-staging-d7c-rg
+  staging-url:           'https://aks-architect.staging.cloudkube.io/'
+  staging-hostname:       aks-architect.staging.cloudkube.io
+
+
+on:
+  workflow_call:
+    outputs:
+      target:
+        description: 'Deployment target, e.g. dev, staging or production'
+        value: ${{ jobs.setup-variables.outputs.target }}
+      cluster:
+        description: 'Name of AKS Cluster resource'
+        value: ${{ jobs.setup-variables.outputs.cluster }}
+      resource-group:
+        description: 'Name of resource group that AKS cluster belongs to, i.e. not the managed group.'
+        value: ${{ jobs.setup-variables.outputs.resource-group }}
+      url:
+        description: 'The URL used for e2e testing'
+        value: ${{ jobs.setup-variables.outputs.url }}
+      hostname:
+        description: 'Hostname for ingress configuration'
+        value: ${{ jobs.setup-variables.outputs.hotsname }}
+      git-sha:
+        description: 'Short version of current git sha'
+        value: ${{ jobs.setup-variables.outputs.git-sha }}
+      docker-tag:
+        description: 'Docker Image Tag'
+        value: ${{ jobs.setup-variables.outputs.docker-tag }}
+
+
+jobs:
+  setup-variables:
+    runs-on: ubuntu-latest
+    outputs:
+      target:         ${{ steps.resolved.outputs.target }}
+      cluster:        ${{ steps.resolved.outputs.cluster }}
+      resource-group: ${{ steps.resolved.outputs.resource-group }}
+      url:            ${{ steps.resolved.outputs.url }}
+      hostname:       ${{ steps.resolved.outputs.hostname }}
+      git-sha:        ${{ steps.resolved.outputs.git-sha }}
+      docker-tag:     ${{ steps.resolved.outputs.docker-tag }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: save git sha
+      run: echo "git-sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+    - id: is-dev
+      if: github.ref == 'refs/heads/main' # <=== CONFIGURE branch name
+      run: |
+        echo "target=dev" >> $GITHUB_ENV
+        echo "cluster=${{ env.dev-cluster }}" >> $GITHUB_ENV
+        echo "rg=${{ env.dev-resource-group }}" >> $GITHUB_ENV
+        echo "url=${{ env.dev-url }}" >> $GITHUB_ENV
+        echo "hostname=${{ env.dev-hostname }}" >> $GITHUB_ENV
+        echo "docker-tag=dev-${{ env.git-sha }}" >> $GITHUB_ENV
+
+    - id: is-staging
+      if: github.ref == 'refs/heads/staging' # <=== CONFIGURE branch name
+      run: |
+        echo "target=staging" >> $GITHUB_ENV
+        echo "cluster=${{ env.staging-cluster }}" >> $GITHUB_ENV
+        echo "rg=${{ env.staging-resource-group }}" >> $GITHUB_ENV
+        echo "url=${{ env.staging-url }}" >> $GITHUB_ENV
+        echo "hostname=${{ env.staging-hostname }}" >> $GITHUB_ENV
+        echo "docker-tag=staging-${{ env.git-sha }}" >> $GITHUB_ENV
+
+    - id: resolved
+      run: |
+        echo "::set-output name=target::${{ env.target }}"
+        echo "::set-output name=cluster::${{ env.cluster }}"
+        echo "::set-output name=resource-group::${{ env.rg }}"
+        echo "::set-output name=docker-tag::${{ env.docker-tag }}"
+        echo "::set-output name=url::${{ env.url }}"
+        echo "::set-output name=hostname::${{ env.hostname }}"
+        echo "::set-output name=git-sha::${{ env.git-sha }}"

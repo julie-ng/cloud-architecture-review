@@ -1,0 +1,63 @@
+name: docker-build
+
+# Example Tags e.g. `dev-abc123` vs `0.2.0`
+# Note: dev and staging branch names are defined in build-and-push job.
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      git-sha:
+        type: string
+        default: 'maybe-should-be-requried'
+    secrets:
+      AZURE_CLIENT_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+
+# ===============
+#  Configuration
+# ===============
+env:
+  acr-registry: aksarchitect
+  image-name: aksarchitect.azurecr.io/frontend
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+
+    - uses: actions/checkout@v2
+    - name: 'Azure Login'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: 'Container Registry - Login'
+      run: az acr login --name ${{ env.acr-registry }}
+
+    # Build Dev Image
+    - name: 'Docker - Build and Push'
+      if: inputs.environment == 'dev'
+      run: |
+        docker build -t ${{ env.image-name }}:dev-${{ inputs.git-sha }} .
+        docker push ${{ env.image-name }}:dev-${{ inputs.git-sha }}
+
+    # Promote Dev to Staging
+    - name: 'Re-tag to Promote'
+      if: inputs.environment == 'staging'
+      run: |
+        docker pull ${{ env.image-name }}:dev-${{ inputs.git-sha }}
+        docker tag ${{ env.image-name }}:dev-${{ inputs.git-sha }} ${{ env.image-name }}:staging-${{ inputs.git-sha }}
+        docker push ${{ env.image-name }}:staging-${{ inputs.git-sha }}
+
+    - name: 'Docker - Logout'
+      run: docker logout

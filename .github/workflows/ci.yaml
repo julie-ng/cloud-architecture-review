@@ -5,6 +5,12 @@ on:
     branches:
     - main
     - feat/*
+    paths-ignore:
+    - 'content/**'
+    - 'manifests/**'
+    - 'scss/**'
+    - 'static/**'
+    - '*.md'
   pull_request:
     branches:
     - main
