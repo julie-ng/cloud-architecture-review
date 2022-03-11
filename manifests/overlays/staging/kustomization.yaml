@@ -6,4 +6,3 @@ resources:
 
 patches:
 - deployment.yaml
-- ingress.yaml
