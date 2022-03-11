@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nuxtjs
+  namespace: aks-architect
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+      - name: aks-architect-nuxtjs
+        resources:
+          limits:
+            cpu: 0.75
+            memory: 1024Mi
+          requests:
+            cpu:  0.25
+            memory: 512Mi

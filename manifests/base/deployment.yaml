@@ -24,20 +24,20 @@ spec:
             app: aks-architect-nuxtjs
       containers:
       - name: aks-architect-nuxtjs
-        image: aksarchitect.azurecr.io/aks-archtitect:${IMAGE_TAG}
+        image: aksarchitect.azurecr.io/frontend:${IMAGE_TAG}
         ports:
         - containerPort: 80
         env:
         - name: PORT
           value: "3000"
         - name: APP_BUILD_SHA
-          value: ${APP_BUILD_SHA}
+          value: ${APP_BUILD_SHA} # edge case: if git sha is all numbers, this will fail.
         - name: NODE_ENV
           value: production
         resources:
-          requests:
-            cpu:  0.5
-            memory: 512Mi
           limits:
-            cpu: 1
-            memory: 1024Mi
+            cpu: 0.5
+            memory: 512Mi
+          requests:
+            cpu:  0.25
+            memory: 256Mi

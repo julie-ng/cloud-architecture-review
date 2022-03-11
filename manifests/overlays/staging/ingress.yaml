@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aks-architect-ingress
+  namespace: aks-architect
+spec:
+  rules:
+  - host: aks-architect.staging.cloudkube.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aks-architect-service
+            port:
+              number: 80
