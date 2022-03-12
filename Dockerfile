@@ -1,4 +1,4 @@
-FROM node:17-alpine
+FROM node:14-alpine
 
 ENV HOST '0.0.0.0'
 EXPOSE ${PORT:-80}
