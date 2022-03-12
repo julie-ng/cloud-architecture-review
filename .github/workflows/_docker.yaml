@@ -1,7 +1,4 @@
-name: docker-build
-
-# Example Tags e.g. `dev-abc123` vs `0.2.0`
-# Note: dev and staging branch names are defined in build-and-push job.
+name: docker
 
 on:
   workflow_call:
@@ -15,9 +12,13 @@ on:
     secrets:
       AZURE_CLIENT_ID:
         required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
       AZURE_TENANT_ID:
         required: true
-      AZURE_SUBSCRIPTION_ID:
+      AZ_APPINSIGHTS_CONNECTION_STRING:
+        required: true
+      AZ_DEFENDER_TOKEN:
         required: true
 
 # ===============
@@ -28,36 +29,70 @@ env:
   image-name: aksarchitect.azurecr.io/frontend
 
 jobs:
+  # ========================
+  #  DEV: build, scan, push
+  # ========================
   build-and-push:
+    if: inputs.environment == 'dev'
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
-
     - uses: actions/checkout@v2
     - name: 'Azure Login'
       uses: azure/login@v1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
     - name: 'Container Registry - Login'
       run: az acr login --name ${{ env.acr-registry }}
 
-    # Build Dev Image
-    - name: 'Docker - Build and Push'
-      if: inputs.environment == 'dev'
-      run: |
-        docker build -t ${{ env.image-name }}:dev-${{ inputs.git-sha }} .
-        docker push ${{ env.image-name }}:dev-${{ inputs.git-sha }}
+    - name: 'Docker - Build'
+      run: docker build -t ${{ env.image-name }}:dev-${{ inputs.git-sha }} .
 
-    # Promote Dev to Staging
+    - uses: Azure/container-scan@v0
+      name: 'Docker - Azure Defender Scan'
+      continue-on-error: true
+      id: container-scan
+      with:
+        image-name: ${{ env.image-name }}:dev-${{ inputs.git-sha }}
+        severity-threshold: WARN
+
+    - name: 'Docker - Push'
+      run: docker push ${{ env.image-name }}:dev-${{ inputs.git-sha }}
+
+    - name: 'Defender Scan - post results to Azure' # per Docs must be _after_ push
+      uses: Azure/publish-security-assessments@v0
+      with:
+        scan-results-path: ${{ steps.container-scan.outputs.scan-report-path }}
+        connection-string: ${{ secrets.AZ_APPINSIGHTS_CONNECTION_STRING }}
+        subscription-token: ${{ secrets.AZ_DEFENDER_TOKEN }}
+
+    - name: 'Docker - Logout'
+      run: docker logout
+
+
+  # ==================
+  #  STAGING: promote
+  # ==================
+  promote-to-staging:
+    if: inputs.environment == 'staging'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+    - run: az acr login --name ${{ env.acr-registry }}
+
     - name: 'Re-tag to Promote'
-      if: inputs.environment == 'staging'
       run: |
         docker pull ${{ env.image-name }}:dev-${{ inputs.git-sha }}
         docker tag ${{ env.image-name }}:dev-${{ inputs.git-sha }} ${{ env.image-name }}:staging-${{ inputs.git-sha }}
         docker push ${{ env.image-name }}:staging-${{ inputs.git-sha }}
 
-    - name: 'Docker - Logout'
-      run: docker logout
+    - run: docker logout

@@ -36,9 +36,11 @@ jobs:
       environment:  ${{ needs.config.outputs.target }}
       git-sha:      ${{ needs.config.outputs.git-sha }}
     secrets:
-      AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_CLIENT_ID:                  ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_SUBSCRIPTION_ID:            ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID:                  ${{ secrets.AZURE_TENANT_ID }}
+      AZ_APPINSIGHTS_CONNECTION_STRING: ${{ secrets.AZ_APPINSIGHTS_CONNECTION_STRING }}
+      AZ_DEFENDER_TOKEN:                ${{ secrets.AZ_DEFENDER_TOKEN }}
 
   deploy:
     needs: config
@@ -53,8 +55,8 @@ jobs:
       overlays:       ./manifests/overlays/${{ needs.config.outputs.target }}
     secrets:
       AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
 
   e2e:
     needs: [config, docker, deploy]
