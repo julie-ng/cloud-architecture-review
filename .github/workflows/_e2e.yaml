@@ -26,7 +26,7 @@ jobs:
         npm install chromedriver --chromedriver_version=LATEST
 
     - id: wait-3-min
-      name: for Docker and k8s to catch up
+      name: Wait for Docker and k8s to catch up
       run: sleep 180
 
     - id: first-try
