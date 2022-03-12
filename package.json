@@ -46,7 +46,11 @@
     "nodemon": "^2.0.13",
     "pino-pretty": "^7.5.1"
   },
+  "overrides": {
+    "glob-parent": "6.0.2",
+    "nth-check": "2.0.1"
+  },
   "engines": {
-    "node": ">=14.10.0"
+    "node": ">=17.3.0"
   }
 }
