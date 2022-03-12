@@ -6,6 +6,7 @@ on:
     - main
     - feat/*
     paths-ignore:
+    - '.github/**'
     - 'content/**'
     - 'manifests/**'
     - 'scss/**'
