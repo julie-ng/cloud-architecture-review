@@ -5,8 +5,8 @@ on:
     branches:
     - main
     - feat/*
+    - fix/*
     paths-ignore:
-    - '.github/**'
     - 'content/**'
     - 'manifests/**'
     - 'scss/**'
@@ -50,4 +50,5 @@ jobs:
     needs: node
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - run: docker build .
