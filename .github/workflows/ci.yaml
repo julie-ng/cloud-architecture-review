@@ -19,7 +19,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  ci:
+  node:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -45,3 +45,9 @@ jobs:
 
     - name: build
       run: npm run nuxt:build
+
+  docker:
+    needs: node
+    runs-on: ubuntu-latest
+    steps:
+    - run: docker build .
