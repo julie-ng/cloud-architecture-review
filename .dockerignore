@@ -8,6 +8,7 @@ node_modules/
 # Unnecessary
 tests/
 coverage/
+Dockerfile
 
 # Terraform
 .terraform/

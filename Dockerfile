@@ -1,5 +1,5 @@
 FROM node:14-alpine
-RUN apk add --update curl dumb-init
+RUN apk add --update --no-cache curl dumb-init
 
 ENV NODE_ENV production
 ENV HOST '0.0.0.0'
