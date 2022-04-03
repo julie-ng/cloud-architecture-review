@@ -1,3 +1,6 @@
+.git
+*.env*
+
 # Nuxtjs
 .nuxt/
 node_modules/
