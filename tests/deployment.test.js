@@ -14,6 +14,7 @@ describe(`Confirm Deployment to ${testUrl}`, () => {
 		const response = await fetch(healthEndpoint)
 		const body = await response.text()
 
+		expect(response.status).toEqual(200)
 		expect(JSON.parse(body).details.env.APP_BUILD_SHA).toEqual(buildNo)
 	})
 })
