@@ -14,7 +14,7 @@ spec:
         app: aks-architect-nuxtjs
     spec:
       nodeSelector:
-        workloadType: user
+        agentpool: user
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: "kubernetes.io/hostname"
