@@ -2,7 +2,7 @@
 	<header class="app-header">
 		<div class="container-wrapper">
 			<div>
-				<h1><NuxtLink to="/">Azure Kubernetes Architecture</NuxtLink></h1>
+				<h1><NuxtLink to="/">Azure Kubernetes <span>|</span> Architecture</NuxtLink></h1>
 			</div>
 			<div>
 				<nav>

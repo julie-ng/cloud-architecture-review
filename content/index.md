@@ -1,4 +1,4 @@
-# How does your AKS cluster architecture measure up?
+# How does your AKS Design measure up?
 
 <p class="lead">
 	There is no single perfect cluster design or configuration. Instead ask yourself - how well does my cluster design meet my business requirements?
