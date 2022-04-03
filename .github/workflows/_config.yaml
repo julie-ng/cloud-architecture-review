@@ -2,8 +2,8 @@ name: config
 
 # CONFIG GOES HERE
 env:
-  dev-cluster:            cloudkube-dev-r9er-cluster
-  dev-resource-group:     cloudkube-dev-r9er-rg
+  dev-cluster:            cloudkube-dev-nyl9-cluster
+  dev-resource-group:     cloudkube-dev-nyl9-rg
   dev-url:                'https://aks-architect.dev.cloudkube.io/'
   dev-hostname:           aks-architect.dev.cloudkube.io
 

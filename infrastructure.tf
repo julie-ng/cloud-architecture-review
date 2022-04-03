@@ -19,38 +19,32 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_client_config" "current" {}
 
 # ===========
 #  Variables
 # ===========
 
 locals {
-  location      = "North Europe"
-  rg_name       = "aks-architect-rg"
-  acr_name      = "aksarchitect"
-  sp_name       = "aks-architect-ci-acr-sp"
-  app_namespace = "aks-architect"
+  location       = "North Europe"
+  rg_name        = "aks-architect-rg"
+  acr_name       = "aksarchitect"
+  dev_suffix     = "nyl9"
+  staging_suffix = "d7c"
 
   environments = {
     dev = {
-      sp_name         = "aks-architect-ci-dev-sp"
-      cluster_name    = "cloudkube-dev-r9er-cluster"
-      cluster_rg      = "cloudkube-dev-r9er-rg"
-      kubelet_mi_name = "cloudkube-dev-r9er-cluster-agentpool"
-      kubelet_rg      = "cloudkube-dev-r9er-managed-rg"
+      sp_name = "aks-architect-ci-dev-sp"
+      suffix  = "nyl9"
+      # kubelet_mi_name = "cloudkube-dev-nyl9-cluster-agentpool"
+      # kubelet_rg      = "cloudkube-dev-nyl9-managed-rg"
     }
     staging = {
-      sp_name         = "aks-architect-ci-staging-sp"
-      cluster_name    = "cloudkube-staging-d7c-cluster"
-      cluster_rg      = "cloudkube-staging-d7c-rg"
-      kubelet_mi_name = "cloudkube-staging-d7c-cluster-agentpool"
-      kubelet_rg      = "cloudkube-staging-d7c-managed-rg"
+      sp_name = "aks-architect-ci-staging-sp"
+      suffix  = "d7c"
+      # kubelet_mi_name = "cloudkube-staging-d7c-cluster-agentpool"
+      # kubelet_rg      = "cloudkube-staging-d7c-managed-rg"
     }
   }
-
-  sp_key_vault_name = "cloudkube-devops-kv"
-  sp_key_vault_rg   = "cloudkube-shared-rg"
 
   default_tags = {
     public = true
@@ -59,16 +53,17 @@ locals {
   }
 }
 
-# Resource Group
-# --------------
+
+# ====================
+#  Conainer Resources
+# ====================
+
 resource "azurerm_resource_group" "rg" {
   name     = local.rg_name
   location = local.location
   tags     = local.default_tags
 }
 
-# Azure Container Registry
-# ------------------------
 resource "azurerm_container_registry" "acr" {
   name                = local.acr_name
   resource_group_name = azurerm_resource_group.rg.name
@@ -78,94 +73,45 @@ resource "azurerm_container_registry" "acr" {
   tags                = local.default_tags
 }
 
-# Service Principal for CI
-# ------------------------
+data "azurerm_kubernetes_cluster" "cloudkube" {
+  for_each            = local.environments
+  name                = "cloudkube-${each.key}-${each.value.suffix}-cluster" # e.g. cloudkube-dev-r9er-cluster
+  resource_group_name = "cloudkube-${each.key}-${each.value.suffix}-rg"      # e.g. cloudkube-dev-r9er-rg
+}
+
+
+# ==========================
+#  Service Principal for CI
+# ==========================
+
 data "azuread_client_config" "current" {}
 
-resource "azuread_application" "ci" {
+resource "azuread_application" "ci" { # import id = App Registrations's Object ID
   for_each     = local.environments
   display_name = local.environments[each.key].sp_name
   owners       = [data.azuread_client_config.current.object_id]
 }
 
-resource "azuread_service_principal" "ci" {
+resource "azuread_service_principal" "ci" { # import id = Entperise Application's Object ID
   for_each                     = local.environments
   application_id               = azuread_application.ci[each.key].application_id
   app_role_assignment_required = false
   owners                       = [data.azuread_client_config.current.object_id]
 }
 
-# Store client IDs and secrets in Key Vault so we can access it
-# and configure for Azure DevOps
-data "azurerm_key_vault" "cloudkube_devops" {
-  name                = local.sp_key_vault_name
-  resource_group_name = local.sp_key_vault_rg
-}
-
-resource "azuread_service_principal_password" "ci" {
-  for_each             = local.environments
-  service_principal_id = azuread_service_principal.ci[each.key].object_id
-}
-
-resource "azurerm_key_vault_secret" "sp_client_id" {
-  for_each     = local.environments
-  name         = "${local.environments[each.key].sp_name}-client-id"
-  value        = azuread_service_principal.ci[each.key].application_id
-  key_vault_id = data.azurerm_key_vault.cloudkube_devops.id
-}
-
-resource "azurerm_key_vault_secret" "sp_secret" {
-  for_each     = local.environments
-  name         = "${local.environments[each.key].sp_name}-client-secret"
-  value        = azuread_service_principal_password.ci[each.key].value
-  key_vault_id = data.azurerm_key_vault.cloudkube_devops.id
-}
 
 # ==================
 #  Role Assignments
 # ==================
 
-# Let our SP push to our ACR
-
-resource "azurerm_role_assignment" "ci_acr" {
-  for_each             = local.environments
-  scope                = azurerm_container_registry.acr.id
-  role_definition_name = "AcrPush"
-  principal_id         = azuread_service_principal.ci[each.key].object_id
-}
-
-# Let our SP access to its namespace
-# https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster
-data "azurerm_kubernetes_cluster" "cloudkube" {
-  for_each            = local.environments
-  name                = each.value.cluster_name
-  resource_group_name = each.value.cluster_rg
-}
-
-resource "azurerm_role_assignment" "ci_namespace" {
-  for_each             = local.environments
-  scope                = "${data.azurerm_kubernetes_cluster.cloudkube[each.key].id}/namespaces/${local.app_namespace}"
-  role_definition_name = "Azure Kubernetes Service RBAC Writer"
-  principal_id         = azuread_service_principal.ci[each.key].object_id
-}
-
-# Needed to list configs for az aks get-credentials
-# https://docs.microsoft.com/en-us/azure/aks/control-kubeconfig-access
-resource "azurerm_role_assignment" "cluster_user" {
-  for_each             = local.environments
-  scope                = data.azurerm_kubernetes_cluster.cloudkube[each.key].id
-  role_definition_name = "Azure Kubernetes Service Cluster User Role"
-  principal_id         = azuread_service_principal.ci[each.key].object_id
-}
-
 # Get reference to cluster kubelets (managed in aks iac repo)
 data "azurerm_user_assigned_identity" "kubelets" {
   for_each            = local.environments
-  name                = each.value.kubelet_mi_name
-  resource_group_name = each.value.kubelet_rg
+  name                = "cloudkube-${each.key}-${each.value.suffix}-cluster-agentpool" # e.g. cloudkube-dev-r9er-cluster-agentpool
+  resource_group_name = "cloudkube-${each.key}-${each.value.suffix}-managed-rg"        # e.g. cloudkube-dev-r9er-managed-rg
 }
 
-# Cluster kubelets can pull from that registry
+# Cluster kubelets can pull from our registry
 resource "azurerm_role_assignment" "kubelets_acr_pull" {
   for_each             = local.environments
   scope                = azurerm_container_registry.acr.id
@@ -173,6 +119,14 @@ resource "azurerm_role_assignment" "kubelets_acr_pull" {
   principal_id         = data.azurerm_user_assigned_identity.kubelets[each.key].principal_id
 }
 
+# Kubelogin - Needed to list configs for az aks get-credentials
+# https://docs.microsoft.com/en-us/azure/aks/control-kubeconfig-access
+resource "azurerm_role_assignment" "cluster_user" {
+  for_each             = local.environments
+  scope                = data.azurerm_kubernetes_cluster.cloudkube[each.key].id
+  role_definition_name = "Azure Kubernetes Service Cluster User Role"
+  principal_id         = azuread_service_principal.ci[each.key].object_id
+}
 
 # =========
 #  Outputs
@@ -203,19 +157,18 @@ output "service_principal_rbac" {
       name  = "Azure Kubernetes Service Cluster User Role"
       scope = data.azurerm_kubernetes_cluster.cloudkube[k].id
       }, {
-      name  = "Azure Kubernetes Service RBAC Writer"
-      scope = "${data.azurerm_kubernetes_cluster.cloudkube[k].id}/namespaces/${local.app_namespace}"
-      }, {
       name  = "AcrPush"
       scope = azurerm_container_registry.acr.id
     }]
   }]
 }
 
+
 output "kubelet_rbac" {
   value = [for r in azurerm_role_assignment.kubelets_acr_pull : {
-    scope                = r.scope
+    id                   = r.id
     role_definition_name = r.role_definition_name
+    scope                = r.scope
     principal_id         = r.principal_id
   }]
 }
