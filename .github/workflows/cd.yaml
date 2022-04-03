@@ -7,7 +7,6 @@ on:
     - staging
     paths-ignore:
     - 'content/**'
-    - 'manifests/**'
     - 'scss/**'
     - 'static/**'
     - '**/*.md'
