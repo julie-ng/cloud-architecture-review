@@ -25,24 +25,18 @@ provider "azurerm" {
 # ===========
 
 locals {
-  location       = "North Europe"
-  rg_name        = "aks-architect-rg"
-  acr_name       = "aksarchitect"
-  dev_suffix     = "nyl9"
-  staging_suffix = "d7c"
+  location = "North Europe"
+  rg_name  = "aks-architect-rg"
+  acr_name = "aksarchitect"
 
   environments = {
     dev = {
       sp_name = "aks-architect-ci-dev-sp"
       suffix  = "nyl9"
-      # kubelet_mi_name = "cloudkube-dev-nyl9-cluster-agentpool"
-      # kubelet_rg      = "cloudkube-dev-nyl9-managed-rg"
     }
     staging = {
       sp_name = "aks-architect-ci-staging-sp"
       suffix  = "d7c"
-      # kubelet_mi_name = "cloudkube-staging-d7c-cluster-agentpool"
-      # kubelet_rg      = "cloudkube-staging-d7c-managed-rg"
     }
   }
 
@@ -162,7 +156,6 @@ output "service_principal_rbac" {
     }]
   }]
 }
-
 
 output "kubelet_rbac" {
   value = [for r in azurerm_role_assignment.kubelets_acr_pull : {
