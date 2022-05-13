@@ -7,8 +7,8 @@ env:
   dev-url:                'https://aks-architect.dev.cloudkube.io/'
   dev-hostname:           aks-architect.dev.cloudkube.io
 
-  staging-cluster:        cloudkube-staging-d7c-cluster
-  staging-resource-group: cloudkube-staging-d7c-rg
+  staging-cluster:        cloudkube-staging-4ow-cluster
+  staging-resource-group: cloudkube-staging-4ow-rg
   staging-url:           'https://aks-architect.staging.cloudkube.io/'
   staging-hostname:       aks-architect.staging.cloudkube.io
 

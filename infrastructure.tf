@@ -36,7 +36,7 @@ locals {
     }
     staging = {
       sp_name = "aks-architect-ci-staging-sp"
-      suffix  = "d7c"
+      suffix  = "4ow"
     }
   }
 
