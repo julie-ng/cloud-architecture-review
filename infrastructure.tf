@@ -25,9 +25,10 @@ provider "azurerm" {
 # ===========
 
 locals {
-  location = "North Europe"
-  rg_name  = "aks-architect-rg"
-  acr_name = "aksarchitect"
+  location  = "North Europe"
+  rg_name   = "aks-architect-rg"
+  acr_name  = "aksarchitect"
+  namespace = "aks-architect"
 
   environments = {
     dev = {
@@ -113,14 +114,22 @@ resource "azurerm_role_assignment" "kubelets_acr_pull" {
   principal_id         = data.azurerm_user_assigned_identity.kubelets[each.key].principal_id
 }
 
-# Kubelogin - Needed to list configs for az aks get-credentials
+# Kubelogin - Reader Role needed to list configs for az aks get-credentials
 # https://docs.microsoft.com/en-us/azure/aks/control-kubeconfig-access
-resource "azurerm_role_assignment" "cluster_user" {
+resource "azurerm_role_assignment" "kubelogin" {
   for_each             = local.environments
   scope                = data.azurerm_kubernetes_cluster.cloudkube[each.key].id
   role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = azuread_service_principal.ci[each.key].object_id
 }
+
+resource "azurerm_role_assignment" "namespace_contributor" {
+  for_each             = local.environments
+  scope                = "${data.azurerm_kubernetes_cluster.cloudkube[each.key].id}/namespaces/${local.namespace}"
+  role_definition_name = "Azure Kubernetes Service RBAC Writer"
+  principal_id         = azuread_service_principal.ci[each.key].object_id
+}
+
 
 # =========
 #  Outputs
@@ -150,6 +159,9 @@ output "service_principal_rbac" {
     roles = [{
       name  = "Azure Kubernetes Service Cluster User Role"
       scope = data.azurerm_kubernetes_cluster.cloudkube[k].id
+      }, {
+      name  = "Azure Kubernetes Service RBAC Writer"
+      scope = "${data.azurerm_kubernetes_cluster.cloudkube[k].id}/namespaces/${local.namespace}"
       }, {
       name  = "AcrPush"
       scope = azurerm_container_registry.acr.id
