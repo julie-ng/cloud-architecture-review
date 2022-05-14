@@ -2,7 +2,10 @@
 	<header class="app-header">
 		<div class="container-wrapper">
 			<div>
-				<h1><NuxtLink to="/">Azure Kubernetes <span>|</span> Architecture</NuxtLink></h1>
+				<h1>
+					<img src="/images/cloudkube/kubewave.svg" alt="Cloudkube Logo" class="cloudkube-logo">
+					<NuxtLink to="/">Azure Kubernetes <span>|</span> Architecture</NuxtLink>
+				</h1>
 			</div>
 			<div>
 				<nav>
