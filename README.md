@@ -2,7 +2,8 @@
 
 | Environment | Status |
 |:--|:--|
-| [dev]([https://](https://aks-architect.dev.cloudkube.io/)) | [![Build Status](https://dev.azure.com/julie-msft/aks-architecct/_apis/build/status/dev?branchName=dev)](https://dev.azure.com/julie-msft/aks-architecct/_build/latest?definitionId=47&branchName=dev) |
+| [dev]([https://](https://aks-architect.dev.cloudkube.io/)) | [![cd](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml/badge.svg?branch=main)](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml) |
+| [staging]([https://](https://aks-architect.staging.cloudkube.io/)) | [![cd](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml/badge.svg?branch=staging)](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml) |
 
 ##  Setup
 
