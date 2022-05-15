@@ -43,11 +43,11 @@ export default {
 				content: {
 					type: 'element',
 					tagName: 'span',
-					properties: {className: ['bd-anchor-link']},
-					children: [{type: 'text', value: '#'}]
+					properties: { className: ['bd-anchor-link'] },
+					children: [{ type: 'text', value: '#' }]
 				}
 			}
-		},
+		}
 	},
 
 	// Modules: https://go.nuxtjs.dev/config-modules
