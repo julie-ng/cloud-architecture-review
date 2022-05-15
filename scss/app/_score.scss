@@ -1,5 +1,5 @@
 .app-scoreboard {
-	padding: 0.5rem var(--gutter-width);
+	// padding: 0.5rem var(--gutter-width);
 
 	h3 {
 		margin-bottom: 0; //0.25em;
@@ -8,6 +8,7 @@
 
 		& + p {
 			margin-top: 0.5em;
+			line-height: 1.5em;
 		}
 	}
 }
@@ -23,6 +24,7 @@
 		margin-top: 0;
 		margin-bottom: 0.25em;
 		text-transform: capitalize;
+		-webkit-font-smoothing: auto;
 	}
 
 	span {
@@ -42,8 +44,10 @@ span.score-delta {
 	overflow: hidden;
 	background: #e1e4f5; // #f6f7fd;
 	// border: 1px solid #aeb6d7;
+	border-radius: 10px;
 
 	.meter-bar {
 		background-color: #8fa4ff;
+		// transition: all 0.2s ease-in 0;
 	}
 }

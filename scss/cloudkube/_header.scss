@@ -1,0 +1,63 @@
+.app-header {
+	// position: sticky;
+	// top: 0;
+	// left: 0;
+	// z-index: 1000;
+	// background: rgba(255, 255, 255, 0.93);
+
+	border-top: 5px solid var(--purple-color);
+	border-bottom: 1px solid var(--layout-border-color);
+	padding: 0.2rem 0;
+
+	h1 {
+		// margin: 0;
+		font-size: 1.3rem;
+		font-weight: 600;
+
+		span {
+			color: var(--teal-color);
+			margin: 0 0.2em;
+		}
+
+		a {
+			// text-decoration: none;
+
+			&:link, &:visited {
+				color: var(--purple-color);
+			}
+
+			&:hover, &:active {
+				color: var(--teal-color);
+			}
+		}
+	}
+
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		margin: 0;
+		padding: 0;
+		display: inline-block;
+		// border: 1px solid blue;
+		// margin-left: 1.5em;
+
+		// a:not(.btn) {
+		// 	&:link, &:visited {
+		// 		color: var(--body-text-color);
+		// 		text-decoration: none;
+		// 	}
+
+		// 	&:hover, &:active {
+		// 		color: var(--teal-color);
+		// 	}
+		// }
+	}
+
+	// .btn {
+	// 	margin-top: 1px;
+	// }
+}

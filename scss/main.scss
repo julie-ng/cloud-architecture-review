@@ -1,28 +1,76 @@
 // @import '../node_modules/@cloudkube/ui/src/scss/main.scss';
 
 @import 'vars';
-@import 'normalize';
-@import 'layout';
-@import 'typography';
-@import 'buttons';
-@import 'forms';
-@import 'header';
-@import 'footer';
-@import 'navigation';
-@import 'tables';
-@import 'questions';
-@import 'articles';
-@import 'score';
-@import 'results';
-@import 'print';
+// @import 'poc/normalize';
+// @import 'poc/layout';
+// @import 'poc/typography';
+// @import 'poc/buttons';
+// @import 'poc/forms';
+@import 'cloudkube/header';
+// @import 'poc/footer';
+// @import 'poc/navigation';
 
-.has-scroll-anchor {
-	scroll-margin-top: 120px;
+// @import 'poc/articles';
+// @import 'poc/score';
+// @import 'poc/results';
+// @import 'poc/print';
+@import 'bulma';
+
+@import 'sidenav';
+@import 'tables';
+@import 'app/questions';
+@import 'app/score';
+@import 'app/results';
+
+// .has-scroll-anchor {
+// 	scroll-margin-top: 120px;
+// }
+
+// Bulma Override needed for Logo
+.navbar-item {
+	.cloudkube-logo {
+		vertical-align: middle;
+		max-width: 48px;
+		max-height: 48px;
+		// margin-top: -63px;
+		margin-left: -6px;
+		margin-right: 4px;
+	}
 }
 
-.cloudkube-logo {
-	max-width: 48px;
-	vertical-align: middle;
-	margin-top: -6px;
-	margin-right: 6px;
+html.has-navbar-fixed-top,
+body.has-navbar-fixed-top {
+	padding-top: 4.25rem;
+}
+
+.capitalize-case {
+	text-transform: capitalize;
+}
+
+.category-title {
+	text-transform: capitalize;
+	font-size: 1.8rem;
+	// border-bottom: 6px solid var(--purple-color);
+	// padding-bottom: 4px;
+
+	background: var(--purple-color);
+	color: #fff;
+	padding: 0.4em 0.85em;
+}
+
+.sidebar-disclaimer {
+	margin: 1.5em 0;
+	font-size: var(--xs-font-size);
+	line-height: 1.4em;
+	color: var(--md-grey-font-color);
+
+	a:link, a:visited {
+		color: var(--md-grey-font-color);
+	}
+}
+
+a {
+	&.has-no-underline {
+		text-decoration: none;
+	}
 }

@@ -1,5 +1,5 @@
 <template>
-	<nuxt-content :document="content" />
+	<nuxt-content :document="aboutMd" />
 </template>
 
 <script>
@@ -7,9 +7,9 @@
     layout: 'basic',
 
     async asyncData({ $content, params }) {
-      const content = await $content('guide/index').fetch()
+      const aboutMd = await $content('about').fetch()
       return {
-        content
+        aboutMd
       }
     }
   }

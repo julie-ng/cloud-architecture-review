@@ -97,14 +97,3 @@ blockquote {
 .grey-text {
 	color: #bbb;
 }
-
-.sidebar-disclaimer {
-	margin: 1.5em 0;
-	font-size: var(--xs-font-size);
-	line-height: 1.4em;
-	color: var(--md-grey-font-color);
-
-	a:link, a:visited {
-		color: var(--md-grey-font-color);
-	}
-}

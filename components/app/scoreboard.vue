@@ -10,12 +10,12 @@
 				:score=score
 			>
 			</score-pillar>
-			<div class="score-details">
+			<div class="score-details buttons">
 				<div>
-					<NuxtLink to="/review/score" class="btn btn-primary">Understand Your Scores &rarr;</NuxtLink>
+					<NuxtLink to="/review/score" class="button is-link">Understand Your Scores &rarr;</NuxtLink>
 				</div>
 				<div>
-					<button class="btn btn-primary-outline" @click="onClear">Reset All Answers</button>
+					<button class="button" @click="onClear">Reset All Answers</button>
 				</div>
 				<div class="sidebar-disclaimer">Note: this is not an official Microsoft assessment. <NuxtLink to="/about">Learn more</NuxtLink></div>
 			</div>

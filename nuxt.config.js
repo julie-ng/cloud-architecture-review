@@ -3,7 +3,8 @@ export default {
 	head: {
 		title: 'Azure Kubernetes Architect',
 		htmlAttrs: {
-			lang: 'en'
+			lang: 'en',
+			class: 'has-navbar-fixed-top'
 		},
 		meta: [
 			{ charset: 'utf-8' },
@@ -35,6 +36,19 @@ export default {
 	// Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
 	buildModules: [
 	],
+
+	content: {
+		markdown: {
+			remarkAutolinkHeadings: {
+				content: {
+					type: 'element',
+					tagName: 'span',
+					properties: {className: ['bd-anchor-link']},
+					children: [{type: 'text', value: '#'}]
+				}
+			}
+		},
+	},
 
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [

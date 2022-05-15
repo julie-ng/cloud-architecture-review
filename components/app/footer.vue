@@ -1,7 +1,7 @@
 <template>
-	<footer class="app-footer">
-		<div class="wrapper">
-			<p>&copy; <a href="https://www.youtube.com/c/JulieNgTech/about" target="_blank">Julie Ng</a> 2021. Designed and made with &hearts; in Munich.</p>
+	<footer class="footer">
+		<div class="content mt-6 has-text-centered has-text-grey-light is-size-6">
+			<p>Copyright 2020-2021 <a class="has-text-grey-light" href="https://www.youtube.com/c/JulieNgTech/about" target="_blank">Julie Ng</a>. Designed and made with &hearts; in Munich.</p>
 		</div>
 	</footer>
 </template>

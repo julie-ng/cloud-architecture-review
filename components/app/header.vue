@@ -1,55 +1,32 @@
 <template>
-	<header class="app-header">
-		<div class="container-wrapper">
-			<div>
-				<h1>
-					<img src="/images/cloudkube/kubewave.svg" alt="Cloudkube Logo" class="cloudkube-logo">
-					<NuxtLink to="/">Azure Kubernetes <span>|</span> Architecture</NuxtLink>
+	<header class="app-header navbar is-fixed-top">
+		<div class="container is-widescreen">
+
+			<div class="navbar-brand">
+				<h1 class="navbar-item">
+					<NuxtLink  to="/">
+						<img src="/images/cloudkube/kubewave.svg" alt="Cloudkube Logo" class="cloudkube-logo">
+						Azure Kubernetes <span>|</span> Architecture
+					</NuxtLink>
 				</h1>
+
+				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="js-navbar">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
 			</div>
-			<div>
-				<nav>
-					<ul>
-						<li><NuxtLink to="/about">About</NuxtLink></li>
-						<li><NuxtLink to="/getting-started">Getting Started</NuxtLink></li>
-						<li><NuxtLink to="/review" class="btn btn-sm btn-primary-outline">Review your Design</NuxtLink></li>
-					</ul>
+
+			<div class="navbar-menu" id="js-navbar">
+				<nav aria-label="main navigation" class="navbar-end">
+					<NuxtLink class="navbar-item" to="/about">About</NuxtLink>
+					<NuxtLink class="navbar-item" to="/getting-started">Getting Started</NuxtLink>
+					<div class="navbar-item buttons">
+						<NuxtLink class="button is-link" to="/review">Review your Design</NuxtLink>
+					</div>
 				</nav>
 			</div>
+
 		</div>
 	</header>
 </template>
-
-<style scoped>
-	.container-wrapper {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-	}
-
-	/* vertically align heading */
-	.container-wrapper > div:first-child {
-		display: flex;
-  	align-items: center;
-	}
-
-	.container-wrapper > div {
-		vertical-align: middle;
-		/* border: 1px solid blue; */
-	}
-
-	.container-wrapper > div:nth-child(2) {
-		text-align: right;
-	}
-
-	h1 {
-		/* border: 1px solid red; */
-		display: inline;
-		vertical-align: middle;
-		margin: 0;
-	}
-
-	a.btn:hover,
-	a.btn:active {
-		color: #fff;
-	}
-</style>

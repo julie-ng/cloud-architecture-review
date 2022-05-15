@@ -1,17 +1,18 @@
 <template>
 	<div>
 		<app-header/>
-		<main class="app-grid container-wrapper">
-			<div class="app-nav-col">
-				<!-- <app-tab-nav/> -->
-				<app-navigation/>
+		<main class="container is-widescreen">
+			<div class="columns section">
+				<div class="column is-one-fifth-desktop">
+					<app-navigation/>
+				</div>
+				<div class="column">
+					<Nuxt/>
+				</div>
+				<div class="column is-one-fifth-desktop">
+					<app-scoreboard/>
+				</div>
 			</div>
-
-			<div class="app-body">
-				<Nuxt/>
-			</div>
-
-			<app-scoreboard/>
 		</main>
 		<app-footer/>
 	</div>

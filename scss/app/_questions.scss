@@ -1,5 +1,9 @@
 .question-box {
 	padding: 1em 1.5em 2em;
+
+	h2 {
+		margin-top: 0.75em;
+	}
 }
 
 .question-box {
@@ -33,6 +37,7 @@
 }
 
 .label-factor {
+
 	input[type="radio"] {
 		width: 20px;
 		display: inline-block;
@@ -48,6 +53,35 @@
 	}
 
 	p {
-		margin: 0.4em 0 1em 24px;
+		margin: 0.2em 0 1em 24px;
 	}
+}
+
+.factor-container {
+	// border-left: 6px solid transparent;
+	padding: 0.6em 1em;
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+
+	&.is-selected {
+		// border-color: var(--purple-color);
+		background: var(--background-color);
+	}
+
+
+	&:not(.is-selected) {
+		// .label-factor {
+			label {
+				cursor: pointer;
+			}
+
+			&:hover {
+				background-color: #eff1fa;
+				// background-color: var(--teal-color);
+				// color: #fff;
+			}
+		}
+	// }
 }

@@ -1,15 +1,15 @@
 <template>
-	<nuxt-content :document="homepage" />
+	<nuxt-content :document="homepageMd" />
 </template>
 
 <script>
   export default {
-    layout: 'basic', // <-- why we can't use _.vue
+    layout: 'homepage',
 
     async asyncData({ $content, params }) {
-      const homepage = await $content('index').fetch()
+      const homepageMd = await $content('index').fetch()
       return {
-        homepage
+        homepageMd
       }
     }
   }
