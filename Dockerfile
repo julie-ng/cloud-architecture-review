@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:16-alpine
 RUN apk add --update --no-cache curl dumb-init
 
 ENV NODE_ENV production
