@@ -95,3 +95,5 @@ sw.*
 
 # Vim swap files
 *.swp
+
+debug.sh
