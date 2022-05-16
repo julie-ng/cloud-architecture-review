@@ -6,10 +6,11 @@ on:
     - main
     - staging
     paths-ignore:
-    - 'content/**'
-    - 'scss/**'
-    - 'static/**'
-    - '**/*.md'
+    - '.*'
+    - '!.dockerignore'
+    - 'CHANGELOG.md'
+    - 'README.md'
+    - 'infrastructure.*'
 
 permissions:
   id-token: write
