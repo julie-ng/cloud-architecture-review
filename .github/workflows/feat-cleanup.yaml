@@ -43,8 +43,8 @@ jobs:
       name: 'Login - Kubernetes'
       uses: ./.github/actions/kubelogin
       with:
-        cluster-name: ${{ inputs.cluster-name }}
-        resource-group: ${{ inputs.resource-group }}
+        cluster-name: ${{ needs.config.outputs.cluster }}
+        resource-group: ${{ needs.config.outputs.resource-group }}
 
     - name: 'kubectl delete'
       if: startsWith(github.ref, 'refs/heads/feat/')
