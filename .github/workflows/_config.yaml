@@ -4,13 +4,13 @@ name: config
 env:
   dev-cluster:            cloudkube-dev-nyl9-cluster
   dev-resource-group:     cloudkube-dev-nyl9-rg
-  dev-url:                'https://aks-architect.dev.cloudkube.io/'
   dev-hostname:           aks-architect.dev.cloudkube.io
+  dev-branch:             'refs/heads/main'
 
   staging-cluster:        cloudkube-staging-4ow-cluster
   staging-resource-group: cloudkube-staging-4ow-rg
-  staging-url:           'https://aks-architect.staging.cloudkube.io/'
   staging-hostname:       aks-architect.staging.cloudkube.io
+  staging-branch:         'refs/heads/staging'
 
 
 on:
@@ -58,22 +58,22 @@ jobs:
       run: echo "git-sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - id: is-dev
-      if: github.ref == 'refs/heads/main' # <=== CONFIGURE branch name
+      if: github.ref == env.dev-branch
       run: |
         echo "target=dev" >> $GITHUB_ENV
         echo "cluster=${{ env.dev-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.dev-resource-group }}" >> $GITHUB_ENV
-        echo "url=${{ env.dev-url }}" >> $GITHUB_ENV
+        echo "url=${{ join(['https://', env.dev-hostname, '/'], '') }}" >> $GITHUB_ENV
         echo "hostname=${{ env.dev-hostname }}" >> $GITHUB_ENV
         echo "docker-tag=dev-${{ env.git-sha }}" >> $GITHUB_ENV
 
     - id: is-staging
-      if: github.ref == 'refs/heads/staging' # <=== CONFIGURE branch name
+      if: github.ref == env.staging-branch
       run: |
         echo "target=staging" >> $GITHUB_ENV
         echo "cluster=${{ env.staging-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.staging-resource-group }}" >> $GITHUB_ENV
-        echo "url=${{ env.staging-url }}" >> $GITHUB_ENV
+        echo "url=${{ join(['https://', env.staging-hostname, '/'], '') }}" >> $GITHUB_ENV
         echo "hostname=${{ env.staging-hostname }}" >> $GITHUB_ENV
         echo "docker-tag=staging-${{ env.git-sha }}" >> $GITHUB_ENV
 
