@@ -81,7 +81,7 @@ jobs:
     # Staging
     # =======
     - id: is-staging
-      if: github.ref == 'refs/heads/main' # <== CONFIGURE (1)
+      if: github.ref == 'refs/heads/staging' # <== CONFIGURE (1)
       name: 'STAGING: set vars'
       run: |
         echo "target=staging" >> $GITHUB_ENV
