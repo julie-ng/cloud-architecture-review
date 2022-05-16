@@ -38,6 +38,7 @@ export default {
 	],
 
 	content: {
+		useCache: true,
 		markdown: {
 			remarkAutolinkHeadings: {
 				content: {
