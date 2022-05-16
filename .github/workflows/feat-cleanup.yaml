@@ -25,8 +25,10 @@ jobs:
     - run: echo "Docker tag ${{ needs.config.outputs.docker-tag }}"
 
   delete-temp:
+    name: 'Delete Temp Deployment'
     needs: config
     runs-on: ubuntu-latest
+    environment: dev
     steps:
     - uses: actions/checkout@v2
 
