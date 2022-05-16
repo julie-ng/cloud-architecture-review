@@ -1,4 +1,4 @@
-name: kubectl-apply
+name: _kubectl-apply
 
 on:
   workflow_call:

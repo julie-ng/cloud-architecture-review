@@ -1,4 +1,4 @@
-name: feat-cleanup
+name: Feature Cleanup
 
 on:
   delete:
