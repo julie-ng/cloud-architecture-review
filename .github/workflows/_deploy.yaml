@@ -53,7 +53,8 @@ jobs:
         cluster-name: ${{ inputs.cluster-name }}
         resource-group: ${{ inputs.resource-group }}
 
-    - name: kubectl apply
+    - name: 'kubectl apply (DEV or STAGING)'
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
       env:
         KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
         APP_BUILD_SHA: ${{ inputs.git-sha }}
@@ -62,6 +63,18 @@ jobs:
       run: |
         kustomize build ${{ inputs.overlays }} | envsubst
         kustomize build ${{ inputs.overlays }} | envsubst | kubectl apply -f -
+
+    - name: 'kubectl apply (FEATURE)'
+      if: startsWith(github.ref, 'refs/heads/feat/')
+      env:
+        KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
+        APP_BUILD_SHA: ${{ inputs.git-sha }}
+        IMAGE_TAG: ${{ inputs.image-tag }}
+        INGRESS_HOSTNAME: ${{ inputs.hostname }}
+      run: |
+        cat ./manifests/feat/deployment.yaml | envsubst | kubectl apply -f -
+        cat ./manifests/feat/ingress.yaml | envsubst | kubectl apply -f -
+        cat ./manifests/feat/service.yaml | envsubst | kubectl apply -f -
 
     - uses: ./.github/actions/kubelogout
       name: 'Logout - Kubernetes'

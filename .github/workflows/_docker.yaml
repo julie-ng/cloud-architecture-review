@@ -9,6 +9,9 @@ on:
       git-sha:
         type: string
         default: 'maybe-should-be-requried'
+      image-tag:
+        type: string
+        required: true
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -49,18 +52,18 @@ jobs:
       run: az acr login --name ${{ env.acr-registry }}
 
     - name: 'Docker - Build'
-      run: docker build -t ${{ env.image-name }}:dev-${{ inputs.git-sha }} .
+      run: docker build -t ${{ env.image-name }}:${{ inputs.image-tag }} .
 
     - uses: Azure/container-scan@v0
       name: 'Docker - Azure Defender Scan'
       continue-on-error: true
       id: container-scan
       with:
-        image-name: ${{ env.image-name }}:dev-${{ inputs.git-sha }}
+        image-name: ${{ env.image-name }}:${{ inputs.image-tag }}
         severity-threshold: WARN
 
     - name: 'Docker - Push'
-      run: docker push ${{ env.image-name }}:dev-${{ inputs.git-sha }}
+      run: docker push ${{ env.image-name }}:${{ inputs.image-tag }}
 
     - name: 'Defender Scan - post results to Azure' # per Docs must be _after_ push
       uses: Azure/publish-security-assessments@v0
@@ -92,7 +95,7 @@ jobs:
     - name: 'Re-tag to Promote'
       run: |
         docker pull ${{ env.image-name }}:dev-${{ inputs.git-sha }}
-        docker tag ${{ env.image-name }}:dev-${{ inputs.git-sha }} ${{ env.image-name }}:staging-${{ inputs.git-sha }}
-        docker push ${{ env.image-name }}:staging-${{ inputs.git-sha }}
+        docker tag ${{ env.image-name }}:dev-${{ inputs.git-sha }} ${{ env.image-name }}:${{ inputs.image-tag }}
+        docker push ${{ env.image-name }}:${{ inputs.image-tag }}
 
     - run: docker logout

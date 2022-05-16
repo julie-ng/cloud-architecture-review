@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: temp-nuxtjs-${IMAGE_TAG}-ingress
+  namespace: aks-architect
+  labels:
+    name: temp-nuxtjs-${IMAGE_TAG}
+spec:
+  rules:
+  - host: ${INGRESS_HOSTNAME}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: temp-nuxtjs-${IMAGE_TAG}-service
+            port:
+              number: 80
+
+# example `IMAGE_TAG` feat-repsonsive

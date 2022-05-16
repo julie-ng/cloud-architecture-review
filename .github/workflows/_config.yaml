@@ -12,12 +12,15 @@ env:
   staging-hostname:       aks-architect.staging.cloudkube.io
   staging-branch:         'refs/heads/staging'
 
+  feat-hostname:          'aks-architect-{0}.dev.cloudkube.io'
+  url-format:             'https://{0}/'
+
 
 on:
   workflow_call:
     outputs:
       target:
-        description: 'Deployment target, e.g. dev, staging or production'
+        description: 'GitHub Environment for deployment'
         value: ${{ jobs.setup-variables.outputs.target }}
       cluster:
         description: 'Name of AKS Cluster resource'
@@ -37,6 +40,9 @@ on:
       docker-tag:
         description: 'Docker Image Tag'
         value: ${{ jobs.setup-variables.outputs.docker-tag }}
+      overlays:
+        description: 'Kustomize Overlays directory'
+        value: ${{ jobs.setup-variables.outputs.overlays }}
 
 
 jobs:
@@ -50,6 +56,7 @@ jobs:
       hostname:       ${{ steps.resolved.outputs.hostname }}
       git-sha:        ${{ steps.resolved.outputs.git-sha }}
       docker-tag:     ${{ steps.resolved.outputs.docker-tag }}
+      overlays:       ${{ steps.resolved.outputs.overlays }}
 
     steps:
     - uses: actions/checkout@v2
@@ -57,32 +64,76 @@ jobs:
     - name: save git sha
       run: echo "git-sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
+    # Dev
+    # ===
     - id: is-dev
-      if: github.ref == env.dev-branch
+      if: github.ref == 'refs/heads/main' # <== CONFIGURE (1)
+      name: 'DEV: set vars'
       run: |
         echo "target=dev" >> $GITHUB_ENV
+        echo "overlays=dev" >> $GITHUB_ENV
         echo "cluster=${{ env.dev-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.dev-resource-group }}" >> $GITHUB_ENV
-        echo "url=${{ join(['https://', env.dev-hostname, '/'], '') }}" >> $GITHUB_ENV
         echo "hostname=${{ env.dev-hostname }}" >> $GITHUB_ENV
+        echo "url=${{ format(env.url-format, env.dev-hostname) }}" >> $GITHUB_ENV
         echo "docker-tag=dev-${{ env.git-sha }}" >> $GITHUB_ENV
 
+    # Staging
+    # =======
     - id: is-staging
-      if: github.ref == env.staging-branch
+      if: github.ref == 'refs/heads/main' # <== CONFIGURE (1)
+      name: 'STAGING: set vars'
       run: |
         echo "target=staging" >> $GITHUB_ENV
+        echo "overlays=staging" >> $GITHUB_ENV
         echo "cluster=${{ env.staging-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.staging-resource-group }}" >> $GITHUB_ENV
-        echo "url=${{ join(['https://', env.staging-hostname, '/'], '') }}" >> $GITHUB_ENV
         echo "hostname=${{ env.staging-hostname }}" >> $GITHUB_ENV
+        echo "url=${{ format(env.url-format, env.staging-hostname) }}" >> $GITHUB_ENV
         echo "docker-tag=staging-${{ env.git-sha }}" >> $GITHUB_ENV
 
+
+    # Feature
+    # =======
+    - name: 'feat: format name from branch'
+      if: startsWith(github.ref, 'refs/heads/feat/')
+      run: echo "feat-name=$(echo '${{ github.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
+
+    - name: 'feat: set hostname on dev cluster'
+      if: startsWith(github.ref, 'refs/heads/feat/')
+      run: echo "hostname=${{ format(env.feat-hostname, env.feat-name) }}" >> $GITHUB_ENV
+
+    - name: 'feat: set url'
+      if: startsWith(github.ref, 'refs/heads/feat/')
+      run: echo "url=${{ format(env.url-format, env.hostname) }}" >> $GITHUB_ENV
+
+    - name: 'feat: set other vars'
+      if: startsWith(github.ref, 'refs/heads/feat/')
+      run: |
+        echo "target=dev" >> $GITHUB_ENV
+        echo "overlays=feat" >> $GITHUB_ENV
+        echo "cluster=${{ env.dev-cluster }}" >> $GITHUB_ENV
+        echo "rg=${{ env.dev-resource-group }}" >> $GITHUB_ENV
+        echo "docker-tag=${{ env.feat-name }}" >> $GITHUB_ENV
+
+
+    # Set Outputs
+    # ===========
     - id: resolved
+      name: 'OUTPUTS - resolve'
       run: |
         echo "::set-output name=target::${{ env.target }}"
+        echo "::set-output name=overlays::${{ env.overlays }}"
         echo "::set-output name=cluster::${{ env.cluster }}"
         echo "::set-output name=resource-group::${{ env.rg }}"
         echo "::set-output name=docker-tag::${{ env.docker-tag }}"
         echo "::set-output name=url::${{ env.url }}"
         echo "::set-output name=hostname::${{ env.hostname }}"
         echo "::set-output name=git-sha::${{ env.git-sha }}"
+
+
+# =========
+# Footnotes
+# =========
+# (1) `env` context not available in jobs  `jobs.<job_id>.if`
+# https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability

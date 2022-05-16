@@ -33,6 +33,7 @@ jobs:
     uses: ./.github/workflows/_docker.yaml
     with:
       environment:  ${{ needs.config.outputs.target }}
+      image-tag:    ${{ needs.config.outputs.docker-tag }}
       git-sha:      ${{ needs.config.outputs.git-sha }}
     secrets:
       AZURE_CLIENT_ID:                  ${{ secrets.AZURE_CLIENT_ID }}
@@ -51,7 +52,7 @@ jobs:
       resource-group: ${{ needs.config.outputs.resource-group }}
       cluster-name:   ${{ needs.config.outputs.cluster }}
       hostname:       ${{ needs.config.outputs.hostname }}
-      overlays:       ./manifests/overlays/${{ needs.config.outputs.target }}
+      overlays:       ./manifests/overlays/${{ needs.config.outputs.overlays }}
     secrets:
       AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -60,6 +61,7 @@ jobs:
   e2e:
     needs: [config, docker, deploy]
     uses: ./.github/workflows/_e2e.yaml
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
     with:
       url:       ${{ needs.config.outputs.url }}
       build-sha: ${{ needs.config.outputs.git-sha }}
