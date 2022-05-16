@@ -1,0 +1,62 @@
+name: feat-cleanup
+
+on:
+  delete:
+    branches:
+    - 'feat/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  config:
+    uses: ./.github/workflows/_config.yaml
+
+  output-vars:
+    needs: config
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "Target Environment - ${{ needs.config.outputs.target }}"
+    - run: echo "AKS cluster - ${{ needs.config.outputs.cluster }}"
+    - run: echo "Hostname - ${{ needs.config.outputs.hostname }}"
+    - run: echo "Url - ${{ needs.config.outputs.url }}"
+    - run: echo "git sha ${{ needs.config.outputs.git-sha }}"
+    - run: echo "Docker tag ${{ needs.config.outputs.docker-tag }}"
+
+  delete-temp:
+    needs: config
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: 'Login - Azure'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+    - id: kubelogin
+      name: 'Login - Kubernetes'
+      uses: ./.github/actions/kubelogin
+      with:
+        cluster-name: ${{ inputs.cluster-name }}
+        resource-group: ${{ inputs.resource-group }}
+
+    - name: 'kubectl delete'
+      if: startsWith(github.ref, 'refs/heads/feat/')
+      env:
+        KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
+        APP_BUILD_SHA: ${{ needs.config.outputs.git-sha }}
+        IMAGE_TAG: ${{ needs.config.outputs.docker-tag }}
+        INGRESS_HOSTNAME: ${{ needs.config.outputs.hostname }}
+      run: |
+        cat ./manifests/feat/deployment.yaml | envsubst | kubectl delete -f -
+        cat ./manifests/feat/service.yaml | envsubst | kubectl delete -f -
+        cat ./manifests/feat/ingress.yaml | envsubst | kubectl delete -f -
+
+    - uses: ./.github/actions/kubelogout
+      name: 'Logout - Kubernetes'
+      with:
+        kubeconfig: ${{ steps.kubelogin.outputs.kubeconfig }}
