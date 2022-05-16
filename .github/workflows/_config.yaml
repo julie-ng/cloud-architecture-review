@@ -30,7 +30,7 @@ on:
         value: ${{ jobs.setup-variables.outputs.url }}
       hostname:
         description: 'Hostname for ingress configuration'
-        value: ${{ jobs.setup-variables.outputs.hotsname }}
+        value: ${{ jobs.setup-variables.outputs.hostname }}
       git-sha:
         description: 'Short version of current git sha'
         value: ${{ jobs.setup-variables.outputs.git-sha }}

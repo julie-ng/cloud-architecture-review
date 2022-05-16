@@ -58,7 +58,7 @@ jobs:
         KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
         APP_BUILD_SHA: ${{ inputs.git-sha }}
         IMAGE_TAG: ${{ inputs.image-tag }}
-        HOSTNAME: ${{ inputs.hostname }}
+        INGRESS_HOSTNAME: ${{ inputs.hostname }}
       run: |
         kustomize build ${{ inputs.overlays }} | envsubst
         kustomize build ${{ inputs.overlays }} | envsubst | kubectl apply -f -
