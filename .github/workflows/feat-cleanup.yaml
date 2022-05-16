@@ -23,6 +23,10 @@ jobs:
     - run: echo "Url - ${{ needs.config.outputs.url }}"
     - run: echo "git sha ${{ needs.config.outputs.git-sha }}"
     - run: echo "Docker tag ${{ needs.config.outputs.docker-tag }}"
+    - run: echo "github.ref ${{ github.ref }}"
+    - run: echo "github.ref_name ${{ github.ref_name }}"
+    - run: echo "github.event_name ${{ github.event_name }}"
+    - run: echo "github.event_type ${{ github.event_type }}"
 
   delete-temp:
     name: 'Delete Temp Deployment'
@@ -47,7 +51,6 @@ jobs:
         resource-group: ${{ needs.config.outputs.resource-group }}
 
     - name: 'kubectl delete'
-      if: startsWith(github.ref, 'refs/heads/feat/')
       env:
         KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
         APP_BUILD_SHA: ${{ needs.config.outputs.git-sha }}
