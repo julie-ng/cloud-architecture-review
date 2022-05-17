@@ -1,0 +1,128 @@
+name: Feature Deployment
+
+on:
+  push:
+    branches:
+    - 'feat/**'
+  delete:
+    branches:
+    - 'feat/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  dev-cluster:         cloudkube-dev-nyl9-cluster
+  dev-resource-group:  cloudkube-dev-nyl9-rg
+  acr-registry:        aksarchitect
+  image-name:          aksarchitect.azurecr.io/frontend
+
+  manifests-dir:       './manifests/feat/'
+  hostname-format:     'aks-architect-{0}.dev.cloudkube.io'
+  url-format:          'https://{0}/'
+
+jobs:
+
+  # Setup Vars
+  # ==========
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      hostname:       ${{ steps.resolved.outputs.hostname }}
+      git-sha:        ${{ steps.resolved.outputs.git-sha }}
+      docker-tag:     ${{ steps.resolved.outputs.docker-tag }}
+      # url:            ${{ steps.resolved.outputs.url }} # no e2e for features
+
+    steps:
+    - id: name-on-push
+      if: github.event_name == 'push'
+      run: echo "feat-name=$(echo '${{ github.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
+
+    - id: name-on-delete
+      if: github.event_name == 'delete'
+      run: echo "feat-name=$(echo '${{ github.event.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
+
+    - id: set-hostname
+      run: echo "hostname=${{ format(env.hostname-format, env.feat-name) }}" >> $GITHUB_ENV
+
+    - id: other-vars
+      run: |
+        echo "docker-tag=${{ env.feat-name }}" >> $GITHUB_ENV
+        echo "git-sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+    - id: resolved
+      run: |
+        echo "::set-output name=docker-tag::${{ env.docker-tag }}"
+        echo "::set-output name=hostname::${{ env.hostname }}"
+        echo "::set-output name=git-sha::${{ env.git-sha }}"
+
+
+  # Deployments
+  # ===========
+  deployment:
+    name: 'Add/Remove Deployment'
+    needs: config
+    runs-on: ubuntu-latest
+    environment: dev # GitHub Envronment
+    steps:
+    - uses: actions/checkout@v2
+
+    # Azure Login
+    - name: 'Login - Azure'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+    # Build and Push Docker Image
+    - id: docker
+      if: github.event_name == 'push'
+      run: |
+        az acr login --name ${{ env.acr-registry }}
+        docker build -t ${{ env.image-name }}:${{ inputs.image-tag }} .
+        docker push ${{ env.image-name }}:${{ inputs.image-tag }}
+        docker logout
+
+    # Cluster Login
+    - id: kubelogin
+      name: 'Login - Kubernetes'
+      uses: ./.github/actions/kubelogin
+      with:
+        cluster-name: ${{ env.cluster }}
+        resource-group: ${{ env.resource-group }}
+
+    # Add/Update Deployment
+    - id: apply
+      name: 'Add/Update Deployment (k apply)'
+      if: github.event_name == 'push'
+      env:
+        KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
+        APP_BUILD_SHA: ${{ inputs.git-sha }}
+        IMAGE_TAG: ${{ inputs.image-tag }}
+        INGRESS_HOSTNAME: ${{ inputs.hostname }}
+      run: |
+        cat ./manifests/feat/deployment.yaml | envsubst | kubectl apply -f -
+        cat ./manifests/feat/ingress.yaml | envsubst | kubectl apply -f -
+        cat ./manifests/feat/service.yaml | envsubst | kubectl apply -f -
+
+    # Remove Deployment
+    - id: remove
+      name: 'Remove Deployment (k delete)'
+      if: github.event_name == 'delete'
+      env:
+        KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
+        APP_BUILD_SHA: ${{ needs.config.outputs.git-sha }}
+        IMAGE_TAG: ${{ needs.config.outputs.docker-tag }}
+        INGRESS_HOSTNAME: ${{ needs.config.outputs.hostname }}
+      run: |
+        cat ./manifests/feat/deployment.yaml | envsubst | kubectl delete -f -
+        cat ./manifests/feat/service.yaml | envsubst | kubectl delete -f -
+        cat ./manifests/feat/ingress.yaml | envsubst | kubectl delete -f -
+
+    # Cluster Logout (remove kubeconfig)
+    - uses: ./.github/actions/kubelogout
+      name: 'Logout - Kubernetes'
+      with:
+        kubeconfig: ${{ steps.kubelogin.outputs.kubeconfig }}

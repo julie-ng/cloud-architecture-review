@@ -1,6 +1,5 @@
 name: _config
 
-# CONFIG GOES HERE
 env:
   dev-cluster:            cloudkube-dev-nyl9-cluster
   dev-resource-group:     cloudkube-dev-nyl9-rg
@@ -12,7 +11,6 @@ env:
   staging-hostname:       aks-architect.staging.cloudkube.io
   staging-branch:         'refs/heads/staging'
 
-  feat-hostname:          'aks-architect-{0}.dev.cloudkube.io'
   url-format:             'https://{0}/'
 
 
@@ -91,30 +89,6 @@ jobs:
         echo "hostname=${{ env.staging-hostname }}" >> $GITHUB_ENV
         echo "url=${{ format(env.url-format, env.staging-hostname) }}" >> $GITHUB_ENV
         echo "docker-tag=staging-${{ env.git-sha }}" >> $GITHUB_ENV
-
-
-    # Feature
-    # =======
-    - name: 'feat: format name from branch'
-      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
-      run: echo "feat-name=$(echo '${{ github.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
-
-    - name: 'feat: set hostname on dev cluster'
-      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
-      run: echo "hostname=${{ format(env.feat-hostname, env.feat-name) }}" >> $GITHUB_ENV
-
-    - name: 'feat: set url'
-      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
-      run: echo "url=${{ format(env.url-format, env.hostname) }}" >> $GITHUB_ENV
-
-    - name: 'feat: set other vars'
-      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
-      run: |
-        echo "target=dev" >> $GITHUB_ENV
-        echo "overlays=feat" >> $GITHUB_ENV
-        echo "cluster=${{ env.dev-cluster }}" >> $GITHUB_ENV
-        echo "rg=${{ env.dev-resource-group }}" >> $GITHUB_ENV
-        echo "docker-tag=${{ env.feat-name }}" >> $GITHUB_ENV
 
 
     # Set Outputs
