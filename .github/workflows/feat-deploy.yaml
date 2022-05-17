@@ -16,7 +16,8 @@ env:
   cluster-name:    cloudkube-dev-nyl9-cluster
   cluster-rg:      cloudkube-dev-nyl9-rg
   acr-registry:    aksarchitect
-  image-name:      aksarchitect.azurecr.io/frontend
+  base-tag:        aksarchitect.azurecr.io/frontend
+  image-name:      frontend
   k8s-namespace:   aks-architect
 
   manifests-dir:   './manifests/feat/'
@@ -97,8 +98,8 @@ jobs:
         image-tag: ${{ needs.config.outputs.docker-tag }}
       run: |
         az acr login --name ${{ env.acr-registry }}
-        docker build -t ${{ env.image-name }}:${{ env.image-tag }} .
-        docker push ${{ env.image-name }}:${{ env.image-tag }}
+        docker build -t ${{ env.base-tag }}:${{ env.image-tag }} .
+        docker push ${{ env.base-tag }}:${{ env.image-tag }}
         docker logout
 
     # Add/Update Deployment (incl. restart)
@@ -129,6 +130,7 @@ jobs:
         cat ./manifests/feat/deployment.yaml | envsubst | kubectl delete -f -
         cat ./manifests/feat/service.yaml | envsubst | kubectl delete -f -
         cat ./manifests/feat/ingress.yaml | envsubst | kubectl delete -f -
+        az acr repository delete --name ${{ env.acr-registry }} --image ${{ env.image-name }}:${{ env.IMAGE_TAG }}
 
     # Cluster Logout (remove kubeconfig)
     - uses: ./.github/actions/kubelogout
