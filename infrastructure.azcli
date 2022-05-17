@@ -11,8 +11,8 @@
 # -----
 
 ACR_REGISTRY=aksarchitect
-PURGE_DEV="acr purge --filter 'aks-archtitect:dev-*' --untagged --ago 30d --keep 5"
-PURGE_STAGING="acr purge --filter 'aks-archtitect:staging-*' --untagged --ago 30d --keep 5"
+PURGE_DEV="acr purge --filter 'frontend:dev-*' --untagged --ago 14d --keep 5"
+PURGE_STAGING="acr purge --filter 'frontend:staging-*' --untagged --ago 14d --keep 5"
 
 # One-Time purge (dev)
 
