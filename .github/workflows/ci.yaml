@@ -17,18 +17,17 @@ on:
     - main
   schedule:
     - cron: '0 0 * * *'
+  workflow_call:
 
 jobs:
   node:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [ '16' ]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node }}
+        node-version: 16
+        cache: 'npm'
 
     - name: npm install
       run: npm ci
@@ -46,31 +45,31 @@ jobs:
     - name: build
       run: npm run nuxt:build
 
-  docker:
-    needs: node
-    runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
-    steps:
-    - uses: actions/checkout@v2
-    - run: docker build .
+  # docker:
+  #   needs: node
+  #   runs-on: ubuntu-latest
+  #   if: github.ref != 'refs/heads/main'
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - run: docker build .
 
-  analyze:
-    name: CodeQL Analysis
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
+  # analyze:
+  #   name: CodeQL Analysis
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     actions: read
+  #     contents: read
+  #     security-events: write
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v2
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+  #   - name: Initialize CodeQL
+  #     uses: github/codeql-action/init@v2
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+  #   - name: Autobuild
+  #     uses: github/codeql-action/autobuild@v2
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+  #   - name: Perform CodeQL Analysis
+  #     uses: github/codeql-action/analyze@v2

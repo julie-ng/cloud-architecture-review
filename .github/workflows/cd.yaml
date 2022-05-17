@@ -17,7 +17,11 @@ permissions:
   contents: read
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yaml
+
   config:
+    needs: ci
     uses: ./.github/workflows/_config.yaml
 
   output-vars:
