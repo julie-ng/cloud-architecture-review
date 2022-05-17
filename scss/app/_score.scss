@@ -1,10 +1,10 @@
 .app-scoreboard {
-	// padding: 0.5rem var(--gutter-width);
+	// border: 1px solid red;
+	display: table; // to make sticky work
+	height: 100%;
 
 	h3 {
-		margin-bottom: 0; //0.25em;
-		font-size: 1.1rem; // TODO
-		// font-weight: 500;
+		// margin-bottom: 0; //0.25em;
 
 		& + p {
 			margin-top: 0.5em;
@@ -17,6 +17,7 @@
 	position: sticky;
 	top: 110px;
 	font-size: var(--sm-font-size);
+	// border: 1px solid black;
 }
 
 .score-pillar {
