@@ -13,14 +13,15 @@ permissions:
   contents: read
 
 env:
-  dev-cluster:         cloudkube-dev-nyl9-cluster
-  dev-resource-group:  cloudkube-dev-nyl9-rg
-  acr-registry:        aksarchitect
-  image-name:          aksarchitect.azurecr.io/frontend
+  cluster-name:    cloudkube-dev-nyl9-cluster
+  cluster-rg:      cloudkube-dev-nyl9-rg
+  acr-registry:    aksarchitect
+  image-name:      aksarchitect.azurecr.io/frontend
+  k8s-namespace:   aks-architect
 
-  manifests-dir:       './manifests/feat/'
-  hostname-format:     'aks-architect-{0}.dev.cloudkube.io'
-  url-format:          'https://{0}/'
+  manifests-dir:   './manifests/feat/'
+  hostname-format: 'aks-architect-{0}.dev.cloudkube.io'
+  url-format:      'https://{0}/'
 
 jobs:
   ci:
@@ -30,6 +31,7 @@ jobs:
   # ==========
   config:
     needs: ci
+    name: 'setup-vars'
     runs-on: ubuntu-latest
     outputs:
       hostname:       ${{ steps.resolved.outputs.hostname }}
@@ -64,7 +66,7 @@ jobs:
   # Deployments
   # ===========
   deployment:
-    name: 'Add/Remove Deployment'
+    name: 'deploy'
     needs: config
     runs-on: ubuntu-latest
     environment: dev # GitHub Envronment
@@ -79,40 +81,44 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
-    # Build and Push Docker Image
-    - id: docker
-      if: github.event_name == 'push'
-      run: |
-        az acr login --name ${{ env.acr-registry }}
-        docker build -t ${{ env.image-name }}:${{ inputs.image-tag }} .
-        docker push ${{ env.image-name }}:${{ inputs.image-tag }}
-        docker logout
-
     # Cluster Login
     - id: kubelogin
-      name: 'Login - Kubernetes'
+      name: 'Login - Cluster'
       uses: ./.github/actions/kubelogin
       with:
-        cluster-name: ${{ env.cluster }}
-        resource-group: ${{ env.resource-group }}
+        cluster-name: ${{ env.cluster-name }}
+        resource-group: ${{ env.cluster-rg }}
 
-    # Add/Update Deployment
+    # Build and Push Docker Image
+    - id: docker
+      name: '🐳 Docker - build and psuh'
+      if: github.event_name == 'push'
+      env:
+        image-tag: ${{ needs.config.outputs.docker-tag }}
+      run: |
+        az acr login --name ${{ env.acr-registry }}
+        docker build -t ${{ env.image-name }}:${{ env.image-tag }} .
+        docker push ${{ env.image-name }}:${{ env.image-tag }}
+        docker logout
+
+    # Add/Update Deployment (incl. restart)
     - id: apply
-      name: 'Add/Update Deployment (k apply)'
+      name: '🧪 APPLY Deployment'
       if: github.event_name == 'push'
       env:
         KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
-        APP_BUILD_SHA: ${{ inputs.git-sha }}
-        IMAGE_TAG: ${{ inputs.image-tag }}
-        INGRESS_HOSTNAME: ${{ inputs.hostname }}
+        APP_BUILD_SHA: ${{ needs.config.outputs.git-sha }}
+        IMAGE_TAG: ${{ needs.config.outputs.docker-tag }}
+        INGRESS_HOSTNAME: ${{ needs.config.outputs.hostname }}
       run: |
         cat ./manifests/feat/deployment.yaml | envsubst | kubectl apply -f -
         cat ./manifests/feat/ingress.yaml | envsubst | kubectl apply -f -
         cat ./manifests/feat/service.yaml | envsubst | kubectl apply -f -
+        kubectl rollout restart deployment temp-nuxtjs-${{ env.IMAGE_TAG }} -n ${{ env.k8s-namespace }}
 
     # Remove Deployment
     - id: remove
-      name: 'Remove Deployment (k delete)'
+      name: '🧹 DELETE Deployment'
       if: github.event_name == 'delete'
       env:
         KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
@@ -126,6 +132,6 @@ jobs:
 
     # Cluster Logout (remove kubeconfig)
     - uses: ./.github/actions/kubelogout
-      name: 'Logout - Kubernetes'
+      name: 'Logout - Cluster'
       with:
         kubeconfig: ${{ steps.kubelogin.outputs.kubeconfig }}
