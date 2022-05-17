@@ -178,6 +178,7 @@ jobs:
     - id: remove-image
       name: '🧹 DELETE Docker Image'
       run: |
+        az acr login --name ${{ env.acr-registry }}
         az acr repository delete \
           --name ${{ env.acr-registry }} \
           --image ${{ env.image-name }}:${{ needs.config.outputs.docker-tag }} \
