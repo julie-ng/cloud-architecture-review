@@ -20,6 +20,9 @@ env:
   image-name:      frontend
   k8s-namespace:   aks-architect
 
+  # pattern in manifests/feat/deployment.yaml
+  deployment-base-name: temp-nuxtjs
+
   manifests-dir:   './manifests/feat/'
   hostname-format: 'aks-architect-{0}.dev.cloudkube.io'
   url-format:      'https://{0}/'
@@ -64,17 +67,17 @@ jobs:
         echo "::set-output name=git-sha::${{ env.git-sha }}"
 
 
-  # Deployments
-  # ===========
-  deployment:
+  # Deploy
+  # ======
+  deploy:
     name: 'deploy'
+    if: github.event_name == 'push'
     needs: config
     runs-on: ubuntu-latest
     environment: dev # GitHub Envronment
     steps:
     - uses: actions/checkout@v2
 
-    # Azure Login
     - name: 'Login - Azure'
       uses: azure/login@v1
       with:
@@ -82,7 +85,6 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
-    # Cluster Login
     - id: kubelogin
       name: 'Login - Cluster'
       uses: ./.github/actions/kubelogin
@@ -93,7 +95,6 @@ jobs:
     # Build and Push Docker Image
     - id: docker
       name: '🐳 Docker - build and psuh'
-      if: github.event_name == 'push'
       env:
         image-tag: ${{ needs.config.outputs.docker-tag }}
       run: |
@@ -103,9 +104,8 @@ jobs:
         docker logout
 
     # Add/Update Deployment (incl. restart)
-    - id: apply
+    - id: kubectl-apply
       name: '🧪 APPLY Deployment'
-      if: github.event_name == 'push'
       env:
         KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
         APP_BUILD_SHA: ${{ needs.config.outputs.git-sha }}
@@ -115,10 +115,45 @@ jobs:
         cat ./manifests/feat/deployment.yaml | envsubst | kubectl apply -f -
         cat ./manifests/feat/ingress.yaml | envsubst | kubectl apply -f -
         cat ./manifests/feat/service.yaml | envsubst | kubectl apply -f -
-        kubectl rollout restart deployment temp-nuxtjs-${{ env.IMAGE_TAG }} -n ${{ env.k8s-namespace }}
+
+    # Pull Latest Image
+    - id: restart-pods
+      run: |
+        kubectl rollout restart deployment \
+          ${{ env.deployment-base-name }}-${{ needs.config.outputs.docker-tag }} \
+          --namespace ${{ env.k8s-namespace }}
+
+    - uses: ./.github/actions/kubelogout
+      name: 'Logout - Cluster'
+      with:
+        kubeconfig: ${{ steps.kubelogin.outputs.kubeconfig }}
+
+  # Clean Up
+  # ========
+  clean-up:
+    needs: config
+    if: github.event_name == 'delete'
+    runs-on: ubuntu-latest
+    environment: dev # GitHub Envronment
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: 'Login - Azure'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+    - id: kubelogin
+      name: 'Login - Cluster'
+      uses: ./.github/actions/kubelogin
+      with:
+        cluster-name: ${{ env.cluster-name }}
+        resource-group: ${{ env.cluster-rg }}
 
     # Remove Deployment
-    - id: remove
+    - id: remove-deployment
       name: '🧹 DELETE Deployment'
       if: github.event_name == 'delete'
       env:
@@ -130,9 +165,15 @@ jobs:
         cat ./manifests/feat/deployment.yaml | envsubst | kubectl delete -f -
         cat ./manifests/feat/service.yaml | envsubst | kubectl delete -f -
         cat ./manifests/feat/ingress.yaml | envsubst | kubectl delete -f -
-        az acr repository delete --name ${{ env.acr-registry }} --image ${{ env.image-name }}:${{ env.IMAGE_TAG }}
 
-    # Cluster Logout (remove kubeconfig)
+    # Remove Docker Image
+    - id: remove-image
+      name: '🧹 DELETE Docker Image'
+      run: |
+        az acr repository delete \
+          --name ${{ env.acr-registry }} \
+          --image ${{ env.image-name }}:${{ needs.config.outputs.docker-tag }}
+
     - uses: ./.github/actions/kubelogout
       name: 'Logout - Cluster'
       with:
