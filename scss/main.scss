@@ -1,6 +1,7 @@
 // @import '../node_modules/@cloudkube/ui/src/scss/main.scss';
 
 @import 'vars';
+@import 'bulma';
 // @import 'poc/normalize';
 // @import 'poc/layout';
 // @import 'poc/typography';
@@ -13,7 +14,6 @@
 // @import 'poc/score';
 // @import 'poc/results';
 // @import 'poc/print';
-@import 'bulma';
 
 @import 'app/header';
 @import 'sidenav';

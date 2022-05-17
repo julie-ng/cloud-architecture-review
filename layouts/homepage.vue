@@ -3,8 +3,8 @@
 		<app-header/>
 
     <div class="hero is-link">
-      <div class="container is-widescreen">
-        <div class="section columns is-desktop">
+      <div class="container is-max-widescreen gap-on-mobile">
+        <div class="columns is-desktop pt-6 pb-6">
           <div class="column is-three-fifths">
             <h1 class="title is-2 is-spaced">How does your Azure Kubernetes Architecture Design measure up?</h1>
             <p class="subtitle">
@@ -18,7 +18,7 @@
       </div>
     </div><!--/.hero-->
 
-    <div class="container is-widescreen">
+    <div class="container is-max-widescreen">
       <section class="section">
         <div class="columns is-desktop">
           <div class="column">
