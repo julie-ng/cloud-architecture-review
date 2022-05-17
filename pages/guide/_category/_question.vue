@@ -41,6 +41,8 @@ const QuestionSchema = require('../../../schemas/question')
 const DecisionSchema = require('../../../schemas/decision')
 
 export default {
+  layout: 'app',
+
 	data () {
 		return {
 			factors: []

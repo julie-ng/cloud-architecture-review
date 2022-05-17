@@ -7,6 +7,8 @@
 
 <script>
 export default {
+  layout: 'basic',
+
   async asyncData ({ $content, app, params, error }) {
     const path = `/${params.pathMatch || 'index'}`
     const [article] = await $content({ deep: true }).where({ path }).fetch()

@@ -4,8 +4,8 @@
 
 <script>
 	import FormLoader from '~/app/form-loader'
-
 	export default {
+		layout: 'app',
 		/**
 		 * [SSR] Fetch and load Markdown Content
 		 * Loads only title and metadata without body

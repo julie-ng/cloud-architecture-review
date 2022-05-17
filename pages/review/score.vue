@@ -27,6 +27,8 @@
 
 <script>
 export default {
+	layout: 'app',
+
 	computed: {
 		results () {
       return this.$store.getters['decisions/analysis']
