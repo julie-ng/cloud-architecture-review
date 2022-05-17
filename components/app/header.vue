@@ -1,6 +1,6 @@
 <template>
 	<header class="app-header navbar is-fixed-top">
-		<div class="container is-widescreen">
+		<div class="container is-max-widescreen">
 
 			<div class="navbar-brand">
 				<h1 class="navbar-item">
