@@ -1,17 +1,17 @@
 name: 'Continuous Integration (CI)'
 
 on:
-  push:
-    branches:
-    - main
-    - feat/*
-    - fix/*
-    paths-ignore:
-    - 'content/**'
-    - 'manifests/**'
-    - 'scss/**'
-    - 'static/**'
-    - '**/*.md'
+  # push:
+  #   branches:
+  #   - main
+  #   - feat/*
+  #   - fix/*
+  #   paths-ignore:
+  #   - 'content/**'
+  #   - 'manifests/**'
+  #   - 'scss/**'
+  #   - 'static/**'
+  #   - '**/*.md'
   pull_request:
     branches:
     - main
@@ -45,13 +45,13 @@ jobs:
     - name: build
       run: npm run nuxt:build
 
-  # docker:
-  #   needs: node
-  #   runs-on: ubuntu-latest
-  #   if: github.ref != 'refs/heads/main'
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - run: docker build .
+  docker:
+    if: github.event_name == 'pull_request'
+    needs: node
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: docker build .
 
   # analyze:
   #   name: CodeQL Analysis
