@@ -41,11 +41,14 @@ jobs:
       hostname:       ${{ steps.resolved.outputs.hostname }}
       git-sha:        ${{ steps.resolved.outputs.git-sha }}
       docker-tag:     ${{ steps.resolved.outputs.docker-tag }}
-      # url:            ${{ steps.resolved.outputs.url }} # no e2e for features
 
     steps:
     - id: debug-context
-      run: echo '${{ toJSON(github) }}'
+      run: |
+        echo "event_name      ${{ github.event_name }}"
+        echo "ref_name        ${{ github.ref_name }}"
+        echo "event.ref       ${{ github.event.ref }}"
+        echo "event.ref_type  ${{ github.event.ref_type }}"
 
     - id: name-on-push
       if: github.event_name == 'push'
@@ -53,7 +56,7 @@ jobs:
 
     - id: name-on-delete
       if: github.event_name == 'delete'
-      run: echo "feat-name=$(echo '${{ github.event.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
+      run: echo "feat-name=$(echo '${{ github.event.ref }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
 
     - id: set-hostname
       run: echo "hostname=${{ format(env.hostname-format, env.feat-name) }}" >> $GITHUB_ENV
