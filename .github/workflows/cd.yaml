@@ -21,17 +21,22 @@ jobs:
     uses: ./.github/workflows/ci.yaml
 
   config:
-    needs: ci
     uses: ./.github/workflows/_config.yaml
 
-  output-vars:
+  debug-outputs:
     needs: config
     runs-on: ubuntu-latest
     steps:
     - run: echo "Target Environment - ${{ needs.config.outputs.target }}"
     - run: echo "AKS cluster - ${{ needs.config.outputs.cluster }}"
-    - run: echo "git sha ${{ needs.config.outputs.git-sha }}"
-    - run: echo "Docker tag ${{ needs.config.outputs.docker-tag }}"
+    - run: echo "Git sha - ${{ needs.config.outputs.git-sha }}"
+    - run: echo "Docker Tag - ${{ needs.config.outputs.docker-tag }}"
+    - id: debug-context
+      run: |
+        echo "event_name      ${{ github.event_name }}"
+        echo "ref_name        ${{ github.ref_name }}"
+        echo "event.ref       ${{ github.event.ref }}"
+        echo "event.ref_type  ${{ github.event.ref_type }}"
 
   docker:
     needs: config

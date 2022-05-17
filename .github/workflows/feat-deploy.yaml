@@ -35,7 +35,6 @@ jobs:
   # Setup Vars
   # ==========
   config:
-    needs: ci
     name: 'setup-vars'
     runs-on: ubuntu-latest
     outputs:
@@ -79,7 +78,7 @@ jobs:
   deploy:
     name: 'deploy'
     if: github.event_name == 'push'
-    needs: config
+    needs: [ci, config]
     runs-on: ubuntu-latest
     environment: dev # GitHub Envronment
     steps:
@@ -125,10 +124,12 @@ jobs:
 
     # Pull Latest Image
     - id: restart-pods
+      name: '☸️ Restart Pods'
       run: |
         kubectl rollout restart deployment \
           ${{ env.deployment-base-name }}-${{ needs.config.outputs.docker-tag }} \
           --namespace ${{ env.k8s-namespace }}
+      continue-on-error: true # will fail on first deploy
 
     - uses: ./.github/actions/kubelogout
       name: 'Logout - Cluster'
