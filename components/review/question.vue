@@ -1,7 +1,7 @@
 <template>
 	<article class="question-box box">
 		<h2 class="question-title has-scroll-anchor" :id=question.slug>
-			<NuxtLink class="has-no-underline" :to=question.path>{{ question.title }}</NuxtLink>
+			<NuxtLink :to=question.path>{{ question.title }}</NuxtLink>
 		</h2>
 		<p>{{ question.description }} <NuxtLink :to=question.path>Learn more…</NuxtLink></p>
 		<review-radio-input

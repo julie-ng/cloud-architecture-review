@@ -58,19 +58,9 @@ pre {
 .category-title {
 	text-transform: capitalize;
 	font-size: 1.8rem;
+	font-weight: 500;
 }
 
-.question-title {
-	// font-size: 1.3rem;
-
-	a:link, a:visited {
-		text-decoration: none;
-	}
-
-	a:hover, a:active {
-		text-decoration: underline;
-	}
-}
 
 .lead {
 	font-weight: 300;

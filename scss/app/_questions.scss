@@ -14,6 +14,16 @@
 	border-radius: 0.5em;
 }
 
+.question-title {
+	a:link, a:visited {
+		text-decoration: none;
+	}
+
+	a:hover, a:active {
+		text-decoration: underline;
+	}
+}
+
 .question-reset-btn {
 	display: inline-block;
 	position: absolute;
@@ -21,7 +31,7 @@
 	right: 2em;
 	margin: 2em 0 0;
 	padding: 0.4em 0.7em;
-	border: 1px solid var(--grey-border-color);
+	border: 1px solid #ddd;
 	box-sizing: border-box;
 	border-radius: 4px;
 	font-weight: 400 !important;

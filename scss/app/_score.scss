@@ -48,7 +48,8 @@ span.score-delta {
 	border-radius: 10px;
 
 	.meter-bar {
-		background-color: #8fa4ff;
+		background-color: var(--teal-color);
+		// background-color: #8fa4ff;
 		// transition: all 0.2s ease-in 0;
 	}
 }

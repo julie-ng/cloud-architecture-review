@@ -1,7 +1,7 @@
 <template>
 	<div class="app-scoreboard">
 		<div class="score">
-			<h3 class="mb-0">Your Architecture Scores</h3>
+			<h3 class="mb-0 is-size-6">Your Architecture Scores</h3>
 			<p>How does an Azure Kubernetes Cluster with the selected criteria measure?</p>
 			<score-pillar v-for="(score, category) in scores"
 				:id=category

@@ -6,10 +6,8 @@
 	.navbar-title {
 		font-size: 1.3rem;
 		font-weight: 600;
+		font-family: var(--heading-font);
 
-		// @include until($widescreen) {
-		// 	// padding-left: 0;
-		// }
 		@include until($tablet) {
 			font-size: 1rem;
 		}
@@ -18,10 +16,12 @@
 			color: var(--teal-color);
 			margin: 0 0.4em;
 		}
+	}
 
-
-		&:link, &:visited {
-			color: #111;
+	a {
+		&:hover, &:active {
+			text-decoration: none;
+			color: var(--purple-color);
 		}
 	}
 
@@ -34,6 +34,11 @@
 		margin: 0;
 		padding: 0;
 		display: inline-block;
+	}
+
+	.navbar-menu {
+		// font-family: var(--heading-font);
+		font-size: var(--sm-font-size);
 	}
 }
 

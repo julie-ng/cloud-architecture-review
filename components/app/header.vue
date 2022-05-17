@@ -1,5 +1,5 @@
 <template>
-	<header class="app-header navbar is-fixed-top">
+	<header class="app-header navbar is-fixed-top no-underlined-links">
 		<div class="container is-max-widescreen">
 
 			<div class="navbar-brand">
@@ -22,7 +22,7 @@
 					<NuxtLink class="navbar-item" to="/about">About</NuxtLink>
 					<NuxtLink class="navbar-item" to="/getting-started">Getting Started</NuxtLink>
 					<div class="navbar-item buttons">
-						<NuxtLink class="button is-link" to="/review">Review your Design</NuxtLink>
+						<NuxtLink class="button is-link is-light" to="/review">Review your Design</NuxtLink>
 					</div>
 				</nav>
 			</div>

@@ -8,15 +8,15 @@
 		list-style-type: none;
 	}
 
-	a {
-		&:link, &:visited {
-			text-decoration: none;
-		}
+	// a {
+	// 	&:link, &:visited {
+	// 		text-decoration: none;
+	// 	}
 
-		&:hover, &:active {
-			text-decoration: underline;
-		}
-	}
+	// 	&:hover, &:active {
+	// 		text-decoration: underline;
+	// 	}
+	// }
 }
 
 .app-navigation-category {
@@ -32,9 +32,14 @@
 	}
 }
 
+.app-navigation-questions {
+	font-size: 0.9em;
+}
+
 .app-navigation-title {
 	text-transform: capitalize;
 	margin-bottom: 0.4em;
+	font-weight: 500;
 }
 
 .app-tab-nav {

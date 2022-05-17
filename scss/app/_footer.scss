@@ -1,0 +1,13 @@
+.app-footer {
+	line-height: 1.3em;
+	color: var(--footer-text-color);
+
+	a:link, a:visited {
+		color: var(--footer-text-color);
+	}
+}
+
+.commit:link,
+.commit:visited {
+	color: #ccc;
+}
