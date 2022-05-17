@@ -1,4 +1,4 @@
-name: Feature Deployment
+name: Feature Deploy, Clean Up
 
 on:
   push:
@@ -30,6 +30,7 @@ env:
 jobs:
   ci:
     uses: ./.github/workflows/ci.yaml
+    if: github.event_name == 'push'
 
   # Setup Vars
   # ==========
@@ -178,7 +179,8 @@ jobs:
       run: |
         az acr repository delete \
           --name ${{ env.acr-registry }} \
-          --image ${{ env.image-name }}:${{ needs.config.outputs.docker-tag }}
+          --image ${{ env.image-name }}:${{ needs.config.outputs.docker-tag }} \
+          --yes
 
     - uses: ./.github/actions/kubelogout
       name: 'Logout - Cluster'
