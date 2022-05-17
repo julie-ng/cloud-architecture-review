@@ -44,6 +44,9 @@ jobs:
       # url:            ${{ steps.resolved.outputs.url }} # no e2e for features
 
     steps:
+    - id: debug-context
+      run: echo '${{ toJSON(github) }}'
+
     - id: name-on-push
       if: github.event_name == 'push'
       run: echo "feat-name=$(echo '${{ github.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
