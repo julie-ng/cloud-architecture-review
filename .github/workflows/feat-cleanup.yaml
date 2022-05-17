@@ -23,10 +23,9 @@ jobs:
     - run: echo "Url - ${{ needs.config.outputs.url }}"
     - run: echo "git sha ${{ needs.config.outputs.git-sha }}"
     - run: echo "Docker tag ${{ needs.config.outputs.docker-tag }}"
-    - run: echo "github.ref ${{ github.ref }}"
-    - run: echo "github.ref_name ${{ github.ref_name }}"
+    - run: echo "github.event.ref ${{ github.event.ref }}"
+    - run: echo "github.event.ref_type ${{ github.event.ref_type }}"
     - run: echo "github.event_name ${{ github.event_name }}"
-    - run: echo "github.event_type ${{ github.event_type }}"
 
   delete-temp:
     name: 'Delete Temp Deployment'

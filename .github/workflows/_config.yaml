@@ -96,19 +96,19 @@ jobs:
     # Feature
     # =======
     - name: 'feat: format name from branch'
-      if: startsWith(github.ref, 'refs/heads/feat/')
+      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
       run: echo "feat-name=$(echo '${{ github.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
 
     - name: 'feat: set hostname on dev cluster'
-      if: startsWith(github.ref, 'refs/heads/feat/')
+      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
       run: echo "hostname=${{ format(env.feat-hostname, env.feat-name) }}" >> $GITHUB_ENV
 
     - name: 'feat: set url'
-      if: startsWith(github.ref, 'refs/heads/feat/')
+      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
       run: echo "url=${{ format(env.url-format, env.hostname) }}" >> $GITHUB_ENV
 
     - name: 'feat: set other vars'
-      if: startsWith(github.ref, 'refs/heads/feat/')
+      if: (github.event_name == 'delete' && startsWith(github.event.ref, 'refs/heads/feat/') || startsWith(github.ref, 'refs/heads/feat/')
       run: |
         echo "target=dev" >> $GITHUB_ENV
         echo "overlays=feat" >> $GITHUB_ENV
