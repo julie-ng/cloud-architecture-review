@@ -6,7 +6,6 @@
 // @import 'poc/typography';
 // @import 'poc/buttons';
 // @import 'poc/forms';
-@import 'cloudkube/header';
 // @import 'poc/footer';
 // @import 'poc/navigation';
 
@@ -16,6 +15,7 @@
 // @import 'poc/print';
 @import 'bulma';
 
+@import 'app/header';
 @import 'sidenav';
 @import 'tables';
 @import 'app/questions';
@@ -27,16 +27,6 @@
 // }
 
 // Bulma Override needed for Logo
-.navbar-item {
-	.cloudkube-logo {
-		vertical-align: middle;
-		max-width: 48px;
-		max-height: 48px;
-		// margin-top: -63px;
-		margin-left: -6px;
-		margin-right: 4px;
-	}
-}
 
 html.has-navbar-fixed-top,
 body.has-navbar-fixed-top {

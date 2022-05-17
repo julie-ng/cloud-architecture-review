@@ -1,0 +1,47 @@
+.app-header {
+	border-top: 5px solid var(--purple-color);
+	border-bottom: 1px solid var(--layout-border-color);
+	padding: 0.2rem 0;
+
+	.navbar-title {
+		font-size: 1.3rem;
+		font-weight: 600;
+
+		// @include until($widescreen) {
+		// 	// padding-left: 0;
+		// }
+		@include until($tablet) {
+			font-size: 1rem;
+		}
+
+		span {
+			color: var(--teal-color);
+			margin: 0 0.4em;
+		}
+
+
+		&:link, &:visited {
+			color: #111;
+		}
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		margin: 0;
+		padding: 0;
+		display: inline-block;
+	}
+}
+
+.cloudkube-logo {
+	vertical-align: middle;
+	height: auto;
+	max-width: 48px;
+	max-height: 48px !important;
+	margin-left: -3px;
+	margin-right: 8px;
+}

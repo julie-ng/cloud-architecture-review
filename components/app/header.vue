@@ -3,12 +3,12 @@
 		<div class="container is-max-widescreen">
 
 			<div class="navbar-brand">
-				<h1 class="navbar-item">
-					<NuxtLink  to="/">
-						<img src="/images/cloudkube/kubewave.svg" alt="Cloudkube Logo" class="cloudkube-logo">
-						Azure Kubernetes <span>|</span> Architecture
-					</NuxtLink>
-				</h1>
+
+				<NuxtLink  class="navbar-title navbar-item" to="/">
+					<img src="/images/cloudkube/kubewave.svg" alt="Cloudkube Logo" class="cloudkube-logo">
+					Azure Kubernetes <span>|</span> Architecture
+				</NuxtLink>
+
 
 				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="js-navbar">
 					<span aria-hidden="true"></span>
