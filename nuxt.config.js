@@ -27,7 +27,8 @@ export default {
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
 	plugins: [
-		'~/plugins/init-store.client.js'
+		'~/plugins/init-store.client.js',
+		'~/plugins/nav-burger.client.js'
 	],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
