@@ -54,6 +54,9 @@ jobs:
     - name: 'Docker - Build'
       run: docker build -t ${{ env.image-name }}:${{ inputs.image-tag }} .
 
+    - name: 'Docker - Push'
+      run: docker push ${{ env.image-name }}:${{ inputs.image-tag }}
+
     - uses: Azure/container-scan@v0
       name: 'Docker - Azure Defender Scan'
       continue-on-error: true
@@ -61,9 +64,6 @@ jobs:
       with:
         image-name: ${{ env.image-name }}:${{ inputs.image-tag }}
         severity-threshold: WARN
-
-    - name: 'Docker - Push'
-      run: docker push ${{ env.image-name }}:${{ inputs.image-tag }}
 
     - name: 'Defender Scan - post results to Azure' # per Docs must be _after_ push
       uses: Azure/publish-security-assessments@v0
