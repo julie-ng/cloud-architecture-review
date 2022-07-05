@@ -9,6 +9,7 @@
 			</div>
 			<div v-else>
 				<nuxt-content :document="scorePreface" />
+				<fta-cta />
 				<section v-for="pillar of results" :key=pillar.name>
 					<h2 class="capitalize-case">{{ pillar.name }}</h2>
 					<article v-for="delta of deltaSets" :key=delta>

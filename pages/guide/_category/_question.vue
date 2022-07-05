@@ -28,6 +28,8 @@
         </article>
       </section>
 
+      <fta-cta />
+
       <!-- <pre>{{ article }}</pre> -->
 
       <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
