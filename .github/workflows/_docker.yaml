@@ -58,10 +58,11 @@ jobs:
     - uses: snyk/actions/docker@master
       name: Run Snyk Vulnerability Scan
       continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         image: ${{ env.image-name }}:${{ inputs.image-tag }}
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_API_TOKEN }}
+        args: --file=Dockerfile --severity-threshold=high
 
     - name: 'Docker - Push'
       run: docker push ${{ env.image-name }}:${{ inputs.image-tag }}
