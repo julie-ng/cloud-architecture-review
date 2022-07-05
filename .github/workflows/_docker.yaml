@@ -23,6 +23,8 @@ on:
         required: true
       AZ_DEFENDER_TOKEN:
         required: true
+      SNYK_API_TOKEN:
+        required: true
 
 # ===============
 #  Configuration
@@ -59,7 +61,7 @@ jobs:
       name: Run Snyk Vulnerability Scan
       continue-on-error: true
       env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        SNYK_TOKEN: ${{ secrets.SNYK_API_TOKEN }}
       with:
         image: ${{ env.image-name }}:${{ inputs.image-tag }}
         args: --file=Dockerfile --severity-threshold=high

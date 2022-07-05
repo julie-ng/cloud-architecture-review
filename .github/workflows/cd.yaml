@@ -51,6 +51,7 @@ jobs:
       AZURE_TENANT_ID:                  ${{ secrets.AZURE_TENANT_ID }}
       AZ_APPINSIGHTS_CONNECTION_STRING: ${{ secrets.AZ_APPINSIGHTS_CONNECTION_STRING }}
       AZ_DEFENDER_TOKEN:                ${{ secrets.AZ_DEFENDER_TOKEN }}
+      SNYK_API_TOKEN:                   ${{ secrets.SNYK_API_TOKEN }}
 
   deploy:
     needs: config
