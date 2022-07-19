@@ -1,5 +1,7 @@
 # aks-designer
 
+> ⚠️ **Archived** this app is being re-purposed and the scope has changed from Azure Kubernetes to general Cloud Architecture.
+
 | Environment | Status |
 |:--|:--|
 | [dev]([https://](https://aks-architect.dev.cloudkube.io/)) | [![cd](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml/badge.svg?branch=main)](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml) |
