@@ -33,7 +33,7 @@ locals {
   environments = {
     dev = {
       sp_name = "aks-architect-ci-dev-sp"
-      suffix  = "nyl9"
+      suffix  = "v2fy"
     }
     staging = {
       sp_name = "aks-architect-ci-staging-sp"
