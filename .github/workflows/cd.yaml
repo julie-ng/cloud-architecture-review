@@ -3,8 +3,8 @@ name: 'Continuous Delivery (CD)'
 on:
   push:
     branches:
-    - main
-    - staging
+    - aks-architect/main
+    - aks-architect/staging
     paths-ignore:
     - '.*'
     - '!.dockerignore'

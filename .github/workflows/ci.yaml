@@ -14,9 +14,9 @@ on:
   #   - '**/*.md'
   pull_request:
     branches:
-    - main
-  schedule:
-    - cron: '0 0 * * *'
+    - aks-architect/main
+  # schedule:
+  #   - cron: '0 0 * * *'
   workflow_call:
 
 jobs:
