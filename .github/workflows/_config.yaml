@@ -1,15 +1,15 @@
 name: _config
 
 env:
-  dev-cluster:            cloudkube-dev-nyl9-cluster
-  dev-resource-group:     cloudkube-dev-nyl9-rg
+  dev-cluster:            cloudkube-dev-v2fy-cluster
+  dev-resource-group:     cloudkube-dev-v2fy-rg
   dev-hostname:           aks-architect.dev.cloudkube.io
-  dev-branch:             'refs/heads/main'
+  dev-branch:             'refs/heads/aks-architect/main'
 
-  staging-cluster:        cloudkube-staging-4ow-cluster
-  staging-resource-group: cloudkube-staging-4ow-rg
+  staging-cluster:        cloudkube-staging-fi9-cluster
+  staging-resource-group: cloudkube-staging-fi9-rg
   staging-hostname:       aks-architect.staging.cloudkube.io
-  staging-branch:         'refs/heads/staging'
+  staging-branch:         'refs/heads/aks-architect/staging'
 
   url-format:             'https://{0}/'
 
@@ -65,7 +65,7 @@ jobs:
     # Dev
     # ===
     - id: is-dev
-      if: github.ref == 'refs/heads/main' # <== CONFIGURE (1)
+      if: github.ref == 'refs/heads/aks-architect/main' # <== CONFIGURE (1)
       name: 'DEV: set vars'
       run: |
         echo "target=dev" >> $GITHUB_ENV
@@ -79,7 +79,7 @@ jobs:
     # Staging
     # =======
     - id: is-staging
-      if: github.ref == 'refs/heads/staging' # <== CONFIGURE (1)
+      if: github.ref == 'refs/heads/aks-architect/staging' # <== CONFIGURE (1)
       name: 'STAGING: set vars'
       run: |
         echo "target=staging" >> $GITHUB_ENV
