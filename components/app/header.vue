@@ -6,7 +6,7 @@
 
 				<NuxtLink  class="navbar-title navbar-item" to="/">
 					<img src="/images/cloudkube/kubewave.svg" alt="Cloudkube Logo" class="cloudkube-logo">
-					Azure Kubernetes <span>|</span> Architecture
+					cloudkube.io <span class="slashes">//</span><span class="section-title">cloud architecture</span>
 				</NuxtLink>
 
 

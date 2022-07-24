@@ -8,14 +8,25 @@
 		font-weight: 600;
 		font-family: var(--heading-font);
 
+		.slashes {
+			color: var(--teal-color);
+			margin: 0 0.6em 0 0.5em;
+			letter-spacing: -4px;
+		}
+
+		.section-title {
+			color: var(--primary-color);
+			font-weight: 600;
+		}
+
 		@include until($tablet) {
 			font-size: 1rem;
 		}
 
-		span {
-			color: var(--teal-color);
-			margin: 0 0.4em;
-		}
+		// span {
+		// 	color: var(--teal-color);
+		// 	margin: 0 0.4em;
+		// }
 	}
 
 	a {
@@ -50,3 +61,4 @@
 	margin-left: -3px;
 	margin-right: 8px;
 }
+
