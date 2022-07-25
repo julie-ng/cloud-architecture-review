@@ -6,12 +6,12 @@
       <div class="container is-max-widescreen gap-on-mobile">
         <div class="columns is-desktop pt-6 pb-6">
           <div class="column is-three-fifths">
-            <h1 class="title is-2 is-spaced">How does Cloud Architecture measure up in real life?</h1>
+            <h1 class="title is-2 is-spaced">How would an Experienced Architect evaluate your design?</h1>
             <p class="subtitle">
-              There is no single perfect cloud architecture design. Instead ask yourself - how well does my architecture design meet my requirements and create business value?
+              There is no no checklist of best practices. Instead ask yourself - how well does the design meet the business requirements and create business value?
             </p>
             <p>
-              <a class="button is-medium is-primary" href="/review">Review your Architecture Design &rarr;</a>
+              <a class="button is-medium is-primary" href="/review">Review your Architecture &rarr;</a>
             </p>
           </div>
         </div>
