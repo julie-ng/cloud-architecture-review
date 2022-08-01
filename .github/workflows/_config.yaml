@@ -1,14 +1,14 @@
 name: _config
 
 env:
-  dev-cluster:            cloudkube-dev-nyl9-cluster
-  dev-resource-group:     cloudkube-dev-nyl9-rg
-  dev-hostname:           aks-architect.dev.cloudkube.io
+  dev-cluster:            cloudkube-dev-v2fy-cluster
+  dev-resource-group:     cloudkube-dev-v2fy-rg
+  dev-hostname:           architecture-review.dev.cloudkube.io
   dev-branch:             'refs/heads/main'
 
-  staging-cluster:        cloudkube-staging-4ow-cluster
-  staging-resource-group: cloudkube-staging-4ow-rg
-  staging-hostname:       aks-architect.staging.cloudkube.io
+  staging-cluster:        cloudkube-staging-fi9-cluster
+  staging-resource-group: cloudkube-staging-fi9-rg
+  staging-hostname:       architecture-review.staging.cloudkube.io
   staging-branch:         'refs/heads/staging'
 
   url-format:             'https://{0}/'
