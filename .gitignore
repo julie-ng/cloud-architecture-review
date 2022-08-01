@@ -4,6 +4,9 @@
 *.tfstate
 *.tfstate.backup
 
+# Azure Debug
+debug.azcli
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
