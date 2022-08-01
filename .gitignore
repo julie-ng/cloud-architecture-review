@@ -1,3 +1,5 @@
+debug.azcli
+
 # Terraform
 .terraform/
 *.tfplan
