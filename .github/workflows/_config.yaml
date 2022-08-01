@@ -68,7 +68,7 @@ jobs:
       if: github.ref == 'refs/heads/aks-architect/main' # <== CONFIGURE (1)
       name: 'DEV: set vars'
       run: |
-        echo "target=dev" >> $GITHUB_ENV
+        echo "target=aks-architect-dev" >> $GITHUB_ENV
         echo "overlays=dev" >> $GITHUB_ENV
         echo "cluster=${{ env.dev-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.dev-resource-group }}" >> $GITHUB_ENV
@@ -82,7 +82,7 @@ jobs:
       if: github.ref == 'refs/heads/aks-architect/staging' # <== CONFIGURE (1)
       name: 'STAGING: set vars'
       run: |
-        echo "target=staging" >> $GITHUB_ENV
+        echo "target=aks-architect-staging" >> $GITHUB_ENV
         echo "overlays=staging" >> $GITHUB_ENV
         echo "cluster=${{ env.staging-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.staging-resource-group }}" >> $GITHUB_ENV

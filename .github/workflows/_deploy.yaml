@@ -54,7 +54,7 @@ jobs:
         resource-group: ${{ inputs.resource-group }}
 
     - name: 'kubectl apply (DEV or STAGING)'
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
+      if: github.ref == 'refs/heads/aks-architect/main' || github.ref == 'refs/heads/aks-architect/staging'
       env:
         KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
         APP_BUILD_SHA: ${{ inputs.git-sha }}

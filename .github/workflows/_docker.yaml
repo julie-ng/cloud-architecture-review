@@ -38,7 +38,7 @@ jobs:
   #  DEV: build, scan, push
   # ========================
   build-and-push:
-    if: inputs.environment == 'dev'
+    if: inputs.environment == 'aks-architect-dev'
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
@@ -92,7 +92,7 @@ jobs:
   #  STAGING: promote
   # ==================
   promote-to-staging:
-    if: inputs.environment == 'staging'
+    if: inputs.environment == 'aks-architect-staging'
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:

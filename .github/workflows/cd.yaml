@@ -72,7 +72,7 @@ jobs:
   e2e:
     needs: [config, docker, deploy]
     uses: ./.github/workflows/_e2e.yaml
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
+    if: github.ref == 'refs/heads/aks-architect/main' || github.ref == 'refs/heads/aks-architect/staging'
     with:
       url:       ${{ needs.config.outputs.url }}
       build-sha: ${{ needs.config.outputs.git-sha }}
