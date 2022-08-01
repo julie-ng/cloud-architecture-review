@@ -5,12 +5,12 @@
 terraform {
   required_providers {
     azurerm = {
-      version = ">= 2.76.0"
+      version = ">= 3.16.0"
       source  = "hashicorp/azurerm"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = ">= 2.2.0"
+      version = ">= 2.26.0"
     }
   }
 }
@@ -26,17 +26,17 @@ provider "azurerm" {
 
 locals {
   location  = "North Europe"
-  rg_name   = "aks-architect-rg"
-  acr_name  = "aksarchitect"
-  namespace = "aks-architect"
+  rg_name   = "cloudkube-reviews-rg"
+  acr_name  = "cloudkubereviews"
+  namespace = "architecture-review"
 
   environments = {
     dev = {
-      sp_name = "aks-architect-ci-dev-sp"
+      sp_name = "cloudkube-arch-review-ci-dev-sp"
       suffix  = "v2fy"
     }
     staging = {
-      sp_name = "aks-architect-ci-staging-sp"
+      sp_name = "cloudkube-arch-review-ci-staging-sp"
       suffix  = "fi9"
     }
   }
