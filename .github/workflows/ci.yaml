@@ -1,6 +1,7 @@
 name: 'Continuous Integration (CI)'
 
 on:
+  # Don't check branches b/c CD calls this CI workflow.
   # push:
   #   branches:
   #   - main
@@ -16,7 +17,7 @@ on:
     branches:
     - main
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * 0' # weekly
   workflow_call:
 
 jobs:
@@ -51,24 +52,3 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker build .
-
-  # analyze:
-  #   name: CodeQL Analysis
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     actions: read
-  #     contents: read
-  #     security-events: write
-
-  #   steps:
-  #   - name: Checkout repository
-  #     uses: actions/checkout@v2
-
-  #   - name: Initialize CodeQL
-  #     uses: github/codeql-action/init@v2
-
-  #   - name: Autobuild
-  #     uses: github/codeql-action/autobuild@v2
-
-  #   - name: Perform CodeQL Analysis
-  #     uses: github/codeql-action/analyze@v2
