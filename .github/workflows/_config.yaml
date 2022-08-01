@@ -11,8 +11,8 @@ env:
   staging-hostname:       architecture-review.staging.cloudkube.io
   staging-branch:         'refs/heads/staging'
 
+  cluster-namespace:      architecture-review
   url-format:             'https://{0}/'
-
 
 on:
   workflow_call:
@@ -23,6 +23,9 @@ on:
       cluster:
         description: 'Name of AKS Cluster resource'
         value: ${{ jobs.setup-variables.outputs.cluster }}
+      cluster-namespace:
+        description: 'Name of Kubernetes Cluster namespace where our app is deployed'
+        value: ${{ jobs.setup-variables.outputs.cluster-namespace }}
       resource-group:
         description: 'Name of resource group that AKS cluster belongs to, i.e. not the managed group.'
         value: ${{ jobs.setup-variables.outputs.resource-group }}
@@ -49,6 +52,7 @@ jobs:
     outputs:
       target:         ${{ steps.resolved.outputs.target }}
       cluster:        ${{ steps.resolved.outputs.cluster }}
+      cluster-namespace: ${{ steps.resolved.outputs.cluster-namespace }}
       resource-group: ${{ steps.resolved.outputs.resource-group }}
       url:            ${{ steps.resolved.outputs.url }}
       hostname:       ${{ steps.resolved.outputs.hostname }}
@@ -99,6 +103,7 @@ jobs:
         echo "::set-output name=target::${{ env.target }}"
         echo "::set-output name=overlays::${{ env.overlays }}"
         echo "::set-output name=cluster::${{ env.cluster }}"
+        echo "::set-output name=cluster-namespace::${{ env.cluster-namespace }}"
         echo "::set-output name=resource-group::${{ env.rg }}"
         echo "::set-output name=docker-tag::${{ env.docker-tag }}"
         echo "::set-output name=url::${{ env.url }}"

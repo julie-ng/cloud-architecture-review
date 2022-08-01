@@ -57,13 +57,14 @@ jobs:
     needs: config
     uses: ./.github/workflows/_deploy.yaml
     with:
-      environment:    ${{ needs.config.outputs.target }}
-      git-sha:        ${{ needs.config.outputs.git-sha }}
-      image-tag:      ${{ needs.config.outputs.docker-tag }}
-      resource-group: ${{ needs.config.outputs.resource-group }}
-      cluster-name:   ${{ needs.config.outputs.cluster }}
-      hostname:       ${{ needs.config.outputs.hostname }}
-      overlays:       ./manifests/overlays/${{ needs.config.outputs.overlays }}
+      environment:         ${{ needs.config.outputs.target }}
+      git-sha:             ${{ needs.config.outputs.git-sha }}
+      image-tag:           ${{ needs.config.outputs.docker-tag }}
+      resource-group:      ${{ needs.config.outputs.resource-group }}
+      cluster-name:        ${{ needs.config.outputs.cluster }}
+      cluster-namespace:   ${{ needs.config.outputs.cluster-namespace }}
+      hostname:            ${{ needs.config.outputs.hostname }}
+      overlays:            ./manifests/overlays/${{ needs.config.outputs.overlays }}
     secrets:
       AZURE_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}

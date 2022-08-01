@@ -9,6 +9,10 @@ inputs:
     description: 'Resource Group with AKS cluster resource'
     required: true
     type: string
+  cluster-namespace:
+    description: 'Namespace for our app'
+    required: true
+    type: string
 outputs:
   kubeconfig:
     description: 'Location of kubeconfig file'
@@ -54,4 +58,4 @@ runs:
       KUBECONFIG: ${{ github.workspace }}/${{ steps.kubeconfig.outputs.location }}
     run: |
       kubelogin convert-kubeconfig -l azurecli
-      kubectl get pods --namespace aks-architect
+      kubectl get pods --namespace ${{ inputs.cluster-namespace }}

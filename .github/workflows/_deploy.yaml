@@ -12,6 +12,9 @@ on:
       cluster-name:
         required: true
         type: string
+      cluster-namespace:
+        required: true
+        type: string
       overlays:
         required: true
         type: string
@@ -51,6 +54,7 @@ jobs:
       uses: ./.github/actions/kubelogin
       with:
         cluster-name: ${{ inputs.cluster-name }}
+        cluster-namespace: ${{ inputs.cluster-namespace }}
         resource-group: ${{ inputs.resource-group }}
 
     - name: 'kubectl apply (DEV or STAGING)'
