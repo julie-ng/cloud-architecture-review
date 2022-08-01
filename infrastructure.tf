@@ -33,11 +33,11 @@ locals {
   environments = {
     dev = {
       sp_name = "aks-architect-ci-dev-sp"
-      suffix  = "nyl9"
+      suffix  = "v2fy"
     }
     staging = {
       sp_name = "aks-architect-ci-staging-sp"
-      suffix  = "4ow"
+      suffix  = "fi9"
     }
   }
 
@@ -102,8 +102,8 @@ resource "azuread_service_principal" "ci" { # import id = Entperise Application'
 # Get reference to cluster kubelets (managed in aks iac repo)
 data "azurerm_user_assigned_identity" "kubelets" {
   for_each            = local.environments
-  name                = "cloudkube-${each.key}-${each.value.suffix}-cluster-agentpool" # e.g. cloudkube-dev-r9er-cluster-agentpool
-  resource_group_name = "cloudkube-${each.key}-${each.value.suffix}-managed-rg"        # e.g. cloudkube-dev-r9er-managed-rg
+  name                = "cloudkube-${each.key}-kubelet-mi"
+  resource_group_name = "cloudkube-${each.key}-${each.value.suffix}-rg"
 }
 
 # Cluster kubelets can pull from our registry
