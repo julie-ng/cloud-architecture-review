@@ -61,8 +61,8 @@ The Container Registry and tag prefixes are configured in [`_docker.yaml`](workf
 
 ```yaml
 env:
-  acr-registry: aksarchitect
-  image-name: aksarchitect.azurecr.io/frontend
+  acr-registry: cloudkubereviews
+  image-name: cloudkubereviews.azurecr.io/frontend
 ```
 
 Generally, the image lifecycle is as follows

@@ -10,7 +10,7 @@
 # Setup
 # -----
 
-ACR_REGISTRY=aksarchitect
+ACR_REGISTRY=cloudkubereviews
 PURGE_DEV="acr purge --filter 'frontend:dev-*' --untagged --ago 14d --keep 5"
 PURGE_STAGING="acr purge --filter 'frontend:staging-*' --untagged --ago 14d --keep 5"
 

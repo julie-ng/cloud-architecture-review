@@ -24,7 +24,7 @@ spec:
             app: temp-nuxtjs-${IMAGE_TAG}
       containers:
       - name: temp-nuxtjs-${IMAGE_TAG}
-        image: aksarchitect.azurecr.io/frontend:${IMAGE_TAG}
+        image: cloudkubereviews.azurecr.io/frontend:${IMAGE_TAG}
         imagePullPolicy: Always # <== feat specific
         ports:
         - containerPort: 80

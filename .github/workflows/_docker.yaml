@@ -30,8 +30,8 @@ on:
 #  Configuration
 # ===============
 env:
-  acr-registry: aksarchitect
-  image-name: aksarchitect.azurecr.io/frontend
+  acr-registry: cloudkubereviews
+  image-name: cloudkubereviews.azurecr.io/frontend
 
 jobs:
   # ========================

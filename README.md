@@ -43,7 +43,7 @@ The Terraform infrastructure as code performs the following:
   just for this application (because its lifecycle should be different from the AKS clusters)
 
 - **Service Principals**  
-  - to use in CI/CD to push/pull images to _this_ container registry `aksarchitect` 
+  - to use in CI/CD to push/pull images to _this_ container registry `cloudkubereviews` 
   - contributor access to `aks-architect` namespace in shared cluster
 
 ### Role Based Access Control (RBAC)
@@ -52,10 +52,10 @@ The following are managed in *this* repository's Infrastructure as Code.
 
 | Security Principal | Role | Scope |
 |:--|:--|:--|
-| `cloudkube-dev-r9er-cluster-agentpool` | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
-|`cloudkube-staging-d7c-cluster-agentpool`  | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
-| `aks-architect-ci-dev-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
-| `aks-architect-ci-staging-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `aksarchitect` Container Registry |
+| `cloudkube-dev-r9er-cluster-agentpool` | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
+|`cloudkube-staging-d7c-cluster-agentpool`  | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
+| `aks-architect-ci-dev-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
+| `aks-architect-ci-staging-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
 | `aks-architect-ci-dev-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-dev-r9er-cluster` |
 | `aks-architect-ci-staging-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-staging-d7c-cluster` |
 | `aks-architect-ci-dev-sp` | [AKS RBAC Writer](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster) | `aks-architect` namespace in dev cluster |

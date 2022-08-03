@@ -13,10 +13,10 @@ permissions:
   contents: read
 
 env:
-  cluster-name:    cloudkube-dev-nyl9-cluster
-  cluster-rg:      cloudkube-dev-nyl9-rg
-  acr-registry:    aksarchitect
-  base-tag:        aksarchitect.azurecr.io/frontend
+  cluster-name:    cloudkube-dev-v2fy-cluster
+  cluster-rg:      cloudkube-dev-v2fy-rg
+  acr-registry:    cloudkubereviews
+  base-tag:        cloudkubereviews.azurecr.io/frontend
   image-name:      frontend
   k8s-namespace:   aks-architect
 
