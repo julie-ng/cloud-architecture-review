@@ -3,7 +3,7 @@ name: 'Housekeeping - Container Registry'
 on:
   push:
     branches:
-    # - ci/regsitry-housekeeping
+    - ci/regsitry-housekeeping
     - main
   schedule:
     - cron: '0 6 * * 1'     # Mondays at 6am
@@ -21,11 +21,23 @@ env:
 
 jobs:
   housekeeping-dev:
-    name: 'Dev Images'
+    name: ' 🧹 dev images'
     runs-on: ubuntu-latest
     environment: dev
     steps:
-    - name: 'test command'
+    - name: 'az login'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+    - name: 'az acr login'
+      run: az acr login --name ${{ env.acr-registry }}
+
+    # For details on `acr purge` command, see
+    # https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auto-purge
+    - name: 'acr purge'
       run: |
         RUN_TIDY="acr purge --filter ${{ env.naming-pattern }} --untagged --ago ${{ env.keep-days }} --keep ${{ env.keep-last }}"
-        echo $RUN_TIDY
+        az acr run --cmd "$RUN_TIDY" --registry ${{ env.acr-registry }} /dev/null
