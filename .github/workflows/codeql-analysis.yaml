@@ -1,4 +1,4 @@
-name: 'CodeQL Analysis'
+name: '🚓 CodeQL Analysis'
 # Only run on schedule and PR because it's really slow
 
 on:

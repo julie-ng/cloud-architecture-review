@@ -1,4 +1,4 @@
-name: 'Housekeeping - Container Registry'
+name: '🧹 Housekeeping - Container Registry'
 
 on:
   push:
