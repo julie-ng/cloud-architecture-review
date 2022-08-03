@@ -130,6 +130,13 @@ resource "azurerm_role_assignment" "namespace_contributor" {
   principal_id         = azuread_service_principal.ci[each.key].object_id
 }
 
+# Push to registry
+resource "azurerm_role_assignment" "ci_acr_push" {
+  for_each             = local.environments
+  scope                = azurerm_container_registry.acr.id
+  role_definition_name = "AcrPush"
+  principal_id         = azuread_service_principal.ci[each.key].object_id
+}
 
 # =========
 #  Outputs
