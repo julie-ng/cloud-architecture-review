@@ -1,0 +1,31 @@
+name: 'Housekeeping - Container Registry'
+
+on:
+  push:
+    branches:
+    # - ci/regsitry-housekeeping
+    - main
+  schedule:
+    - cron: '0 6 * * 1'     # Mondays at 6am
+  workflow_dispatch:        # Allow manual runs
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  acr-registry: cloudkubereviews
+  naming-pattern: 'frontend:dev-*'
+  keep-days: 14d
+  keep-last: 5
+
+jobs:
+  housekeeping-dev:
+    name: 'Dev Images'
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: 'test command'
+      run: |
+        RUN_TIDY="acr purge --filter ${{ env.naming-pattern }} --untagged --ago ${{ env.keep-days }} --keep ${{ env.keep-last }}"
+        echo $RUN_TIDY
