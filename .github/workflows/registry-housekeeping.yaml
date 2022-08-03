@@ -15,29 +15,53 @@ permissions:
 
 env:
   acr-registry: cloudkubereviews
+  old-acr-registry: aksarchitect
   naming-pattern: 'frontend:dev-*'
   keep-days: 14d
   keep-last: 5
 
 jobs:
-  housekeeping-dev:
-    name: ' 🧹 dev images'
+  tidy-cloudkubereviews:
+    name: 'tidy - cloudkubereviews'
     runs-on: ubuntu-latest
     environment: dev
     steps:
-    - name: 'az login'
+    - name: 'Azure Login'
       uses: azure/login@v1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
-    - name: 'az acr login'
+    - name: 'ACR Login'
       run: az acr login --name ${{ env.acr-registry }}
 
-    # For details on `acr purge` command, see
-    # https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auto-purge
-    - name: 'acr purge'
+    - name: 'ACR Purge - cloudkubereviews'
       run: |
         RUN_TIDY="acr purge --filter ${{ env.naming-pattern }} --untagged --ago ${{ env.keep-days }} --keep ${{ env.keep-last }}"
         az acr run --cmd "$RUN_TIDY" --registry ${{ env.acr-registry }} /dev/null
+
+
+  tidy-aksarchitect:
+    name: 'tidy - aksarchitect'
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: 'Azure Login'
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+
+    - name: 'ACR Login'
+      run: az acr login --name ${{ env.old-acr-registry }}
+
+    - name: 'ACR Purge - aksarchitect'
+      run: |
+        RUN_TIDY="acr purge --filter ${{ env.naming-pattern }} --untagged --ago ${{ env.keep-days }} --keep ${{ env.keep-last }}"
+        az acr run --cmd "$RUN_TIDY" --registry ${{ env.old-acr-registry }} /dev/null
+
+
+# For details on `acr purge` command, see
+# https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auto-purge
