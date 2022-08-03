@@ -130,13 +130,15 @@ resource "azurerm_role_assignment" "namespace_contributor" {
   principal_id         = azuread_service_principal.ci[each.key].object_id
 }
 
-# Push to registry
-resource "azurerm_role_assignment" "ci_acr_push" {
+# GitHub Workflows - needs Contributor to run `acr purge`
+resource "azurerm_role_assignment" "ci_acr_reader" {
   for_each             = local.environments
   scope                = azurerm_container_registry.acr.id
-  role_definition_name = "AcrPush"
+  role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.ci[each.key].object_id
 }
+
+# See also https://docs.microsoft.com/en-us/azure/container-registry/container-registry-roles?tabs=azure-cli
 
 # =========
 #  Outputs
@@ -170,7 +172,7 @@ output "service_principal_rbac" {
       name  = "Azure Kubernetes Service RBAC Writer"
       scope = "${data.azurerm_kubernetes_cluster.cloudkube[k].id}/namespaces/${local.namespace}"
       }, {
-      name  = "AcrPush"
+      name  = "Contributor"
       scope = azurerm_container_registry.acr.id
     }]
   }]
