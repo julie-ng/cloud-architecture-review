@@ -3,10 +3,10 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-  name: aks-architect-ingress
-  namespace: aks-architect
+  name: architecture-review-ingress
+  namespace: architecture-review
   labels:
-    name: aks-architect-ingress
+    name: architecture-review-ingress
 spec:
   rules:
   - host: ${INGRESS_HOSTNAME}
@@ -16,6 +16,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: aks-architect-service
+            name: architecture-review-service
             port:
               number: 80

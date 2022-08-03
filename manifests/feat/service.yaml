@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: temp-nuxtjs-${IMAGE_TAG}-service
-  namespace: aks-architect
+  namespace: architecture-review
 spec:
   type: ClusterIP
   selector:

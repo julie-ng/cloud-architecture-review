@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: temp-nuxtjs-${IMAGE_TAG}
-  namespace: aks-architect
+  namespace: architecture-review
 spec:
   replicas: 1
   selector:

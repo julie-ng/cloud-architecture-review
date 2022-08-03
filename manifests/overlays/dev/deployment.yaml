@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nuxtjs
-  namespace: aks-architect
+  namespace: architecture-review
 spec:
   replicas: 3
   template:
     spec:
       containers:
-      - name: aks-architect-nuxtjs
+      - name: architecture-review-nuxtjs
         resources:
           limits:
             cpu: 0.5

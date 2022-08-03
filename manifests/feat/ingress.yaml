@@ -4,7 +4,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
   name: temp-nuxtjs-${IMAGE_TAG}-ingress
-  namespace: aks-architect
+  namespace: architecture-review
   labels:
     name: temp-nuxtjs-${IMAGE_TAG}
 spec:

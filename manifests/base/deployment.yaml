@@ -2,16 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nuxtjs
-  namespace: aks-architect
+  namespace: architecture-review
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: aks-architect-nuxtjs
+      app: architecture-review-nuxtjs
   template:
     metadata:
       labels:
-        app: aks-architect-nuxtjs
+        app: architecture-review-nuxtjs
     spec:
       nodeSelector:
         agentpool: user
@@ -21,9 +21,9 @@ spec:
         whenUnsatisfiable: DoNotSchedule
         labelSelector:
           matchLabels:
-            app: aks-architect-nuxtjs
+            app: architecture-review-nuxtjs
       containers:
-      - name: aks-architect-nuxtjs
+      - name: architecture-review-nuxtjs
         image: aksarchitect.azurecr.io/frontend:${IMAGE_TAG}
         ports:
         - containerPort: 80
