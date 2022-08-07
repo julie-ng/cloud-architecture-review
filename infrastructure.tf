@@ -33,11 +33,11 @@ locals {
   environments = {
     dev = {
       sp_name = "cloudkube-arch-review-ci-dev-sp"
-      suffix  = "v2fy"
+      suffix  = "m59i"
     }
     staging = {
       sp_name = "cloudkube-arch-review-ci-staging-sp"
-      suffix  = "fi9"
+      suffix  = "1bp"
     }
   }
 
