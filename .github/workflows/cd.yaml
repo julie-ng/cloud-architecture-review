@@ -11,6 +11,8 @@ on:
     - '!.dockerignore'
     - 'CHANGELOG.md'
     - 'README.md'
+    - 'Makefile'
+    - '.github/'
     - 'infrastructure.*'
 
 concurrency:
