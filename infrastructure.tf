@@ -25,11 +25,17 @@ provider "azurerm" {
 # ===========
 
 locals {
+  # Azure
   location  = "North Europe"
   rg_name   = "cloudkube-reviews-rg"
   acr_name  = "cloudkubereviews"
   namespace = "architecture-review"
 
+  # GitHub
+  gh_repo_name = "cloud-architecture-review"
+  gh_repo_org  = "julie-ng"
+
+  # N.B. GitHub environments have same `dev` and `staging` names
   environments = {
     dev = {
       sp_name = "cloudkube-arch-review-ci-dev-sp"
@@ -92,6 +98,17 @@ resource "azuread_service_principal" "ci" { # import id = Entperise Application'
   application_id               = azuread_application.ci[each.key].application_id
   app_role_assignment_required = false
   owners                       = [data.azuread_client_config.current.object_id]
+}
+
+# Federated Credential for GitHub Actions
+resource "azuread_application_federated_identity_credential" "example" {
+  for_each              = local.environments
+  application_object_id = azuread_application.ci[each.key].object_id
+  display_name          = "github-workflows-${each.key}"
+  description           = "GitHub Workflows Deployments for ${each.key}"
+  audiences             = ["api://AzureADTokenExchange"]
+  issuer                = "https://token.actions.githubusercontent.com"
+  subject               = "repo:${local.gh_repo_org}/${local.gh_repo_name}:environment:${each.key}"
 }
 
 
