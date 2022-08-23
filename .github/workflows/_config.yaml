@@ -1,13 +1,13 @@
 name: _config
 
 env:
-  dev-cluster:            cloudkube-dev-v2fy-cluster
-  dev-resource-group:     cloudkube-dev-v2fy-rg
+  dev-cluster:            cloudkube-dev-m59i-cluster
+  dev-resource-group:     cloudkube-dev-m59i-rg
   dev-hostname:           architecture-review.dev.cloudkube.io
   dev-branch:             'refs/heads/main'
 
-  staging-cluster:        cloudkube-staging-fi9-cluster
-  staging-resource-group: cloudkube-staging-fi9-rg
+  staging-cluster:        cloudkube-staging-1bp-cluster
+  staging-resource-group: cloudkube-staging-1bp-rg
   staging-hostname:       architecture-review.staging.cloudkube.io
   staging-branch:         'refs/heads/staging'
 

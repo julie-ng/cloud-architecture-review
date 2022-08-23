@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 env:
-  cluster-name:    cloudkube-dev-v2fy-cluster
-  cluster-rg:      cloudkube-dev-v2fy-rg
+  cluster-name:    cloudkube-dev-m59i-cluster
+  cluster-rg:      cloudkube-dev-m59i-rg
   acr-registry:    cloudkubereviews
   base-tag:        cloudkubereviews.azurecr.io/frontend
   image-name:      frontend
