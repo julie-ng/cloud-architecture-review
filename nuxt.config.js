@@ -1,7 +1,7 @@
 export default {
 	// Global page headers: https://go.nuxtjs.dev/config-head
 	head: {
-		title: 'Azure Kubernetes Architect',
+		title: 'Cloud In Real Life // Architecture',
 		htmlAttrs: {
 			lang: 'en',
 			class: 'has-navbar-fixed-top'
