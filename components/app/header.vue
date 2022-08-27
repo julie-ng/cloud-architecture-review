@@ -6,7 +6,7 @@
 
 				<NuxtLink  class="navbar-title navbar-item" to="/">
 					<img src="/images/cloudkube/kubewave.svg" alt="Cloudkube Logo" class="cloudkube-logo">
-					cloudkube.io <span class="slashes">//</span><span class="section-title">cloud architecture</span>
+					cloudIRL <span class="slashes">//</span><span class="section-title">Architecture</span>
 				</NuxtLink>
 
 

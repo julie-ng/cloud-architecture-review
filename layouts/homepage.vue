@@ -6,7 +6,7 @@
       <div class="container is-max-widescreen gap-on-mobile">
         <div class="columns is-desktop pt-6 pb-6">
           <div class="column is-three-fifths">
-            <h1 class="title is-2 is-spaced">How would an Experienced Architect evaluate your design?</h1>
+            <h1 class="title is-2 is-spaced">How would an Experienced Architect evaluate your architecture?</h1>
             <p class="subtitle">
               There is no no checklist of best practices. Instead ask yourself - how well does the design meet the business requirements and create business value?
             </p>
