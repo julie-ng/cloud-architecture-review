@@ -10,14 +10,14 @@
 				</NuxtLink>
 
 
-				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="js-navbar">
+				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" id="js-nav-burger">
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
 				</a>
 			</div>
 
-			<div class="navbar-menu" id="js-navbar">
+			<div class="navbar-menu" id="js-nav-menu">
 				<nav aria-label="main navigation" class="navbar-end">
 					<NuxtLink class="navbar-item" to="/about">About</NuxtLink>
 					<NuxtLink class="navbar-item" to="/getting-started">Getting Started</NuxtLink>
@@ -30,3 +30,19 @@
 		</div>
 	</header>
 </template>
+
+
+<script>
+	export default {
+		mounted () {
+			const btn = document.getElementById('js-nav-burger')
+			const menu = document.getElementById('js-nav-menu')
+			// console.log('[Header] - mounted')
+			btn.addEventListener('click', () => {
+				// console.log('[Nav Burger] - click')
+				btn.classList.toggle('is-active')
+				menu.classList.toggle('is-active')
+			})
+		}
+	}
+</script>
