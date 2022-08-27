@@ -15,14 +15,19 @@
 		 * @async
 		 * @returns {Array} of all questions and questions per defined sort order
 		 */
-		async asyncData({ $content, params, store }) {
-			// Prefer SSR load
-			const loader = new FormLoader({ $content: $content })
-			const data = await loader.load()
-			store.commit('form/set', data)
 
-			return
-		},
+
+		// TODO: this breaks routing from review to guide pages :-(
+		// not sure why though
+		// -------------------
+		// async asyncData({ $content, params, store }) {
+		// 	// Prefer SSR load
+		// 	const loader = new FormLoader({ $content: $content })
+		// 	const data = await loader.load()
+		// 	store.commit('form/set', data)
+
+		// 	return
+		// },
 
 		// anchor does not exist until fully rendered
 		// see in main.scss for offset value

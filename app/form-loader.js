@@ -60,9 +60,10 @@ export default class FormLoader {
 	 * @returns {Array}
 	 */
 	async #fetchFactors (factors) {
+		console.log('fetchFactors()', factors)
 		const results = []
 		for (const f of factors) {
-			const data = await this.$content(f.path)
+			const data = await this.$content('factors/' + f.path)
 				.without(config.formWithoutProps)
 				.fetch()
 

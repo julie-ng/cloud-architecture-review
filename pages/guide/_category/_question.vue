@@ -52,7 +52,8 @@ export default {
 	},
 
   async asyncData ({ $content, app, params, error }) {
-    const path = `/guide/${params.category}/${params.question}`
+    // current example path content/guide/networking/ingress/ingress.md (why double question)
+    const path = `/guide/${params.category}/${params.question}/${params.question}`
     const [article] = await $content({ deep: true })
       .where({ path })
       .fetch()

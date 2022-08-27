@@ -3,10 +3,10 @@ title: What is your disaster recovery strategy?
 shortTitle: Disaster Recovery
 description: In the unlikely event an Azure region is unavailable, how will your respond?
 factors:
-- slug: 'dr-active-active'
-- slug: 'dr-active-passive'
-- slug: 'dr-redeploy'
-- slug: 'dr-wait'
+- slug: 'active-active'
+- slug: 'active-passive'
+- slug: 'redeploy'
+- slug: 'wait'
 ---
 
 ## When do you need Disaster Recovery?

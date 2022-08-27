@@ -13,11 +13,11 @@ class QuestionSchema {
 
 	normalize (attrs) {
 		// console.log('normalize()')
-		// console.log(result)
 		let result = { ...attrs }
 		result = this.#expandFactorPaths(result)
 		result = this.#removeExtension(result)
 		result.inputName = this.#extractInputName(attrs.path)
+		// console.log(result)
 		return result
 	}
 
