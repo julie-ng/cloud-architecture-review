@@ -6,31 +6,16 @@
         <p class="article-lead">{{ article.description }}</p>
       </header>
 
-      <review-radio-input
-        v-for="f of factors"
-        :name=inputName
-        :key=f.slug
-        :factor=f
-        @selected="updateDecision($event, $store, article)"
-      ></review-radio-input>
+      <nuxt-content :document="article" />
 
       <hr>
 
-      <nuxt-content :document="article" />
-
-      <section v-if="factors.length > 0">
-        <h2>Factors</h2>
-        <p class="grey-text">(TODO - add radio buttons here for user to toggle and update score.)</p>
-
-        <article v-for="f of factors" v-bind:key="f.path">
-          <h3>{{ f.title }}</h3>
-          <nuxt-content :document="f" />
-        </article>
-      </section>
+      <review-question
+				:question=article
+			>
+			</review-question>
 
       <fta-cta />
-
-      <!-- <pre>{{ article }}</pre> -->
 
       <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
     </article>
@@ -38,38 +23,21 @@
 </template>
 
 <script>
-const FactorSchema = require('../../../schemas/factor')
-const QuestionSchema = require('../../../schemas/question')
-const DecisionSchema = require('../../../schemas/decision')
+import FormLoader from '~/app/form-loader'
 
 export default {
   layout: 'app',
 
-	data () {
-		return {
-			factors: []
-		}
-	},
-
   async asyncData ({ $content, app, params, error }) {
-    // current example path content/guide/networking/ingress/ingress.md (why double question)
-    const path = `/guide/${params.category}/${params.question}/${params.question}`
-    const [article] = await $content({ deep: true })
-      .where({ path })
-      .fetch()
-
-    const inputName = QuestionSchema.extractInputName({ path: path })
+		const loader = new FormLoader({ $content: $content })
+		const article = await loader.fetchArticle(params.category, params.question)
 
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
     }
-    else if (article.hasOwnProperty('factors') && article.factors.length > 0) {
-      const factors = await _fetchFactorContent($content, article.dir, article.factors)
-      return {
-        article,
-        factors,
-        inputName
-      }
+
+    return {
+      article
     }
   },
 
@@ -81,24 +49,7 @@ export default {
 
     formatAriaDate(date) {
       return new Date(date).toISOString().slice(0, 10);
-    },
-
-    updateDecision: function (event, store, question) {
-      question.inputName = this.inputName
-      const decision = DecisionSchema.normalize(question, event.factor)
-      store.commit('decisions/update', decision)
     }
 	}
-}
-
-async function _fetchFactorContent ($content, basePath, factors) {
-  const content = []
-  for (const f of factors) {
-    const data = await $content(`${basePath}/factors/${f.slug}`)
-      .without(['toc', 'extension', 'createdAt', 'updatedAt'])
-      .fetch()
-    content.push(FactorSchema.normalize(data))
-  }
-  return content
 }
 </script>

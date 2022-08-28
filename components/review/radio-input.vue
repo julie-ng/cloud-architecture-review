@@ -15,8 +15,6 @@
 </template>
 
 <script>
-	const FactorSchema = require('../../schemas/factor')
-
   export default {
     props: {
 			name: {

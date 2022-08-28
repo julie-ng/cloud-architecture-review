@@ -2,6 +2,8 @@ const QuestionSchema = require('../schemas/question')
 const FactorSchema = require('../schemas/factor')
 const config = require('../schemas/config')
 
+const CONTENT_DIR = '/guide'
+
 export default class FormLoader {
 	/**
 	 * @param {String} opts.dir content directory
@@ -25,6 +27,42 @@ export default class FormLoader {
 
 		this.categories = categories
 		return this.categories
+	}
+
+	/**
+	 * Fetch Article Markdown based on router params
+	 *
+	 * @param {String} category, e.g. `requirements`
+	 * @param {String} question, e.g. `tenancy`
+	 */
+	async fetchArticle (category, question) {
+		const dir = this.#articleDir(category, question)
+		const path = this.#articlePath(category, question)
+		console.log('fetchArticle()')
+		// console.log('path', path)
+
+		const [article] = await this.$content({ deep: true })
+			.where({ path: path })
+			.fetch()
+
+		const factors = await this.#fetchFactors({
+			dir: dir,
+			slugs: article.factors,
+			withBody: true
+		})
+
+		article.factors = factors
+
+		return article
+	}
+
+
+	#articlePath (category, question) {
+		return `${CONTENT_DIR}/${category}/${question}/${question}`
+	}
+
+	#articleDir (category, question) {
+		return `${CONTENT_DIR}/${category}/${question}`
 	}
 
 	/**
@@ -55,16 +93,21 @@ export default class FormLoader {
 	}
 
 	/**
-	 * @param {String} dir - where factors are
-	 * @param {Array} factors
+	 * @param {String} opts.dir, e.g. `/guide/requirements/dr`
+	 * @param {Array} opts.slugs, e.g. [{slug:'factors/foo'}, {slug:'factors/bar'}]
+	 * @param {Boolean} opts.withBody - include factor markdown body
 	 * @returns {Array}
 	 */
-	async #fetchFactors (factors) {
-		console.log('fetchFactors()', factors)
+	async #fetchFactors (opts={}) {
+		console.log('fetchFactors()', opts.slugs)
+		const withoutProps = opts.withBody
+			? config.factorAttrsRemove
+			: config.formWithoutProps
+
 		const results = []
-		for (const f of factors) {
-			const data = await this.$content('factors/' + f.path)
-				.without(config.formWithoutProps)
+		for (const f of opts.slugs) {
+			const data = await this.$content(opts.dir + '/' + f.slug)
+				.without(withoutProps)
 				.fetch()
 
 			const factor = FactorSchema.normalize(data)
