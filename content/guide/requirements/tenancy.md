@@ -3,8 +3,8 @@ title: What is your Tenancy Model?
 shortTitle: Tenancy Model
 description: How are the resources of your Kubernetes cluster shared?
 factors:
-- slug: 'factors/single-tenant'
-- slug: 'factors/multi-tenant'
+- slug: 'factors/tenancy/single-tenant'
+- slug: 'factors/tenancy/multi-tenant'
 ---
 
 ## What is Tenancy?

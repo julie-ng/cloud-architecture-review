@@ -10,6 +10,18 @@
 
       <hr>
 
+      <section v-if="factors.length > 0">
+        <h2>Factors</h2>
+        <p class="grey-text">(TODO - add radio buttons here for user to toggle and update score.)</p>
+
+        <article v-for="f of factors" v-bind:key="f.path">
+          <h3>{{ f.title }}</h3>
+          <nuxt-content :document="f" />
+        </article>
+      </section>
+
+      <hr>
+
       <review-question
 				:question=article
 			>
@@ -36,8 +48,11 @@ export default {
       return error({ statusCode: 404, message: 'Article not found' })
     }
 
+    const factors = article.factors
+
     return {
-      article
+      article,
+      factors
     }
   },
 

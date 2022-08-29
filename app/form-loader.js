@@ -14,15 +14,17 @@ export default class FormLoader {
 	}
 
 	async load () {
+		console.log('load()')
 		const categories = []
 		for (const category of config.categoriesSorted) {
 			const dir = config.contentDir + category
-			const questions = await this.#fetchQuestions(dir)
-
-			categories.push({
-				name: category,
-				questions: questions
-			})
+			console.log('dir', dir)
+			// const questions = await this.#fetchQuestions(dir)
+			// console.log('questions', questions)
+			// categories.push({
+			// 	name: category,
+			// 	questions: questions
+			// })
 		}
 
 		this.categories = categories
@@ -39,17 +41,18 @@ export default class FormLoader {
 		const dir = this.#articleDir(category, question)
 		const path = this.#articlePath(category, question)
 		console.log('fetchArticle()')
-		// console.log('path', path)
+		console.log('path', path)
 
-		const [article] = await this.$content({ deep: true })
-			.where({ path: path })
-			.fetch()
+		const article = await this.$content(path).fetch()
+		// console.log('article', article)
 
 		const factors = await this.#fetchFactors({
 			dir: dir,
 			slugs: article.factors,
 			withBody: true
 		})
+
+		// console.log('factors???', factors)
 
 		article.factors = factors
 
@@ -58,11 +61,16 @@ export default class FormLoader {
 
 
 	#articlePath (category, question) {
-		return `${CONTENT_DIR}/${category}/${question}/${question}`
+		return `${CONTENT_DIR}/${category}/${question}`
 	}
 
 	#articleDir (category, question) {
-		return `${CONTENT_DIR}/${category}/${question}`
+		return `${CONTENT_DIR}/${category}`
+	}
+
+	// currently not used b/c .md files have dirs in slugs
+	#factorsDir (category, question) {
+		return `${CONTENT_DIR}/${category}/factors/${question}`
 	}
 
 	/**
@@ -78,22 +86,30 @@ export default class FormLoader {
 			.without(config.formWithoutProps)
 			.fetch()
 
+		console.log('#fetchQuestions #########')
+		console.log(questions)
+
 		// append factors
 		for (const q of questions) {
 			const question = QuestionSchema.normalize(q)
-			const factors = await this.#fetchFactors(question.factors)
-			question.factors = factors
+			// const factors = await this.#fetchFactors(question.factors)
+			// const factors = await this.#fetchFactors({
+			// 	dir: dir,
+			// 	slugs: q.factors,
+			// 	withBody: false
+			// })
+			// question.factors = factors
 
 			results.push(question)
 		}
 
-		// console.log('📑 Form Loader results')
-		// console.log(results)
+		console.log('📑 Form Loader results')
+		console.log(results)
 		return results
 	}
 
 	/**
-	 * @param {String} opts.dir, e.g. `/guide/requirements/dr`
+	 * @param {String} opts.dir - Directory for factors  e.g. `/guide/requirements/factors/dr`
 	 * @param {Array} opts.slugs, e.g. [{slug:'factors/foo'}, {slug:'factors/bar'}]
 	 * @param {Boolean} opts.withBody - include factor markdown body
 	 * @returns {Array}

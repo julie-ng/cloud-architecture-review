@@ -3,8 +3,8 @@ title: What is your networking model?
 shortTitle: Networking Model
 description: Azure CNI vs Kubenet...longer helping text if people don't understand what this question means.
 factors:
-- slug: 'factors/azure-cni'
-- slug: 'factors/kubenet'
+- slug: 'factors/model/azure-cni'
+- slug: 'factors/model/kubenet'
 ---
 
 ## Networking Models in AKS

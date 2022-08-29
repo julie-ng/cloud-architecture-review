@@ -4,6 +4,10 @@
 
 <script>
 	import FormLoader from '~/app/form-loader'
+	import contentConfig from '~/app/content.config'
+
+	console.log('contentConfig', contentConfig)
+
 	export default {
 		layout: 'app',
 		/**
@@ -22,6 +26,16 @@
 		// -------------------
 		// async asyncData({ $content, params, store }) {
 		// 	// Prefer SSR load
+
+		// 	// test
+		// 	// const results = await $content('/guide/networking')
+		// 	// 	.fetch()
+
+		// 	// console.log('------------ results ---------')
+		// 	// console.log(results)
+
+
+
 		// 	const loader = new FormLoader({ $content: $content })
 		// 	const data = await loader.load()
 		// 	store.commit('form/set', data)

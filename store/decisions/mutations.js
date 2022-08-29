@@ -22,6 +22,7 @@ export default {
 	 * @param {String} decision.inputValue
    */
 	update (state, decision) {
+		console.log('decision', decision)
 		logger.mutation('decisions/update', `update ${decision.inputName} sync state with sessionStorage`)
 
 		state.decisions = {

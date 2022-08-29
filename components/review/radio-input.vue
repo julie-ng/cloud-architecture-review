@@ -1,5 +1,5 @@
 <template>
-	<article v-bind:class="classObject">
+	<article v-bind:class="elClass">
 		<label :for=factor.slug class="form-control label-factor">
 			<input ref="input" type="radio"
 				:name=name
@@ -39,7 +39,7 @@
 				}
 			},
 
- 			classObject: function () {
+ 			elClass: function () {
 				return {
 					'factor-container': true,
 					'is-selected': this.answer === this.factor.inputValue
