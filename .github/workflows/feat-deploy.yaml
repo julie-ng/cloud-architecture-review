@@ -18,13 +18,13 @@ env:
   acr-registry:    cloudkubereviews
   base-tag:        cloudkubereviews.azurecr.io/frontend
   image-name:      frontend
-  k8s-namespace:   aks-architect
+  k8s-namespace:   architecture-review
 
   # pattern in manifests/feat/deployment.yaml
   deployment-base-name: temp-nuxtjs
 
   manifests-dir:   './manifests/feat/'
-  hostname-format: 'aks-architect-{0}.dev.cloudkube.io'
+  hostname-format: 'architecture-review-{0}.dev.cloudkube.io'
   url-format:      'https://{0}/'
 
 jobs:
