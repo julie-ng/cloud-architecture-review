@@ -19,12 +19,12 @@ export default class FormLoader {
 		for (const category of config.categoriesSorted) {
 			const dir = config.contentDir + category
 			console.log('dir', dir)
-			// const questions = await this.#fetchQuestions(dir)
-			// console.log('questions', questions)
-			// categories.push({
-			// 	name: category,
-			// 	questions: questions
-			// })
+			const questions = await this.#fetchQuestions(dir)
+			console.log('questions', questions)
+			categories.push({
+				name: category,
+				questions: questions
+			})
 		}
 
 		this.categories = categories
@@ -114,7 +114,7 @@ export default class FormLoader {
 	 * @param {Boolean} opts.withBody - include factor markdown body
 	 * @returns {Array}
 	 */
-	async #fetchFactors (opts={}) {
+	async #fetchFactors (opts = {}) {
 		console.log('fetchFactors()', opts.slugs)
 		const withoutProps = opts.withBody
 			? config.factorAttrsRemove
