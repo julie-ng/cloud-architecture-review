@@ -96,6 +96,7 @@ jobs:
       uses: ./.github/actions/kubelogin
       with:
         cluster-name: ${{ env.cluster-name }}
+        cluster-namespace: ${{ env.k8s-namespace }}
         resource-group: ${{ env.cluster-rg }}
 
     # Build and Push Docker Image
@@ -158,6 +159,7 @@ jobs:
       uses: ./.github/actions/kubelogin
       with:
         cluster-name: ${{ env.cluster-name }}
+        cluster-namespace: ${{ env.k8s-namespace }}
         resource-group: ${{ env.cluster-rg }}
 
     # Remove Deployment
