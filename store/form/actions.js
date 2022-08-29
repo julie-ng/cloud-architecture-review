@@ -17,7 +17,7 @@ export default {
 			logger.action('form/clientInit', 'loading from $content…')
 			commit('load')
 			const loader = new FormLoader({ $content: this.$content })
-			const data = await loader.load()
+			const data = await loader.loadAll()
 
 			commit('set', data)
 			commit('save')

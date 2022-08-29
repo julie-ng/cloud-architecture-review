@@ -56,8 +56,8 @@ export default class FormLoader {
 	async fetchArticle (category, question) {
 		const dir = this.#articleDir(category, question)
 		const path = this.#articlePath(category, question)
-		console.log('fetchArticle()')
-		console.log('path', path)
+		// console.log('fetchArticle()')
+		// console.log('path', path)
 
 		const article = await this.$content(path).fetch()
 		const factors = await this.#fetchFactors({
@@ -89,11 +89,11 @@ export default class FormLoader {
 			.without(config.formWithoutProps)
 			.fetch()
 
-		console.log(questions)
+		// console.log(questions)
 
 		// Append factors
 		for (const q of questions) {
-			console.log('question', q)
+			// console.log('question', q)
 
 			// Must fetch with `slugs`
 			const factors = await this.#fetchFactors({
@@ -125,7 +125,7 @@ export default class FormLoader {
 	 * @returns {Array} noramlized factors
 	 */
 	async #fetchFactors (opts = {}) {
-		console.log('fetchFactors()', opts.slugs)
+		// console.log('fetchFactors()', opts.slugs)
 		const withoutProps = opts.withBody
 			? config.factorAttrsRemove
 			: config.formWithoutProps
