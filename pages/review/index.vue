@@ -4,9 +4,6 @@
 
 <script>
 	import FormLoader from '~/app/form-loader'
-	import contentConfig from '~/app/content.config'
-
-	console.log('contentConfig', contentConfig)
 
 	export default {
 		layout: 'app',
@@ -20,22 +17,13 @@
 		 * @returns {Array} of all questions and questions per defined sort order
 		 */
 
-
-		// TODO: this breaks routing from review to guide pages :-(
-		// not sure why though
-		// -------------------
 		async asyncData({ $content, params, store }) {
-			// Prefer SSR load
-
-
-			const loader = new FormLoader({ $content: $content })
-			const data = await loader.loadAll()
-
-
-			console.log('------------ results ---------')
-			console.log(data)
-
-			store.commit('form/set', data)
+			const isLoaded = store.getters['form/isLoaded']
+			if (!isLoaded) {
+				const loader = new FormLoader({ $content: $content })
+				const data = await loader.loadAll()
+				store.commit('form/set', data)
+			}
 
 			return
 		},

@@ -51,6 +51,7 @@ export default class FormLoader {
 	 * @public
 	 * @param {String} category, e.g. `requirements`
 	 * @param {String} question, e.g. `tenancy`
+	 * @returns {Object} full article (normalized as question) with normalized factors
 	 */
 	async fetchArticle (category, question) {
 		const dir = this.#articleDir(category, question)
@@ -59,19 +60,17 @@ export default class FormLoader {
 		console.log('path', path)
 
 		const article = await this.$content(path).fetch()
-		// console.log('article', article)
-
 		const factors = await this.#fetchFactors({
 			dir: dir,
 			slugs: article.factors,
 			withBody: true
 		})
+		// console.log('factors', factors)
 
-		// console.log('factors???', factors)
+		const result = QuestionSchema.normalize(article)
+		result.factors = factors
 
-		article.factors = factors
-
-		return article
+		return result
 	}
 
 	/**

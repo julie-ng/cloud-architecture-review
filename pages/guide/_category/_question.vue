@@ -22,10 +22,7 @@
 
       <hr>
 
-      <review-question
-				:question=article
-			>
-			</review-question>
+      <review-question :question=article></review-question>
 
       <fta-cta />
 
