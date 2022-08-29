@@ -11,6 +11,32 @@ What is your Tenancy Model?
 - Single-tenant Cluster
 - Mult-tenant Cluster
 
+### YAML Front Matter - no nested attributes ⚠️
+
+The Nuxt content plugin only renders 1 level of YAML attributes.
+
+For example, this works
+
+```yaml
+title: Active/Passive Setup
+description: I need redudant on stand-by infrastructure in production.
+complexity:  15
+security: 0
+cost: 10
+operations: 20
+```
+
+But this **does not work**
+
+```yaml
+title: Active/Passive Setup
+description: I need redudant on stand-by infrastructure in production.
+scores: 
+	complexity:  15 # does NOT work
+	security: 0
+	cost: 10
+	operations: 20
+```
 
 ## Categories
 
