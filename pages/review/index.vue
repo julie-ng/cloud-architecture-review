@@ -24,24 +24,21 @@
 		// TODO: this breaks routing from review to guide pages :-(
 		// not sure why though
 		// -------------------
-		// async asyncData({ $content, params, store }) {
-		// 	// Prefer SSR load
-
-		// 	// test
-		// 	// const results = await $content('/guide/networking')
-		// 	// 	.fetch()
-
-		// 	// console.log('------------ results ---------')
-		// 	// console.log(results)
+		async asyncData({ $content, params, store }) {
+			// Prefer SSR load
 
 
+			const loader = new FormLoader({ $content: $content })
+			const data = await loader.loadAll()
 
-		// 	const loader = new FormLoader({ $content: $content })
-		// 	const data = await loader.load()
-		// 	store.commit('form/set', data)
 
-		// 	return
-		// },
+			console.log('------------ results ---------')
+			console.log(data)
+
+			store.commit('form/set', data)
+
+			return
+		},
 
 		// anchor does not exist until fully rendered
 		// see in main.scss for offset value

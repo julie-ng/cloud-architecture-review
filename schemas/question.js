@@ -4,7 +4,9 @@ const _ = require('./helpers')
 /**
  * Question Schema
  *
- * Prefixes factor slugs with question dir
+ * - adds `inputName` attribute
+ * - `slugs` Array - adds `path` to objects
+ * - removes `extension` attribute
  */
 class QuestionSchema {
 	constructor () {

@@ -9,7 +9,9 @@ const _ = require('./helpers')
  * So here we lump together the points values into its own attribute,
  * e.g. `complexity` becomes `points.complexity`
  *
- * Also sets <input> value based on `slug`.
+ * - nests score values under new `points` attribute
+ * - removes `createdAt` and `updatedAt` attributes
+ * - sets `inputValue` attribute as `slug`.
  */
 
 class FactorSchema {
@@ -17,6 +19,12 @@ class FactorSchema {
 		return this
 	}
 
+	/**
+	 * Normalize
+	 *
+	 * removes all the unwanted properties
+	 * nests scores under `points` property
+	 */
 	normalize (attrs) {
 		let result = { ...attrs }
 
@@ -33,10 +41,25 @@ class FactorSchema {
 		return result
 	}
 
+	/**
+	 * Returns Name for <input> field
+	 *
+	 * currently just slug (not aware of category)
+	 *
+	 * @param {Object} attrs
+	 * @returns {String}
+	 */
 	extractInputValue (attrs) {
 		return attrs.slug
 	}
 
+	/**
+	 * Removes unwanted properties from object
+	 *
+	 * @private
+	 * @param {Object} attrs
+	 * @returns {Object} without unwanted properties
+	 */
 	#sanitize (attrs) {
 		const result = { ...attrs }
 		config.factorAttrsRemove.forEach((prop) => {
@@ -47,6 +70,16 @@ class FactorSchema {
 		return result
 	}
 
+	/**
+	 * Nests scores
+	 *
+	 * under new `points` property
+	 * e.g. security becomes points.security
+	 *
+	 * @private
+	 * @param {Object} attrs
+	 * @returns {Object}
+	 */
 	#adjustPoints (attrs) {
 		const result = { ...attrs }
 		const points = {}
@@ -60,6 +93,13 @@ class FactorSchema {
 		return result
 	}
 
+	/**
+	 * Checks if object already has `poiunts` property
+	 *
+	 * @private
+	 * @param {Object} attrs
+	 * @returns {Boolean}
+	 */
 	#hasPoints (attrs) {
 		return _.hasProp(attrs, 'points') &&
 			Object.keys(attrs.points).length > 0 // not empty
