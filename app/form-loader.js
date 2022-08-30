@@ -95,17 +95,18 @@ export default class FormLoader {
 		for (const t of topics) {
 			// console.log('topic', t)
 
-			// Must fetch with `slugs`
-			const factors = await this.#fetchFactors({
-				dir: categoryDir,
-				slugs: t.factors,
-				withBody: false
-			})
+			if (t.slug !== 'index') {  // ignore category indexes
+				const factors = await this.#fetchFactors({
+					dir: categoryDir,
+					slugs: t.factors, // Must fetch with `slugs`
+					withBody: false
+				})
 
-			// Now normalize for <input> forms
-			const topic = TopicSchema.normalize(t)
-			topic.factors = factors
-			results.push(topic)
+				// Now normalize for <input> forms
+				const topic = TopicSchema.normalize(t)
+				topic.factors = factors
+				results.push(topic)
+			}
 		}
 
 		console.log('📑 Form Loader results')
