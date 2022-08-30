@@ -1,4 +1,4 @@
-const QuestionSchema = require('../schemas/question')
+const TopicSchema = require('../schemas/topic')
 const FactorSchema = require('../schemas/factor')
 const config = require('../schemas/config')
 
@@ -10,7 +10,7 @@ export default class FormLoader {
 	 *  Content Loader
 	 * ================
 	 * Fetches content from the markdown files and
-	 * structures them in category/question/factors format
+	 * structures them in category/topic/factors format
 	 *
 	 * @param {String} opts.dir content directory
 	 * @param {*} opts.content nuxt $content
@@ -22,8 +22,8 @@ export default class FormLoader {
 	/**
 	 * Fetch All
 	 * ---------
-	 * Pre-fetches all Questions (without markdown body)
-	 * for the /review page that lists all questions
+	 * Pre-fetches all Topics (without markdown body)
+	 * for the /review page that lists all topics
 	 *
 	 * @public
 	 * @returns {Array}
@@ -32,10 +32,10 @@ export default class FormLoader {
 		const categories = []
 		for (const category of config.categoriesSorted) {
 			const dir = config.contentDir + category
-			const questions = await this.#fetchQuestionsAndFactors(dir)
+			const topics = await this.#fetchTopicsAndFactors(dir)
 			categories.push({
 				name: category,
-				questions: questions
+				topics: topics
 			})
 		}
 
@@ -46,16 +46,16 @@ export default class FormLoader {
 	/**
 	 * Fetch Single Article
 	 * --------------------
-	 * Get whole article including Markdown body based on Router params
+	 * Get whole topic/article including Markdown body based on Router params
 	 *
 	 * @public
 	 * @param {String} category, e.g. `requirements`
-	 * @param {String} question, e.g. `tenancy`
-	 * @returns {Object} full article (normalized as question) with normalized factors
+	 * @param {String} topic, e.g. `tenancy`
+	 * @returns {Object} full article (normalized as topic) with normalized factors
 	 */
-	async fetchArticle (category, question) {
-		const dir = this.#articleDir(category, question)
-		const path = this.#articlePath(category, question)
+	async fetchArticle (category, topic) {
+		const dir = this.#articleDir(category, topic)
+		const path = this.#articlePath(category, topic)
 		// console.log('fetchArticle()')
 		// console.log('path', path)
 
@@ -67,45 +67,45 @@ export default class FormLoader {
 		})
 		// console.log('factors', factors)
 
-		const result = QuestionSchema.normalize(article)
+		const result = TopicSchema.normalize(article)
 		result.factors = factors
 
 		return result
 	}
 
 	/**
-	 * Fetch All Questions
+	 * Fetch All Topics
 	 * -------------------
 	 * Gets all Markdown content in a given Category directory
 	 *
 	 * @private
 	 * @param {String} categoryDir, e.g. 'requirements'
-	 * @returns {Array} normalized questions
+	 * @returns {Array} normalized topics
 	 */
-	async #fetchQuestionsAndFactors (categoryDir) {
+	async #fetchTopicsAndFactors (categoryDir) {
 		const results = []
-		const questions = await this.$content(categoryDir)
+		const topics = await this.$content(categoryDir)
 			.sortBy('path')
 			.without(config.formWithoutProps)
 			.fetch()
 
-		// console.log(questions)
+		// console.log(topics)
 
 		// Append factors
-		for (const q of questions) {
-			// console.log('question', q)
+		for (const t of topics) {
+			// console.log('topic', t)
 
 			// Must fetch with `slugs`
 			const factors = await this.#fetchFactors({
 				dir: categoryDir,
-				slugs: q.factors,
+				slugs: t.factors,
 				withBody: false
 			})
 
 			// Now normalize for <input> forms
-			const question = QuestionSchema.normalize(q)
-			question.factors = factors
-			results.push(question)
+			const topic = TopicSchema.normalize(t)
+			topic.factors = factors
+			results.push(topic)
 		}
 
 		console.log('📑 Form Loader results')
@@ -116,7 +116,7 @@ export default class FormLoader {
 	/**
 	 * Fetch Factors
 	 * -------------
-	 * for a given question per YAML front matter
+	 * for a given topic per YAML front matter
 	 *
 	 * @private
 	 * @param {String} opts.dir - Directory for factors
@@ -147,16 +147,16 @@ export default class FormLoader {
 	 *  Convention Helpers
 	 * --------------------
 	 */
-	#articlePath (category, question) {
-		return `${CONTENT_DIR}/${category}/${question}`
+	#articlePath (category, topic) {
+		return `${CONTENT_DIR}/${category}/${topic}`
 	}
 
-	#articleDir (category, question) {
+	#articleDir (category, topic) {
 		return `${CONTENT_DIR}/${category}`
 	}
 
 	// currently not used b/c .md files have dirs in slugs
-	// #factorsDir (category, question) {
-	//   return `${CONTENT_DIR}/${category}/factors/${question}`
+	// #factorsDir (category, topic) {
+	//   return `${CONTENT_DIR}/${category}/factors/${topic}`
 	// }
 }

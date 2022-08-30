@@ -4,9 +4,9 @@
 			<!-- <pre>{{ categories }}</pre> -->
 			<h1 class="category-title">{{ c.name }}</h1>
 			<review-question
-				v-for="q of c.questions"
-				:key=q.slug
-				:question=normalizeQuestion(q)
+				v-for="topic of c.topics"
+				:key=topic.slug
+				:question=normalizeTopic(topic)
 			>
 			</review-question>
 		</section>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-	const QuestionSchema = require('../../schemas/question')
+	const TopicSchema = require('../../schemas/topic')
 
 	export default {
 		computed: {
@@ -24,8 +24,8 @@
 		},
 
 		methods: {
-			normalizeQuestion (questionObj) {
-				return QuestionSchema.normalize(questionObj)
+			normalizeTopic (questionObj) {
+				return TopicSchema.normalize(questionObj)
 				// return questionObj
 			}
 		}

@@ -37,8 +37,12 @@ export default {
 	buildModules: [
 	],
 
+	// see https://content.nuxtjs.org/api/configuration/
 	content: {
 		useCache: true,
+		ignores: [
+      'content/README.md'
+    ],
 		markdown: {
 			remarkAutolinkHeadings: {
 				content: {

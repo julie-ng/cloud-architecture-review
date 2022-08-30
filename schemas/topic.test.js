@@ -1,4 +1,4 @@
-const QuestionSchema = require('./question')
+const TopicSchema = require('./topic')
 
 const input = {
 	slug: 'model',
@@ -25,12 +25,12 @@ const expectedOutput = {
 	inputName: 'networking-model'
 }
 
-describe('QuestionSchema', () => {
+describe('TopicSchema', () => {
 	it('can normalize nuxtjs $content', () => {
-		expect(QuestionSchema.normalize(input)).toEqual(expectedOutput)
+		expect(TopicSchema.normalize(input)).toEqual(expectedOutput)
 	})
 
 	it('can also figure out input name based on $content results', () => {
-		expect(QuestionSchema.extractInputName(input)).toEqual('networking-model')
+		expect(TopicSchema.extractInputName(input)).toEqual('networking-model')
 	})
 })

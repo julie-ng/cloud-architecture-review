@@ -2,13 +2,13 @@ const config = require('./config')
 const _ = require('./helpers')
 
 /**
- * Question Schema
+ * Topic Schema
  *
  * - adds `inputName` attribute
  * - `slugs` Array - adds `path` to objects
  * - removes `extension` attribute
  */
-class QuestionSchema {
+class TopicSchema {
 	constructor () {
 		return this
 	}
@@ -55,5 +55,5 @@ class QuestionSchema {
 	}
 }
 
-const schema = new QuestionSchema()
+const schema = new TopicSchema()
 module.exports = schema

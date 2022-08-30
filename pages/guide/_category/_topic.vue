@@ -39,7 +39,7 @@ export default {
 
   async asyncData ({ $content, app, params, error }) {
 		const loader = new FormLoader({ $content: $content })
-		const article = await loader.fetchArticle(params.category, params.question)
+		const article = await loader.fetchArticle(params.category, params.topic)
 
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
