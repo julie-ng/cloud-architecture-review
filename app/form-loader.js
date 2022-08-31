@@ -95,7 +95,7 @@ export default class FormLoader {
 		for (const t of topics) {
 			// console.log('topic', t)
 
-			if (t.slug !== 'index') {  // ignore category indexes
+			if (t.slug !== 'index') { // ignore category indexes
 				const factors = await this.#fetchFactors({
 					dir: categoryDir,
 					slugs: t.factors, // Must fetch with `slugs`

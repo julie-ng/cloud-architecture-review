@@ -41,8 +41,8 @@ export default {
 	content: {
 		useCache: true,
 		ignores: [
-      'content/README.md'
-    ],
+			'content/README.md'
+		],
 		markdown: {
 			remarkAutolinkHeadings: {
 				content: {
