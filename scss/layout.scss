@@ -1,0 +1,14 @@
+@media screen and (min-width: 1024px) {
+	.column {
+		&.article-left-nav {
+			flex: none;
+			width: 18%;
+			border-right: 1px solid var(--grey-border-color);
+		}
+
+		&.article-right-nav {
+			flex: none;
+			width: 12%;
+		}
+	}
+}

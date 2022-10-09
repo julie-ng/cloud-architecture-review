@@ -10,7 +10,7 @@
 				</ul>
 			</li>
 		</ul>
-		<p class="sidebar-disclaimer">Note: this a work-in-progress and incomplete list.</p>
+		<!-- <p class="sidebar-disclaimer">Note: this a work-in-progress and incomplete list.</p> -->
 	</div>
 </template>
 

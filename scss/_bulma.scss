@@ -123,6 +123,10 @@ li:not(:first-child) > h4 {
 	margin-top: 1em;
 }
 
+.container {
+	width: 100%; // bulma defaults to auto
+}
+
 .section {
 	padding-left: 0;
 	padding-right: 0;
@@ -153,4 +157,19 @@ li:not(:first-child) > h4 {
 
 a:not(.button) {
 	text-decoration: underline;
+}
+
+.breadcrumb {
+	ul {
+		margin-left: 0;
+	}
+
+	a {
+		&:link, &:visited {
+			text-decoration: none;
+		}
+		&:hover, &:active {
+			text-decoration: underline;
+		}
+	}
 }

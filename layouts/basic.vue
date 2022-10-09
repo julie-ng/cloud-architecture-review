@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="layout-basic mt-6">
 		<app-header/>
 		<main class="container is-max-widescreen gap-on-mobile">
 			<div class="columns is-desktop mt-2">

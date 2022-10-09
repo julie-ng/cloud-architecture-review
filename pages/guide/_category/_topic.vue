@@ -1,5 +1,12 @@
 <template>
 	<div>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><NuxtLink to="/guide">Architecture Guide</NuxtLink></li>
+        <li><NuxtLink :to=categoryUrl>{{ category.title }}</NuxtLink></li>
+        <li class="is-active"><a href="#" aria-current="page">{{ article.shortTitle }}</a></li>
+      </ul>
+    </nav>
     <article class="article-page">
       <header class="article-header">
         <h1>{{ article.title }}</h1>
@@ -20,9 +27,9 @@
         </article>
       </section>
 
-      <hr>
-
-      <review-question :question=article></review-question>
+      <div class="mt-6">
+        <review-question :question=article></review-question>
+      </div>
 
       <fta-cta />
 
@@ -35,7 +42,7 @@
 import FormLoader from '~/app/form-loader'
 
 export default {
-  layout: 'app',
+  layout: 'article',
 
   async asyncData ({ $content, app, params, error }) {
 		const loader = new FormLoader({ $content: $content })
@@ -45,11 +52,19 @@ export default {
       return error({ statusCode: 404, message: 'Article not found' })
     }
 
+    const category = await $content(`guide/${params.category}/index`)
+      .only(['title'])
+      .fetch()
+
+    const categoryUrl = `/guide/${params.category}`
+
     const factors = article.factors
 
     return {
       article,
-      factors
+      factors,
+      category,
+      categoryUrl
     }
   },
 

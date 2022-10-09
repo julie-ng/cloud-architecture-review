@@ -21,6 +21,7 @@
 @import 'app/questions';
 @import 'app/score';
 @import 'app/results';
+@import 'layout';
 
 // .has-scroll-anchor {
 // 	scroll-margin-top: 120px;
@@ -48,19 +49,24 @@ body.has-navbar-fixed-top {
 	padding: 0.4em 0.85em;
 }
 
-.sidebar-disclaimer {
-	margin: 1.5em 0;
-	font-size: var(--xs-font-size);
-	line-height: 1.4em;
-	color: var(--md-grey-font-color);
+// .sidebar-disclaimer {
+// 	margin: 1.5em 0;
+// 	font-size: var(--xs-font-size);
+// 	line-height: 1.4em;
+// 	color: var(--md-grey-font-color);
 
-	a:link, a:visited {
-		color: var(--md-grey-font-color);
-	}
-}
+// 	a:link, a:visited {
+// 		color: var(--md-grey-font-color);
+// 	}
+// }
 
 a {
 	&.has-no-underline {
 		text-decoration: none;
 	}
+}
+
+.breadcrumb {
+	font-size: var(--sm-font-size);
+	// border-bottom: 1px solid var(--grey-border-color);
 }

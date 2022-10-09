@@ -22,7 +22,7 @@
 				<nav aria-label="main navigation" class="navbar-end">
 					<NuxtLink class="navbar-item" to="/about">About</NuxtLink>
 					<NuxtLink class="navbar-item" to="/getting-started">Getting Started</NuxtLink>
-					<NuxtLink class="navbar-item" to="/guide">Guide</NuxtLink>
+					<NuxtLink class="navbar-item" to="/guide">Architecture Guide</NuxtLink>
 					<div class="navbar-item buttons">
 						<NuxtLink class="button is-link is-light" to="/review">Review your Design</NuxtLink>
 					</div>
