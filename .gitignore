@@ -3,6 +3,7 @@
 *.tfplan
 *.tfstate
 *.tfstate.backup
+*.backup
 
 # Azure Debug
 debug.azcli

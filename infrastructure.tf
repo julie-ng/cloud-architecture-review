@@ -101,7 +101,7 @@ resource "azuread_service_principal" "ci" { # import id = Entperise Application'
 }
 
 # Federated Credential for GitHub Actions
-resource "azuread_application_federated_identity_credential" "example" {
+resource "azuread_application_federated_identity_credential" "ci" {
   for_each              = local.environments
   application_object_id = azuread_application.ci[each.key].object_id
   display_name          = "github-workflows-${each.key}"
