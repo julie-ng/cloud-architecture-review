@@ -1,18 +1,22 @@
 <template>
   <div>
 	  <nuxt-content :document="content" />
-    <h1>Categories</h1>
-    <ul>
-      <li v-for="cat of categories" :key=toLowerCase(cat.title)>
-        <NuxtLink :to=cat.dir>{{ cat.title }}</NuxtLink>
-      </li>
-    </ul>
+    <h2>Categories</h2>
+    <section>
+      <article v-for="cat of categories" :key=toLowerCase(cat.title) class="box">
+        <h3>
+          <NuxtLink :to=cat.dir>{{ cat.title }}</NuxtLink>
+        </h3>
+        {{ cat.description }}
+      </article>
+    </section>
+    <hr>
     <pre>{{ categories }}</pre>
   </div>
 </template>
 
 <script>
-  import ContentLoader from '~/app/form-loader'
+  // import ContentLoader from '~/app/form-loader'
   import ContentConfig from '~/app/content.config'
   export default {
     layout: 'basic',
