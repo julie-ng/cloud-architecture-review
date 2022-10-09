@@ -6,8 +6,12 @@
 			<review-question
 				v-for="topic of c.topics"
 				:key=topic.slug
-				:question=normalizeTopic(topic)
+				:question=topic
 			>
+			<!--
+					don't use :question=noramlmizeTopic(question)
+					breaks app. let vuex handle state
+			 -->
 			</review-question>
 		</section>
 	</div>
@@ -25,7 +29,7 @@
 
 		methods: {
 			normalizeTopic (questionObj) {
-				return TopicSchema.normalize(questionObj)
+				return TopicSchema.normalize(questionObj) // makes appp crash
 				// return questionObj
 			}
 		}
