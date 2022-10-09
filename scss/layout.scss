@@ -11,4 +11,35 @@
 			width: 12%;
 		}
 	}
+
+	.article-next-prev {
+		// border-top: 1px solid var(--grey-border-color);
+		// border-bottom: 1px solid var(--grey-border-color);
+
+		.column:last-child {
+			border-left: 1px solid var(--grey-border-color);
+			text-align: right;
+
+			span:first-child {
+				text-align: left;
+			}
+		}
+
+		.button {
+			display: inline-block;
+			height: auto;
+			&:first-child {
+				text-align: right;
+			}
+
+			span {
+				display: block;
+
+				&:first-child {
+					font-size: var(--xs-font-size);
+					color: var(--purple-extra-light-color);
+				}
+			}
+		}
+	}
 }
