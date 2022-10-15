@@ -31,15 +31,13 @@
         <review-question :question=article></review-question>
       </div>
 
-
-
       <!-- <fta-cta /> -->
 
       <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
       <hr class="mt-5">
       <div class="article-next-prev mb-5 pb-3 columns">
         <div class="column">
-          <div v-if=prevTopic>
+          <div v-if=prevTopic.path>
             <NuxtLink class="button is-link is-light" :to=prevTopic.path>
               <span>Previous</span>
               <span>&larr; {{ prevTopic.shortTitle }}</span>
@@ -47,7 +45,7 @@
           </div>
         </div>
         <div class="column">
-          <div v-if=nextTopic>
+          <div v-if=nextTopic.path>
             <NuxtLink class="button is-link is-light" :to=nextTopic.path>
               <span>Next</span>
               <span>{{ nextTopic.shortTitle }} &rarr;</span>
@@ -55,12 +53,6 @@
           </div>
         </div>
       </div>
-
-
-
-
-
-
 
     </article>
 	</div>
@@ -93,21 +85,20 @@ export default {
     const prevTopicSlug = ContentConfig.previousTopic(params.category, params.topic)
     const nextTopicSlug = ContentConfig.nextTopic(params.category, params.topic)
 
-    console.log('prevTopic', prevTopicSlug)
-    console.log('nextTopic', nextTopicSlug)
-
+    // console.log('prevTopic', prevTopicSlug)
+    // console.log('nextTopic', nextTopicSlug)
 
     const prevTopic = prevTopicSlug
       ? await $content(`guide/${params.category}/${prevTopicSlug}`)
-          .only(['shortTitle'])
+          .only(['shortTitle', 'path'])
           .fetch()
-      : null
+      : false
 
     const nextTopic = nextTopicSlug
       ? await $content(`guide/${params.category}/${nextTopicSlug}`)
-          .only(['shortTitle'])
+          .only(['shortTitle', 'path'])
           .fetch()
-      : null
+      : false
 
 
     // if (nextTopicSlug) {
