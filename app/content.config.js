@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+
 export default {
 	baseDir: '/guide/',
 
@@ -19,8 +21,7 @@ export default {
 
 	nextTopic (category, topicSlug) {
 		const topics = this.sortOrder[category]
-		const index =  topics.findIndex((el) => el === topicSlug )
-		// console.log('index', index)
+		const index = topics.findIndex(el => el === topicSlug)
 		return topics[index + 1] === undefined
 			? null
 			: topics[index + 1]
@@ -28,11 +29,9 @@ export default {
 
 	previousTopic (category, topicSlug) {
 		const topics = this.sortOrder[category]
-		const index =  topics.findIndex((el) => el === topicSlug )
-		// console.log('index', index)
+		const index = topics.findIndex(el => el === topicSlug)
 		return topics[index - 1] === undefined
 			? null
 			: topics[index - 1]
 	}
 }
-
