@@ -1,48 +1,72 @@
 <template>
-	<div>
-    <nav class="breadcrumb" aria-label="breadcrumbs">
-      <ul>
-        <li><NuxtLink to="/guide">Architecture Guide</NuxtLink></li>
-        <li><NuxtLink :to=categoryUrl>{{ category.title }}</NuxtLink></li>
-        <li class="is-active"><a href="#" aria-current="page">{{ article.shortTitle }}</a></li>
-      </ul>
-    </nav>
-    <article class="article-page">
-      <header class="article-header">
-        <h1>{{ article.title }}</h1>
-        <p class="article-lead">{{ article.description }}</p>
-      </header>
+	<div class="layout-article">
+		<app-header/>
+		<main class="container is-max-widescreen gap-on-mobile">
+			<div class="columns is-desktop mt-2">
+				<div class="column article-left-nav mr-6 pt-6">
+					<app-navigation :current-url=currentUrl />
+				</div>
+        <div class="column article-page-content pt-6">
 
-      <nuxt-content :document="article" />
+          <!-- # Article -->
+          <article class="article-page">
 
-      <hr>
+            <!-- Breadcrumb -->
+            <article-breadcrumb
+              :category-url="categoryUrl"
+              :category-title="category.title"
+              :page-short-title="article.shortTitle">
+            </article-breadcrumb>
 
-      <section v-if="factors.length > 0">
-        <h2>Factors</h2>
-        <p class="grey-text">(TODO - add radio buttons here for user to toggle and update score.)</p>
+            <!-- Article Header -->
+            <header class="article-header">
+              <h1>{{ article.title }}</h1>
+              <p class="article-lead">{{ article.description }}</p>
+            </header>
 
-        <article v-for="f of factors" v-bind:key="f.path">
-          <h3>{{ f.title }}</h3>
-          <nuxt-content :document="f" />
-        </article>
-      </section>
+            <!-- Article - Category Body -->
+            <nuxt-content :document="article" />
 
-      <div class="mt-6">
-        <review-question :question=article></review-question>
-      </div>
+            <hr>
 
-      <!-- <fta-cta /> -->
+            <!-- Article - Factors Bodies -->
+            <section v-if="factors.length > 0">
+              <h2>Factors</h2>
+              <article v-for="f of factors" v-bind:key="f.path">
+                <h3>{{ f.title }}</h3>
+                <nuxt-content :document="f" />
+              </article>
+            </section>
 
-      <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
-      <hr class="mt-5">
+            <!-- Itegrate Form Question -->
+            <div class="mt-6">
+              <!-- Re-use review component for now -->
+              <!-- although "Learn more…" link doesn't make sense -->
+              <review-question :question=article></review-question>
+            </div>
 
-      <article-next-prev-nav
-        :prev-topic="prevTopic"
-        :next-topic="nextTopic"
-      >
-      </article-next-prev-nav>
+            <!-- <fta-cta /> -->
 
-    </article>
+            <!-- Last Updated -->
+            <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
+
+            <hr class="mt-5">
+
+            <!-- Next Previous Nav -->
+            <article-next-prev-nav
+              :prev-topic="prevTopic"
+              :next-topic="nextTopic">
+            </article-next-prev-nav>
+
+          </article>
+          <!-- # /Article -->
+				</div>
+				<div class="column article-right-nav pt-6">
+					On this page
+				</div>
+			</div>
+		</main>
+		<app-footer/>
 	</div>
 </template>
 
@@ -51,8 +75,6 @@ import ContentConfig from '~/app/content.config'
 import FormLoader from '~/app/form-loader'
 
 export default {
-  layout: 'article',
-
   async asyncData ({ $content, app, params, error }) {
 		const loader = new FormLoader({ $content: $content })
 		const article = await loader.fetchArticle(params.category, params.topic)
@@ -66,7 +88,6 @@ export default {
       .fetch()
 
     const categoryUrl = `/guide/${params.category}`
-
     const factors = article.factors
 
     // Article Next/Previous Pages

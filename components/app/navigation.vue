@@ -3,6 +3,9 @@
 		<ul v-for="category of categories" :key=category.name class="app-navigation-category">
 			<li>
 				<h3 class="app-navigation-title is-size-6">{{ category.name }}</h3>
+
+				<!-- BUG: topics order might not match -->
+
 				<ul v-for="question of category.topics" :key=question.id class="app-navigation-questions">
 					<li>
 						<NuxtLink :to=guideLink(category.name,question.slug)>{{ question.shortTitle }}</NuxtLink>
