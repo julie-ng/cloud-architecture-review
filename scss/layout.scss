@@ -3,6 +3,16 @@
 	max-width: 760px;
 }
 
+.footer-poc-warning {
+	background: var(--yellow-bg-color);
+	color: var(--brown-text-color);
+	font-size: var(--xs-font-size);
+
+	strong {
+		color: var(--brown-text-color);
+	}
+}
+
 @media screen and (min-width: 769px) {
 	.is-small-hero {
 		.hero-body {
