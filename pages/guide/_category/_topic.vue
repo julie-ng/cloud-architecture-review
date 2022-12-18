@@ -35,24 +35,12 @@
 
       <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
       <hr class="mt-5">
-      <div class="article-next-prev mb-5 pb-3 columns">
-        <div class="column">
-          <div v-if=prevTopic.path>
-            <NuxtLink class="button is-link is-light" :to=prevTopic.path>
-              <span>Previous</span>
-              <span>&larr; {{ prevTopic.shortTitle }}</span>
-            </NuxtLink>
-          </div>
-        </div>
-        <div class="column">
-          <div v-if=nextTopic.path>
-            <NuxtLink class="button is-link is-light" :to=nextTopic.path>
-              <span>Next</span>
-              <span>{{ nextTopic.shortTitle }} &rarr;</span>
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
+
+      <article-next-prev-nav
+        :prev-topic="prevTopic"
+        :next-topic="nextTopic"
+      >
+      </article-next-prev-nav>
 
     </article>
 	</div>
@@ -81,33 +69,21 @@ export default {
 
     const factors = article.factors
 
-    // testing next/prev
+    // Article Next/Previous Pages
     const prevTopicSlug = ContentConfig.previousTopic(params.category, params.topic)
     const nextTopicSlug = ContentConfig.nextTopic(params.category, params.topic)
-
-    // console.log('prevTopic', prevTopicSlug)
-    // console.log('nextTopic', nextTopicSlug)
 
     const prevTopic = prevTopicSlug
       ? await $content(`guide/${params.category}/${prevTopicSlug}`)
           .only(['shortTitle', 'path'])
           .fetch()
-      : false
+      : {}
 
     const nextTopic = nextTopicSlug
       ? await $content(`guide/${params.category}/${nextTopicSlug}`)
           .only(['shortTitle', 'path'])
           .fetch()
-      : false
-
-
-    // if (nextTopicSlug) {
-    //   console.log('got next topic')
-    //   const nextTopic = await $content(`guide/${params.category}/${nextTopicSlug}`)
-    //     .only(['shortTitle'])
-    //     .fetch()
-    //   console.log(nextTopic)
-    // }
+      : {}
 
     return {
       article,
