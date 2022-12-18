@@ -1,3 +1,24 @@
+.content-single-col {
+	width: 100%;
+	max-width: 760px;
+}
+
+@media screen and (min-width: 769px) {
+	.is-small-hero {
+		.hero-body {
+			padding: 2rem 1rem;
+		}
+
+		.title {
+			font-size: var(--lead-font-size);
+		}
+
+		.subtitle {
+			font-size: var(--md-font-size);
+		}
+	}
+}
+
 @media screen and (min-width: 1024px) {
 	.column {
 		&.article-left-nav {

@@ -1,12 +1,16 @@
 <template>
 	<div class="layout-article">
 		<app-header/>
+    <guide-hero
+      title="Architecture Guide"
+      :small=true>
+    </guide-hero>
 		<main class="container is-max-widescreen gap-on-mobile">
 			<div class="columns is-desktop mt-2">
-				<div class="column article-left-nav mr-6 pt-6">
+				<div class="column article-left-nav mr-6 pt-1">
 					<app-navigation :current-url=currentUrl />
 				</div>
-        <div class="column article-page-content pt-6">
+        <div class="column article-page-content pt-4">
 
           <!-- # Article -->
           <article class="article-page">
