@@ -36,13 +36,13 @@ jobs:
     steps:
     - id: debug-context
       run: |
-        echo "### Triggering Event"                                       >> $GITHUB_STEP_SUMMARY
+        echo "### Triggering Event"                                   >> $GITHUB_STEP_SUMMARY
         echo "| Var | Value |"                                        >> $GITHUB_STEP_SUMMARY
         echo "|:--|:--|"                                              >> $GITHUB_STEP_SUMMARY
-        echo "| `event_name`      | ${{ github.event_name }} |"       >> $GITHUB_STEP_SUMMARY
-        echo "| `ref_name`        | ${{ github.ref_name }} |"         >> $GITHUB_STEP_SUMMARY
-        echo "| `event.ref`       | ${{ github.event.ref }} |"        >> $GITHUB_STEP_SUMMARY
-        echo "| `event.ref_type`  | ${{ github.event.ref_type }} |"   >> $GITHUB_STEP_SUMMARY
+        echo "| event_name      | ${{ github.event_name }} |"       >> $GITHUB_STEP_SUMMARY
+        echo "| ref_name        | ${{ github.ref_name }} |"         >> $GITHUB_STEP_SUMMARY
+        echo "| event.ref       | ${{ github.event.ref }} |"        >> $GITHUB_STEP_SUMMARY
+        echo "| event.ref_type  | ${{ github.event.ref_type }} |"   >> $GITHUB_STEP_SUMMARY
 
         echo "### Pipeline Variables"                                     >> $GITHUB_STEP_SUMMARY
         echo "| Var | Value |"                                            >> $GITHUB_STEP_SUMMARY
