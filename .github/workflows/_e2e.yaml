@@ -17,15 +17,15 @@ jobs:
       SELENIUM_TARGET_URL: ${{ inputs.url }}
       APP_BUILD_SHA: ${{ inputs.build-sha }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: '16'
 
     - name: get npm cache directory
       id: npm-cache-dir
       run: |
-        echo "::set-output name=dir::$(npm config get cache)"
+        echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
 
     - uses: actions/cache@v3
       id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'

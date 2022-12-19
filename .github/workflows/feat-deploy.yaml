@@ -43,6 +43,8 @@ jobs:
       docker-tag:     ${{ steps.resolved.outputs.docker-tag }}
 
     steps:
+    - uses: actions/checkout@v3
+
     - id: debug-context
       run: |
         echo "event_name      ${{ github.event_name }}"
@@ -52,25 +54,33 @@ jobs:
 
     - id: name-on-push
       if: github.event_name == 'push'
-      run: echo "feat-name=$(echo '${{ github.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
+      name: 'Branch Name on `push` event'
+      run: |
+        echo "feat-name=$(echo '${{ github.ref_name }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
 
     - id: name-on-delete
       if: github.event_name == 'delete'
-      run: echo "feat-name=$(echo '${{ github.event.ref }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
-
-    - id: set-hostname
-      run: echo "hostname=${{ format(env.hostname-format, env.feat-name) }}" >> $GITHUB_ENV
-
-    - id: other-vars
+      name: 'Branch name on `delete` event'
       run: |
+        echo "feat-name=$(echo '${{ github.event.ref }}' | sed -e 's/\//-/g')" >> $GITHUB_ENV
+
+    - id: set-variables
+      run: |
+        echo "hostname=${{ format(env.hostname-format, env.feat-name) }}" >> $GITHUB_ENV
         echo "docker-tag=${{ env.feat-name }}" >> $GITHUB_ENV
         echo "git-sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - id: resolved
       run: |
-        echo "::set-output name=docker-tag::${{ env.docker-tag }}"
-        echo "::set-output name=hostname::${{ env.hostname }}"
-        echo "::set-output name=git-sha::${{ env.git-sha }}"
+        echo "hostname=${{ env.hostname }}" >> $GITHUB_OUTPUT
+        echo "docker-tag=${{ env.feat-name }}" >> $GITHUB_OUTPUT
+        echo "git-sha=${{ env.git-sha }}" >> $GITHUB_OUTPUT
+
+        echo "| Variable | Value |" >> $GITHUB_STEP_SUMMARY
+        echo "|:--|:--|" >> $GITHUB_STEP_SUMMARY
+        echo "| docker-tag | ${{ env.docker-tag }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| hostname | ${{ env.hostname }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| git-sha | ${{ env.git-sha }} |" >> $GITHUB_STEP_SUMMARY
 
 
   # Deploy
@@ -82,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev # GitHub Envronment
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: 'Login - Azure'
       uses: azure/login@v1
@@ -110,6 +120,8 @@ jobs:
         docker push ${{ env.base-tag }}:${{ env.image-tag }}
         docker logout
 
+        echo "Image Tag: ${{ env.base-tag }}:${{ env.image-tag }}" >> $GITHUB_STEP_SUMMARY
+
     # Add/Update Deployment (incl. restart)
     - id: kubectl-apply
       name: '🧪 APPLY Deployment'
@@ -126,6 +138,8 @@ jobs:
     # Pull Latest Image
     - id: restart-pods
       name: '☸️ Restart Pods'
+      env:
+        KUBECONFIG: ${{ github.workspace }}/${{ steps.kubelogin.outputs.kubeconfig }}
       run: |
         kubectl rollout restart deployment \
           ${{ env.deployment-base-name }}-${{ needs.config.outputs.docker-tag }} \
@@ -145,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev # GitHub Envronment
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: 'Login - Azure'
       uses: azure/login@v1

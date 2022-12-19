@@ -50,18 +50,18 @@ jobs:
   setup-variables:
     runs-on: ubuntu-latest
     outputs:
-      target:         ${{ steps.resolved.outputs.target }}
-      cluster:        ${{ steps.resolved.outputs.cluster }}
+      target:            ${{ steps.resolved.outputs.target }}
+      cluster:           ${{ steps.resolved.outputs.cluster }}
       cluster-namespace: ${{ steps.resolved.outputs.cluster-namespace }}
-      resource-group: ${{ steps.resolved.outputs.resource-group }}
-      url:            ${{ steps.resolved.outputs.url }}
-      hostname:       ${{ steps.resolved.outputs.hostname }}
-      git-sha:        ${{ steps.resolved.outputs.git-sha }}
-      docker-tag:     ${{ steps.resolved.outputs.docker-tag }}
-      overlays:       ${{ steps.resolved.outputs.overlays }}
+      resource-group:    ${{ steps.resolved.outputs.resource-group }}
+      url:               ${{ steps.resolved.outputs.url }}
+      hostname:          ${{ steps.resolved.outputs.hostname }}
+      git-sha:           ${{ steps.resolved.outputs.git-sha }}
+      docker-tag:        ${{ steps.resolved.outputs.docker-tag }}
+      overlays:          ${{ steps.resolved.outputs.overlays }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: save git sha
       run: echo "git-sha=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -100,15 +100,27 @@ jobs:
     - id: resolved
       name: 'OUTPUTS - resolve'
       run: |
-        echo "::set-output name=target::${{ env.target }}"
-        echo "::set-output name=overlays::${{ env.overlays }}"
-        echo "::set-output name=cluster::${{ env.cluster }}"
-        echo "::set-output name=cluster-namespace::${{ env.cluster-namespace }}"
-        echo "::set-output name=resource-group::${{ env.rg }}"
-        echo "::set-output name=docker-tag::${{ env.docker-tag }}"
-        echo "::set-output name=url::${{ env.url }}"
-        echo "::set-output name=hostname::${{ env.hostname }}"
-        echo "::set-output name=git-sha::${{ env.git-sha }}"
+        echo "target=${{ env.target }}" >> $GITHUB_OUTPUT
+        echo "overlays=${{ env.overlays }}" >> $GITHUB_OUTPUT
+        echo "cluster=${{ env.cluster }}" >> $GITHUB_OUTPUT
+        echo "cluster-namespace=${{ env.cluster-namespace }}" >> $GITHUB_OUTPUT
+        echo "resource-group=${{ env.rg }}" >> $GITHUB_OUTPUT
+        echo "docker-tag=${{ env.docker-tag }}" >> $GITHUB_OUTPUT
+        echo "url=${{ env.url }}" >> $GITHUB_OUTPUT
+        echo "hostname=${{ env.hostname }}" >> $GITHUB_OUTPUT
+        echo "git-sha=${{ env.git-sha }}" >> $GITHUB_OUTPUT
+
+        echo "| Variable | Value |" >> $GITHUB_STEP_SUMMARY
+        echo "|:--|:--|" >> $GITHUB_STEP_SUMMARY
+        echo "| target | ${{ env.target }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| overlays | ${{ env.overlays }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| cluster | ${{ env.cluster }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| cluster-namespace | ${{ env.cluster-namespace }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| resource-group | ${{ env.rg }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| docker-tag | ${{ env.docker-tag }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| url | ${{ env.url }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| hostname | ${{ env.hostname }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| git-sha | ${{ env.git-sha }} |" >> $GITHUB_STEP_SUMMARY
 
 
 # =========

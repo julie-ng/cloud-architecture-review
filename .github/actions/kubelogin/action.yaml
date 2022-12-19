@@ -25,7 +25,7 @@ runs:
     name: kubeconfig location
     shell: bash
     run: |
-      echo "::set-output name=location::.kubeconfig-${{ inputs.cluster-name }}"
+      echo "location=.kubeconfig-${{ inputs.cluster-name }}" >> $GITHUB_OUTPUT
 
   - id: install
     name:  Install kubelogin
