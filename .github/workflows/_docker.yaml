@@ -68,21 +68,21 @@ jobs:
     - name: 'Docker - Push'
       run: docker push ${{ env.image-name }}:${{ inputs.image-tag }}
 
-    # only works _after_ push 🤦‍♀️
-    - uses: Azure/container-scan@v0
-      name: 'Docker - Azure Defender Scan'
-      continue-on-error: true
-      id: container-scan
-      with:
-        image-name: ${{ env.image-name }}:${{ inputs.image-tag }}
-        severity-threshold: WARN
+    # # only works _after_ push 🤦‍♀️
+    # - uses: Azure/container-scan@v0
+    #   name: 'Docker - Azure Defender Scan'
+    #   continue-on-error: true
+    #   id: container-scan
+    #   with:
+    #     image-name: ${{ env.image-name }}:${{ inputs.image-tag }}
+    #     severity-threshold: WARN
 
-    - name: 'Defender Scan - post results to Azure' # per Docs must be _after_ push
-      uses: Azure/publish-security-assessments@v0
-      with:
-        scan-results-path: ${{ steps.container-scan.outputs.scan-report-path }}
-        connection-string: ${{ secrets.AZ_APPINSIGHTS_CONNECTION_STRING }}
-        subscription-token: ${{ secrets.AZ_DEFENDER_TOKEN }}
+    # - name: 'Defender Scan - post results to Azure' # per Docs must be _after_ push
+    #   uses: Azure/publish-security-assessments@v0
+    #   with:
+    #     scan-results-path: ${{ steps.container-scan.outputs.scan-report-path }}
+    #     connection-string: ${{ secrets.AZ_APPINSIGHTS_CONNECTION_STRING }}
+    #     subscription-token: ${{ secrets.AZ_DEFENDER_TOKEN }}
 
     - name: 'Docker - Logout'
       run: docker logout
