@@ -1,16 +1,4 @@
-# GitHub Automation
-
-## Security Concept
-
-This repo has the following strategy, where a deployment target can be `dev`, `staging` or `production`.
-
-- Each deployment target has its own Azure Kubernetes clsuter.
-- Each deployment target has its own Service Principal (headless account), which has access stricted to the `aks-architect` namespace on that cluster.
-- Each deployment target has its own [GitHub Environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
-- Each GitHub Environment is restricted to its corresponding branch, e.g. `dev` environemnt is tied to `main` branch.
-- Each Service Principal is [federated](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation-create-trust-github?tabs=azure-portal) to a GitHub environment
-
-In this way, there are no secrets stored on GitHub.com. Instead the GitHub Workflow token (unique to each run) is swapped for an Azure access token. For details, see [Azure Workload identity federation > Configure an app to trust a GitHub repo](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation-create-trust-github?tabs=azure-portal)
+# CI/CD Automation
 
 ## GitHub Actions
 
@@ -72,6 +60,52 @@ Generally, the image lifecycle is as follows
 | Push to `main` branch | `dev-e6c52a4` | git sha is appended to image name |
 | Push to `staging` branch | `staging-e6c52a4` | pull existing dev image, re-tag prefix to `staging-` and push back to registry.|
 | Push tag, e.g. `v0.1.0` | `0.1.0` | Follows semver. Will use git sha to promote staging image via re-taggin (to be implemented) |
+
+## Security Concept
+
+### Azure Setup
+
+#### Dedicated Namespaces in Dedicated Kubernetes Clusters
+
+The dev cluster hosts both dev environment as well as [feature branch deployments](./feat-deploy.yaml).
+
+| Branch | K8s Cluster | K8s Namespace |
+|:--|:--|:--|
+| `main` | `cloudkube-dev-m59i-cluster` | `architecture-review`  |
+| `feat/*` | `cloudkube-dev-m59i-cluster` | `architecture-review`  |
+| `staging` | `cloudkube-staging-1bp-cluster` | `architecture-review` |
+
+Note: I chose to re-use dev cluster security boundary for feature branch deployments. Your requirements may vary.
+
+#### Role Base Access Control
+
+Each deployment target has its own Service Principal (headless account), which has access stricted to the `architecture-review` namespace on that cluster.
+
+#### Federated Credentials for Secretless Deployments
+
+Each Service Principal is [federated](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation-create-trust-github?tabs=azure-portal) to a GitHub environment. This shows a credential federated to this repo `julie-ng/cloud-architecture-review` and tied to the `dev` [GitHub Environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment).
+
+<img src="./../../docs/images/aad-gh-federated-credential.png" width="400" alt="Federated Credential Configuration in Azure Portal">
+
+In this way, there are no secrets stored on GitHub.com. Instead the GitHub Workflow token (unique to each run) is swapped for an Azure access token. For details, see [Azure Workload identity federation > Configure an app to trust a GitHub repo](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation-create-trust-github?tabs=azure-portal)
+
+## GitHub Environments
+
+This repo has 2 GitHub Environments: `dev` and `staging`, each with an `AZURE_CLIENT_ID` secret, which corresponds to federated credential above.
+
+<img src="./../../docs/images/github-environments.png" width="400" alt="2 GitHub Environemnts">
+
+### Deployment Branches
+
+Additionally, each GitHub Environment uses [deployment branches](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#deployment-branches) like so:
+
+<img src="./../../docs/images/github-env-branch-protect.png" width="400" alt="GitHub Environemnts with Branch Protection">
+
+| Branch | Deployment Environment |
+|:--|:--|
+| `main` | `dev` |
+| `feat/*` | `dev` |
+| `staging` | `staging` |
 
 
 ## References

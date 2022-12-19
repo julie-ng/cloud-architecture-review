@@ -1,9 +1,16 @@
-# Cloud Architecture Review
+# Cloud Architecture Review 
 
 | Environment | Status |
 |:--|:--|
-| [dev]([https://](https://aks-architect.dev.cloudkube.io/)) | [![cd](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml/badge.svg?branch=main)](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml) |
-| [staging]([https://](https://aks-architect.staging.cloudkube.io/)) | [![cd](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml/badge.svg?branch=staging)](https://github.com/julie-ng/azure-kubernetes-architect/actions/workflows/cd.yaml) |
+| Dev | [![🚀 Continuous Delivery (CD)](https://github.com/julie-ng/cloud-architecture-review/actions/workflows/cd.yaml/badge.svg?branch=main)](https://github.com/julie-ng/cloud-architecture-review/actions/workflows/cd.yaml) |
+| Staging | [![🚀 Continuous Delivery (CD)](https://github.com/julie-ng/cloud-architecture-review/actions/workflows/cd.yaml/badge.svg?branch=staging)](https://github.com/julie-ng/cloud-architecture-review/actions/workflows/cd.yaml) |
+
+
+A Proof of Concept app that allows users to answer questions to receive a score that's not a binary checklist, but rather an assessment based on trade-offs.
+
+<img src="./docs/images/review-app-poc.png" alt="Review App Proof of Concept" width="600">
+
+_Note: this is just a proof of concept and the content should be treated as fillers and placeholders_
 
 ##  Setup
 
@@ -15,9 +22,18 @@ First install Dependences
 npm install
 ```
 
-Then start the Express erver
+Then start the Nuxt.js Server
 
 ```
+npm run nuxt:dev
+```
+
+#### Testing Production Builds
+
+In the cloud, the app is served via Express so we can include a `/health` endpoint. To test if the app still works locally, run:
+
+```
+npm run nuxt:build
 npm run express:dev
 ```
 
@@ -26,14 +42,9 @@ npm run express:dev
 The best docs are code itself. See 🐳 [Dockerfile](./Dockerfile) and ☸️ [manifests/deployment.yaml](manifests/deployment.yaml)
 
 
-## Node v14
-
-Cannot use v16 until this bug for m1 macs is fixed [docker/for-mac#5831](https://github.com/docker/for-mac/issues/5831)
-
-
 ## Infrastructure
 
-Note: the `aks-architect` namespace should exist before running Terraform.
+Note: the `architecture-review` namespace should exist before running Terraform.
 
 ### Resources Created
 
@@ -44,7 +55,7 @@ The Terraform infrastructure as code performs the following:
 
 - **Service Principals**  
   - to use in CI/CD to push/pull images to _this_ container registry `cloudkubereviews` 
-  - contributor access to `aks-architect` namespace in shared cluster
+  - contributor access to `architecture-review` namespace in shared cluster
 
 ### Role Based Access Control (RBAC)
 
@@ -54,12 +65,12 @@ The following are managed in *this* repository's Infrastructure as Code.
 |:--|:--|:--|
 | `cloudkube-dev-r9er-cluster-agentpool` | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
 |`cloudkube-staging-d7c-cluster-agentpool`  | [AcrPull](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
-| `aks-architect-ci-dev-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
-| `aks-architect-ci-staging-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
-| `aks-architect-ci-dev-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-dev-r9er-cluster` |
-| `aks-architect-ci-staging-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-staging-d7c-cluster` |
-| `aks-architect-ci-dev-sp` | [AKS RBAC Writer](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster) | `aks-architect` namespace in dev cluster |
-| `aks-architect-ci-staging-sp` | [AKS RBAC Writer](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster) | `aks-architect` namespace in staging cluster |
+| `cloudkube-arch-review-ci-dev-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
+| `cloudkube-arch-review-ci-staging-sp` | [AcrPush](https://docs.microsoft.com/azure/container-registry/container-registry-roles?tabs=azure-cli) | `cloudkubereviews` Container Registry |
+| `cloudkube-arch-review-ci-dev-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-dev-r9er-cluster` |
+| `cloudkube-arch-review-ci-staging-sp` | [AKS Cluster User Role](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster)* | `cloudkube-staging-d7c-cluster` |
+| `cloudkube-arch-review-ci-dev-sp` | [AKS RBAC Writer](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster) | `architecture-review` namespace in dev cluster |
+| `cloudkube-arch-review-ci-staging-sp` | [AKS RBAC Writer](https://docs.microsoft.com/azure/aks/manage-azure-rbac#create-role-assignments-for-users-to-access-cluster) | `architecture-review` namespace in staging cluster |
 
 _[*Required read-only role for non-interactive cluster login](https://docs.microsoft.com/azure/aks/control-kubeconfig-access)_
 
