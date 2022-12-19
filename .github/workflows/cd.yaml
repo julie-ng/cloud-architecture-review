@@ -34,16 +34,23 @@ jobs:
     needs: config
     runs-on: ubuntu-latest
     steps:
-    - run: echo "Target Environment - ${{ needs.config.outputs.target }}"
-    - run: echo "AKS cluster - ${{ needs.config.outputs.cluster }}"
-    - run: echo "Git sha - ${{ needs.config.outputs.git-sha }}"
-    - run: echo "Docker Tag - ${{ needs.config.outputs.docker-tag }}"
     - id: debug-context
       run: |
-        echo "event_name      ${{ github.event_name }}"
-        echo "ref_name        ${{ github.ref_name }}"
-        echo "event.ref       ${{ github.event.ref }}"
-        echo "event.ref_type  ${{ github.event.ref_type }}"
+        echo "### Triggering Event"                                       >> $GITHUB_STEP_SUMMARY
+        echo "| Var | Value |"                                        >> $GITHUB_STEP_SUMMARY
+        echo "|:--|:--|"                                              >> $GITHUB_STEP_SUMMARY
+        echo "| `event_name`      | ${{ github.event_name }} |"       >> $GITHUB_STEP_SUMMARY
+        echo "| `ref_name`        | ${{ github.ref_name }} |"         >> $GITHUB_STEP_SUMMARY
+        echo "| `event.ref`       | ${{ github.event.ref }} |"        >> $GITHUB_STEP_SUMMARY
+        echo "| `event.ref_type`  | ${{ github.event.ref_type }} |"   >> $GITHUB_STEP_SUMMARY
+
+        echo "### Pipeline Variables"                                     >> $GITHUB_STEP_SUMMARY
+        echo "| Var | Value |"                                            >> $GITHUB_STEP_SUMMARY
+        echo "|:--|:--|"                                                  >> $GITHUB_STEP_SUMMARY
+        echo "| Target Environment | ${{ needs.config.outputs.target }}"  >> $GITHUB_STEP_SUMMARY
+        echo "| AKS cluster | ${{ needs.config.outputs.cluster }}"        >> $GITHUB_STEP_SUMMARY
+        echo "| Git sha | ${{ needs.config.outputs.git-sha }}"            >> $GITHUB_STEP_SUMMARY
+        echo "| Docker Tag | ${{ needs.config.outputs.docker-tag }}"      >> $GITHUB_STEP_SUMMARY
 
   docker:
     needs: config
