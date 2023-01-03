@@ -25,12 +25,12 @@
       </div>
 
       <section>
-        <article v-for="topic of topics" :key=topic.title class="box">
-          <h3>
-          <NuxtLink :to=topic.path>{{ topic.shortTitle }}</NuxtLink>
-          </h3>
-          {{ topic.description }}
-        </article>
+        <div v-for="group, i of topicGroups" :key=i class="columns my-2">
+          <div v-for="topic, index of group" :key=topic.title class="column box mx-3">
+            <h3><NuxtLink :to=topic.path>{{ topic.shortTitle }}</NuxtLink> ({{ index }})</h3>
+            <p>{{ topic.description }}</p>
+          </div>
+        </div>
       </section>
 
     	</main>
@@ -40,9 +40,9 @@
 
 <script>
   import ContentConfig from '~/app/content.config'
-  export default {
-    // layout: 'basic',
+  import _ from 'lodash'
 
+  export default {
     async asyncData({ $content, params }) {
       const content = await $content(`guide/${params.category}/index`).fetch()
 
@@ -50,10 +50,12 @@
         .without(['body'])
         .where({ slug: { $ne: 'index' } })
         .fetch()
+      const topicGroups = _.chunk(topics, 3)
 
       return {
         content,
-        topics
+        topics,
+        topicGroups
       }
     }
   }
