@@ -6,7 +6,7 @@
       :small=true>
     </guide-hero>
 		<main class="container is-max-widescreen gap-on-mobile">
-			<div class="columns is-desktop mt-2">
+			<div class="columns is-desktop mt-0">
 				<div class="column article-left-nav mr-6 pt-1">
 					<app-navigation :current-url=currentUrl />
 				</div>
