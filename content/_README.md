@@ -9,7 +9,7 @@ What is your Tenancy Model?
 **Example Factors** e.g. possible answers
 
 - Single-tenant Cluster
-- Mult-tenant Cluster
+- Multi-tenant Cluster
 
 ### YAML Front Matter - no nested attributes ⚠️
 
