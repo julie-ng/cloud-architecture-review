@@ -30,10 +30,20 @@
 
 		&[aria-current="page"] {
 			display: inline-block;
-			border-left: 4px solid var(--primary-color);
-			padding: 0.2em 0.8em;
-			margin: 0.2em 0;
+			// border-left: 4px solid var(--primary-color);
+			// padding: 0.2em 0.8em;
+			// margin: 0.2em 0;
 			color: var(--primary-color);
+			position: relative;
+			left: -1em;
+
+			&::before {
+				display: inline-block;
+
+				content: '❯';
+				margin-right: 0.5em;
+				color: var(--primary-color);
+			}
 		}
 	}
 
