@@ -14,6 +14,7 @@
 
           <!-- # Article -->
           <article class="article-page">
+
             <!-- Breadcrumb -->
             <article-breadcrumb
               :category=category
@@ -29,24 +30,22 @@
             <!-- Article - Category Body -->
             <nuxt-content :document="article" />
 
-            <hr>
+            <!-- Itegrate Form Question -->
+            <article-question class="mt-6"
+              v-if="factors.length > 0"
+              :question=article
+              :factors=factors
+            >
+            </article-question>
 
             <!-- Article - Factors Content -->
-            <!-- hasFactors: {{ hasFactors }}
-            <section v-if="hasFactors">
+            <section v-if="factors.length > 0">
               <h2>Factors</h2>
               <article v-for="f of factors" v-bind:key="f.path">
                 <h3>{{ f.title }}</h3>
                 <nuxt-content :document="f" />
               </article>
-            </section> -->
-
-            <!-- Itegrate Form Question -->
-            <div class="mt-6">
-              <!-- Re-use review component for now -->
-              <!-- although "Learn more…" link doesn't make sense -->
-              <!-- <review-question v-if="hasFactors" :question=article></review-question> -->
-            </div>
+            </section>
 
             <!-- <fta-cta /> -->
 
@@ -60,6 +59,7 @@
               :prev-topic="prev"
               :next-topic="next">
             </article-next-prev-nav>
+
           </article>
           <!-- # /Article -->
 				</div>
@@ -71,7 +71,7 @@
           <ul class="mt-1 article-toc-nav">
             <li v-for="link of article.toc"
               :key="link.id"
-              :class="{ 'toc2': link.depth === 2, 'toc3': link.depth === 3 }">
+              :class="{ 'toc-level-2': link.depth === 2, 'toc-level-3': link.depth === 3 }">
               <NuxtLink :to="`#${link.id}`">{{ fixTocTitle(link.text) }}</NuxtLink>
             </li>
           </ul>
@@ -111,10 +111,22 @@ export default {
      * Article
      */
     const article = await $content(`guide/${params.category}/${params.topic}`).fetch()
+    // const toc = article.toc
+    const factors = []
 
     if (!article) {
       return error({ statusCode: 404, message: 'Article not found' })
     }
+
+    if (article.factors) {
+      for await (const f of article.factors) {
+        const factor = await $content(`guide/${params.category}/${f.slug}`).fetch()
+        factors.push(factor)
+        // toc.concat(factor.toc)
+      }
+    }
+
+    // console.log('hasFactors', hasFactors);
 
     /**
      * Category Title for Breadcrumb
@@ -134,20 +146,14 @@ export default {
       .fetch()
 
 
-    /**
-     * Review Form Element (TODO)
-     */
-    // const factors = article.factors || []
-    // const hasFactors = factors.length > 0
-    // const loader = new FormLoader({ $content: $content })
-
     return {
       article,
       category,
       sidenav,
       next,
       prev,
-      // factors,
+      factors,
+      // toc
       // hasFactors,
     }
   },
