@@ -1,7 +1,7 @@
 <template>
 	<div class="article-next-prev mb-5 pb-3 columns">
 		<div class="column">
-			<div v-if=prevTopic.path>
+			<div v-if=prevTopic>
 				<NuxtLink class="button is-link is-light" :to=prevTopic.path>
 					<span>Previous</span>
 					<span>&larr; {{ prevTopic.shortTitle }}</span>
@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<div class="column">
-			<div v-if=nextTopic.path>
+			<div v-if=nextTopic>
 				<NuxtLink class="button is-link is-light" :to=nextTopic.path>
 					<span>Next</span>
 					<span>{{ nextTopic.shortTitle }} &rarr;</span>
@@ -23,7 +23,7 @@
 export default {
   props: {
     nextTopic: Object,
-		prevTopic: Object,
+		prevTopic: Object
   }
 }
 </script>
