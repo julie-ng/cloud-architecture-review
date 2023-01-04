@@ -49,9 +49,6 @@
 
             <!-- <fta-cta /> -->
 
-            <!-- Last Updated -->
-            <p class="article-date">Last updated <time :datetime="formatAriaDate(article.updatedAt)">{{ formatDate(article.updatedAt) }}</time></p>
-
             <hr class="mt-5">
 
             <!-- Next Previous Nav -->
