@@ -39,7 +39,7 @@
 
 		&.article-right-nav {
 			flex: none;
-			width: 12%;
+			width: 15%;
 		}
 	}
 
@@ -48,7 +48,7 @@
 		// border-bottom: 1px solid var(--grey-border-color);
 
 		.column:last-child {
-			border-left: 1px solid var(--grey-border-color);
+			// border-left: 1px solid var(--grey-border-color);
 			text-align: right;
 
 			span:first-child {
