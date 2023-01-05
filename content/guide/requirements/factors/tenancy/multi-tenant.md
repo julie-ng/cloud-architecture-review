@@ -7,6 +7,8 @@ cost: 0
 operations: 100
 ---
 
+## Multi-tenancy Model
+
 Multi-tenancy is incredibly complex. Here is one example, Ingress, which manages external access to your cluster. 
 
 In the diagrams below, 

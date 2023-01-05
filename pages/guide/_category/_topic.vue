@@ -40,9 +40,8 @@
 
             <!-- Article - Factors Content -->
             <section v-if="factors.length > 0">
-              <h2>Factors</h2>
+              <h1>{{ article.factors_heading || 'Factors' }}</h1> <!-- TODO/Bug: this h1 not included in aggregate TOC yet -->
               <article v-for="f of factors" v-bind:key="f.path">
-                <h3>{{ f.title }}</h3>
                 <nuxt-content :document="f" />
               </article>
             </section>
@@ -66,13 +65,12 @@
 
 					<h4 class="mt-1 mb-1">Contents</h4>
           <ul class="mt-1 article-toc-nav">
-            <li v-for="link of article.toc"
+            <li v-for="link of aggregateToc"
               :key="link.id"
               :class="{ 'toc-level-2': link.depth === 2, 'toc-level-3': link.depth === 3 }">
               <NuxtLink :to="`#${link.id}`">{{ fixTocTitle(link.text) }}</NuxtLink>
             </li>
           </ul>
-          <!-- <pre>{{ article.toc }}</pre> -->
 				</div>
 			</div>
 		</main>
@@ -108,7 +106,7 @@ export default {
      * Article
      */
     const article = await $content(`guide/${params.category}/${params.topic}`).fetch()
-    // const toc = article.toc
+    let aggregateToc = article.toc
     const factors = []
 
     if (!article) {
@@ -119,11 +117,10 @@ export default {
       for await (const f of article.factors) {
         const factor = await $content(`guide/${params.category}/${f.slug}`).fetch()
         factors.push(factor)
-        // toc.concat(factor.toc)
+        console.log('got factor toc?', factor.toc)
+        aggregateToc = aggregateToc.concat(factor.toc)
       }
     }
-
-    // console.log('hasFactors', hasFactors);
 
     /**
      * Category Title for Breadcrumb
@@ -142,7 +139,6 @@ export default {
       .surround(params.topic)
       .fetch()
 
-
     return {
       article,
       category,
@@ -150,8 +146,7 @@ export default {
       next,
       prev,
       factors,
-      // toc
-      // hasFactors,
+      aggregateToc
     }
   },
 
