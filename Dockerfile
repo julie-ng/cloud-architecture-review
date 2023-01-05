@@ -1,5 +1,13 @@
 FROM node:16-alpine
-RUN apk add --update --no-cache curl dumb-init
+
+ARG OPENSSL_VERSION=3.0.7-r2
+
+RUN apk add --update --no-cache \
+  curl \
+  dumb-init
+
+RUN apk upgrade --update-cache --available && \
+    apk add --update openssl=${OPENSSL_VERSION}
 
 ENV NODE_ENV production
 ENV HOST '0.0.0.0'
@@ -8,7 +16,8 @@ EXPOSE ${PORT:-80}
 WORKDIR /usr/src/app
 COPY . /usr/src/app
 
-RUN npm ci --omit=dev && npm run nuxt:build
+RUN npm ci --omit=dev && \
+    npm run nuxt:build
 
 USER node
 
