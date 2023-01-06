@@ -23,16 +23,25 @@
 @import 'app/results';
 @import 'layout';
 
-// .has-scroll-anchor {
-// 	scroll-margin-top: 120px;
-// }
-
 // Bulma Override needed for Logo
-
+// otherwise banners squished
 html.has-navbar-fixed-top,
 body.has-navbar-fixed-top {
 	padding-top: 4.25rem;
 }
+
+// .has-scroll-anchor {
+// 	scroll-margin-top: 120px;
+// }
+
+// html {
+//   scroll-padding-top: 320px; // doesn't work either :-(
+// 	scroll-margin-top: 320px;
+// }
+
+// [id] {
+// 	scroll-margin-top: 320px; // doesn't work though :-(
+// }
 
 .capitalize-case {
 	text-transform: capitalize;
@@ -49,16 +58,7 @@ body.has-navbar-fixed-top {
 	padding: 0.4em 0.85em;
 }
 
-// .sidebar-disclaimer {
-// 	margin: 1.5em 0;
-// 	font-size: var(--xs-font-size);
-// 	line-height: 1.4em;
-// 	color: var(--md-grey-font-color);
 
-// 	a:link, a:visited {
-// 		color: var(--md-grey-font-color);
-// 	}
-// }
 
 a {
 	&.has-no-underline {
