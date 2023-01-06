@@ -7,6 +7,12 @@ factors:
 - slug: 'factors/dr/active-passive'
 - slug: 'factors/dr/redeploy'
 - slug: 'factors/dr/wait'
+resources:
+- name: 'uptime.is - SLA and Uptime Calculator'
+  url: 'https://uptime.is/'
+  note: 'Turn 9s into seconds, minutes, etc.'
+- name: 'Azure Docs - Composite SLAs'
+  url: 'https://docs.microsoft.com/azure/architecture/framework/resiliency/business-metrics#composite-slas'
 ---
 
 ## When do you need Disaster Recovery?
@@ -55,8 +61,3 @@ Additionally some of those numbers can come from deployments. In my career both 
 There's no one size fits all answer. Do what you're comfortable with and let's you focus on creating _business value_ during the day and let's you sleep well at night. Do not forget to optimize for developer well-being :-)
 
 (Work in progress)
-
-## Useful Resources
-
-- [uptime.is - SLA and Uptime Calculator ](https://uptime.is/)
-- [Azure Docs - Composite SLAs](https://docs.microsoft.com/azure/architecture/framework/resiliency/business-metrics#composite-slas)

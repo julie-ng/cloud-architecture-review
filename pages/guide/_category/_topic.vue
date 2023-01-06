@@ -47,6 +47,12 @@
               </article>
             </section>
 
+            <!-- Article: Links to curated resources -->
+            <article-resources-list
+              v-if=article.resources
+              :links=article.resources
+            />
+
             <!-- <fta-cta /> -->
 
             <hr class="mt-5">
