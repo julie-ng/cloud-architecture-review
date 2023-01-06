@@ -36,6 +36,7 @@
               v-if="factors.length > 0"
               :question=article
               :factors=factors
+              :formInputName=questionInputName()
             >
             </article-question>
 
@@ -80,6 +81,7 @@
           </ul>
 				</div>
 			</div>
+
 		</main>
 		<app-footer/>
 	</div>
@@ -146,6 +148,7 @@ export default {
       .surround(params.topic)
       .fetch()
 
+
     return {
       article,
       category,
@@ -158,6 +161,12 @@ export default {
   },
 
 	methods: {
+    questionInputName () {
+      return this.$route.path
+        .replace('/guide/', '')
+        .replace('/', '-')
+    },
+
 		formatDate(date) {
 			const options = { year: 'numeric', month: 'long', day: 'numeric' }
 			return new Date(date).toLocaleDateString('en', options)

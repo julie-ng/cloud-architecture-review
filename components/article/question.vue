@@ -9,7 +9,7 @@
 			<p>{{ question.description }}</p>
 			<review-radio-input
 				v-for="factor of factors"
-				:name=question.inputName
+				:name=formInputName
 				:key=factor.slug
 				:factor=normalizeFactor(factor)
 				@selected="updateDecision($event, $store, question)"
@@ -19,6 +19,7 @@
 				<button class="button is-small is-outlined" @click="removeDecision($store, question)">Remove Answer</button>
     		<NuxtLink class="button is-link is-small is-outlined is-right" to="/review">Full Review and Results &rarr;</NuxtLink>
 			</div>
+
 		</article>
 	</div>
 </div>
@@ -30,6 +31,10 @@ const DecisionSchema = require('../../schemas/decision')
 
 	export default {
 		props: {
+			formInputName: {
+				type: String,
+				required: true
+			},
 			question: {
 				type: Object,
 				required: true
@@ -52,6 +57,7 @@ const DecisionSchema = require('../../schemas/decision')
 			updateDecision: function (event, store, question) {
 				// console.log('🔴 question.vue - decision')
 				// console.log(decision)
+				question.inputName = this.formInputName // needed to sync state
 				const decision = DecisionSchema.normalize(question, event.factor)
 				store.commit('decisions/update', decision)
 			}
