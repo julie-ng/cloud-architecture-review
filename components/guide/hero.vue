@@ -17,7 +17,10 @@
 <script>
 export default {
 	props: {
-		title: String,
+		title: {
+			type: String,
+			required: true
+		},
 		subtitle: String,
 		color: {
 			type: String,

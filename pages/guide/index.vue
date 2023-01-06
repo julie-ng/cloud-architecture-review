@@ -2,6 +2,7 @@
 	<div>
 		<app-header/>
     <guide-hero
+      :color="'is-primary'"
       :title=content.hero_title
       :subtitle=content.hero_subtitle>
     </guide-hero>

@@ -1,7 +1,7 @@
 <template>
-<div class="message is-primary article-question">
+<div class="message is-link article-question">
 	<div class="message-header">
-		Review App
+		Design Review App
 	</div>
 	<div class="message-body">
 		<article>

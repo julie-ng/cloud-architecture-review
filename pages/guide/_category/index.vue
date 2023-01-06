@@ -3,8 +3,10 @@
     <app-header/>
 
     <guide-hero
-      :title=content.hero_title
-      :subtitle=content.hero_subtitle>
+      :title=content.title
+      :subtitle=content.description
+      :color="'is-primary'"
+    >
     </guide-hero>
 
 	  <main class="container is-max-widescreen gap-on-mobile mt-4 mb-6">
@@ -17,10 +19,10 @@
       </nav>
 
       <div class="content-single-col">
-        <h1>{{ content.title }}</h1>
+        <!-- <h1>{{ content.title }}</h1>
         <div class="lead">
           {{ content.description }}
-        </div>
+        </div> -->
         <nuxt-content :document="content" />
       </div>
 

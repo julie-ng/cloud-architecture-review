@@ -3,7 +3,7 @@
 		<app-header/>
 
     <div class="hero is-link">
-      <div class="container">
+      <div class="container is-max-widescreen gap-on-mobile">
         <div class="columns is-desktop pt-6 pb-6">
           <div class="column is-three-fifths">
             <h1 class="title is-2 is-spaced">How would an Experienced Architect evaluate your architecture?</h1>

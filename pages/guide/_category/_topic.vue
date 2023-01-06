@@ -3,6 +3,7 @@
 		<app-header/>
     <guide-hero
       title="Architecture Guide"
+      :color="'is-primary'"
       :small=true>
     </guide-hero>
 		<main class="container is-max-widescreen gap-on-mobile">
