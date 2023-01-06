@@ -7,7 +7,7 @@
 				<!-- BUG: topics order might not match -->
 				<ul v-for="topic of category.topics" :key=topic.id class="app-navigation-questions">
 					<li>
-						<NuxtLink :to=topic>{{ topic.shortTitle }}</NuxtLink>
+						<NuxtLink :to=topic exact>{{ topic.shortTitle }}</NuxtLink>
 					</li>
 				</ul>
 			</li>
