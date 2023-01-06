@@ -12,6 +12,7 @@
   },
   "scripts": {
     "nuxt:build": "nuxt build",
+    "nuxt:generate": "nuxt generate",
     "nuxt:dev": "nuxt dev",
     "nuxt:start": "nuxt start",
     "express": "node server/express.js",
