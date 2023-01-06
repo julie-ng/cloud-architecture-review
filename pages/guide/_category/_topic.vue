@@ -91,12 +91,12 @@ export default {
     const sidenav = []
     ContentConfig.categories.forEach(async function (c) {
       const category = await $content(`guide/${c}/index`)
-        .only(['title', 'shortTitle'])
+        .only(['title', 'shortTitle', 'path'])
         .fetch()
 
       // Append subtopics
       const topics = await $content(`guide/${c}`, { deep: false })
-        .only(['title','shortTitle', 'description'])
+        .only(['title','shortTitle', 'description', 'path'])
         .where({ slug: { $ne: 'index' } })
         .fetch()
       category.topics = topics
