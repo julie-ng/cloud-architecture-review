@@ -118,7 +118,7 @@ export default {
       for await (const f of article.factors) {
         const factor = await $content(`guide/${params.category}/${f.slug}`).fetch()
         factors.push(factor)
-        console.log('got factor toc?', factor.toc)
+        // console.log('got factor toc?', factor.toc)
         aggregateToc = aggregateToc.concat(factor.toc)
       }
     }

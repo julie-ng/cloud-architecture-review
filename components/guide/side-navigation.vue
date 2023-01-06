@@ -23,12 +23,6 @@
 				type: Array,
 				default: []
 			}
-		},
-
-		methods: {
-			guideLink (cat, question) {
-				return `/guide/${cat}/${question}`
-			}
 		}
 	}
 </script>
