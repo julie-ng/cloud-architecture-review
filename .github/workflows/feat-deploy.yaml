@@ -90,7 +90,7 @@ jobs:
     if: github.event_name == 'push'
     needs: [ci, config]
     runs-on: ubuntu-latest
-    environment: dev # GitHub Envronment
+    environment: dev # GitHub Environment
     steps:
     - uses: actions/checkout@v3
 
@@ -111,7 +111,7 @@ jobs:
 
     # Build and Push Docker Image
     - id: docker
-      name: '🐳 Docker - build and psuh'
+      name: '🐳 Docker - build and push'
       env:
         image-tag: ${{ needs.config.outputs.docker-tag }}
       run: |
