@@ -18,5 +18,12 @@ export default {
 	save (state) {
 		logger.mutation('form/save', state.categories)
 		sessionStorage.setItem('categories', JSON.stringify(state.categories))
+	},
+
+	reset (state) {
+		logger.mutation('form/reset', 'clearing all categories from session storage')
+
+		state.categories = []
+		sessionStorage.removeItem('categories')
 	}
 }

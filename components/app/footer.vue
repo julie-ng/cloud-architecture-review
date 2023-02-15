@@ -15,7 +15,8 @@
 				</a>
 			</p>
 
-			<button class="button is-small" @click="emptyStorage">Reset Session</button>
+			<button class="button is-small" @click="resetSession">Reset Session</button>
+			<button class="button is-small" @click="resetContent">Clear Content Cache</button>
 		</div>
 	</footer>
 </div>
@@ -24,7 +25,11 @@
 <script>
 	export default {
 		methods: {
-			emptyStorage () {
+			resetContent () {
+				this.$store.commit('form/reset')
+			},
+
+			resetSession () {
 				this.$store.commit('decisions/reset')
 			}
 		}
