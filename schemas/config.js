@@ -1,11 +1,6 @@
 module.exports = {
 	contentDir: '/guide/',
 
-	categoriesSorted: [
-		'requirements',
-		'networking'
-	],
-
 	scoreDimensions: [
 		'complexity',
 		'security',

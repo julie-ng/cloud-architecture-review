@@ -1,6 +1,7 @@
 const TopicSchema = require('../schemas/topic')
 const FactorSchema = require('../schemas/factor')
 const config = require('../schemas/config')
+const contentConfig = require('./content.config')
 
 const CONTENT_DIR = '/guide'
 
@@ -30,7 +31,9 @@ export default class FormLoader {
 	 */
 	async loadAll () {
 		const categories = []
-		for (const category of config.categoriesSorted) {
+		const categorySortOrder = Object.keys(contentConfig.default.sortOrder)
+
+		for (const category of categorySortOrder) {
 			const dir = config.contentDir + category
 			const topics = await this.#fetchTopicsAndFactors(dir)
 			categories.push({
