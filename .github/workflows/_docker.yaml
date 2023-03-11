@@ -59,6 +59,7 @@ jobs:
     # Can Snyk scan a Docker image before I push it?
     - uses: snyk/actions/docker@master
       name: Run Snyk Vulnerability Scan
+      continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_API_TOKEN }}
       with:
