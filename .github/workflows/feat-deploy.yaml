@@ -5,8 +5,8 @@ on:
     branches:
     - 'feat/**'
   delete:
-    branches:
-    - 'feat/**'
+    # branches:
+    # - 'feat/**'
 
 permissions:
   id-token: write
@@ -41,6 +41,10 @@ jobs:
       hostname:       ${{ steps.resolved.outputs.hostname }}
       git-sha:        ${{ steps.resolved.outputs.git-sha }}
       docker-tag:     ${{ steps.resolved.outputs.docker-tag }}
+      event-name:     ${{ steps.debug-context.outputs.event-name }}
+      ref-name:       ${{ steps.debug-context.outputs.ref-name }}
+      event-ref:      ${{ steps.debug-context.outputs.event-ref }}
+      event-ref-type: ${{ steps.debug-context.outputs.event-ref-type }}
 
     steps:
     - uses: actions/checkout@v3
@@ -51,6 +55,10 @@ jobs:
         echo "ref_name        ${{ github.ref_name }}"
         echo "event.ref       ${{ github.event.ref }}"
         echo "event.ref_type  ${{ github.event.ref_type }}"
+        echo "event-name=${{ github.event_name }}" >> $GITHUB_OUTPUT
+        echo "ref-name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+        echo "event-ref=${{ github.event.ref }}" >> $GITHUB_OUTPUT
+        echo "event-ref-type=${{ github.event.ref_type }}" >> $GITHUB_OUTPUT
 
     - id: name-on-push
       if: github.event_name == 'push'
@@ -76,11 +84,11 @@ jobs:
         echo "docker-tag=${{ env.feat-name }}" >> $GITHUB_OUTPUT
         echo "git-sha=${{ env.git-sha }}" >> $GITHUB_OUTPUT
 
-        echo "| Variable | Value |" >> $GITHUB_STEP_SUMMARY
-        echo "|:--|:--|" >> $GITHUB_STEP_SUMMARY
-        echo "| docker-tag | ${{ env.docker-tag }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| hostname | ${{ env.hostname }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| git-sha | ${{ env.git-sha }} |" >> $GITHUB_STEP_SUMMARY
+      # echo "| Variable | Value |" >> $GITHUB_STEP_SUMMARY
+      # echo "|:--|:--|" >> $GITHUB_STEP_SUMMARY
+      # echo "| docker-tag | ${{ env.docker-tag }} |" >> $GITHUB_STEP_SUMMARY
+      # echo "| hostname | ${{ env.hostname }} |" >> $GITHUB_STEP_SUMMARY
+      # echo "| git-sha | ${{ env.git-sha }} |" >> $GITHUB_STEP_SUMMARY
 
 
   # Deploy
@@ -155,7 +163,7 @@ jobs:
   # ========
   clean-up:
     needs: config
-    if: github.event_name == 'delete'
+    if: github.event_name == 'delete' && startswith(github.event.ref, 'refs/heads/feat/')
     runs-on: ubuntu-latest
     environment: dev # GitHub Envronment
     steps:
