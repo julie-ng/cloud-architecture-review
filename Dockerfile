@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-ARG OPENSSL_VERSION=3.0.7-r2
+ARG OPENSSL_VERSION=3.0.8-r0
 
 RUN apk add --update --no-cache \
   curl \
