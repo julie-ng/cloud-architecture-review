@@ -37,27 +37,27 @@ jobs:
     steps:
     - id: debug-context
       run: |
-        echo "### Triggering Event"                                   >> $GITHUB_STEP_SUMMARY
-        echo "| Var | Value |"                                        >> $GITHUB_STEP_SUMMARY
-        echo "|:--|:--|"                                              >> $GITHUB_STEP_SUMMARY
+        echo "### Triggering Event"                                 >> $GITHUB_STEP_SUMMARY
+        echo "| Var | Value |"                                      >> $GITHUB_STEP_SUMMARY
+        echo "|:--|:--|"                                            >> $GITHUB_STEP_SUMMARY
         echo "| event_name      | ${{ github.event_name }} |"       >> $GITHUB_STEP_SUMMARY
         echo "| ref_name        | ${{ github.ref_name }} |"         >> $GITHUB_STEP_SUMMARY
         echo "| event.ref       | ${{ github.event.ref }} |"        >> $GITHUB_STEP_SUMMARY
         echo "| event.ref_type  | ${{ github.event.ref_type }} |"   >> $GITHUB_STEP_SUMMARY
 
-        echo "### Pipeline Variables"                                     >> $GITHUB_STEP_SUMMARY
-        echo "| Var | Value |"                                            >> $GITHUB_STEP_SUMMARY
-        echo "|:--|:--|"                                                  >> $GITHUB_STEP_SUMMARY
-        echo "| Target Environment | ${{ needs.config.outputs.target }}"  >> $GITHUB_STEP_SUMMARY
-        echo "| AKS cluster | ${{ needs.config.outputs.cluster }}"        >> $GITHUB_STEP_SUMMARY
-        echo "| Git sha | ${{ needs.config.outputs.git-sha }}"            >> $GITHUB_STEP_SUMMARY
-        echo "| Docker Tag | ${{ needs.config.outputs.docker-tag }}"      >> $GITHUB_STEP_SUMMARY
+        echo "### Pipeline Variables"                                         >> $GITHUB_STEP_SUMMARY
+        echo "| Var | Value |"                                                >> $GITHUB_STEP_SUMMARY
+        echo "|:--|:--|"                                                      >> $GITHUB_STEP_SUMMARY
+        echo "| GitHub Environment | ${{ needs.config.outputs.github-env }}"  >> $GITHUB_STEP_SUMMARY
+        echo "| AKS cluster | ${{ needs.config.outputs.cluster }}"            >> $GITHUB_STEP_SUMMARY
+        echo "| Git sha | ${{ needs.config.outputs.git-sha }}"                >> $GITHUB_STEP_SUMMARY
+        echo "| Docker Tag | ${{ needs.config.outputs.docker-tag }}"          >> $GITHUB_STEP_SUMMARY
 
   docker:
     needs: config
     uses: ./.github/workflows/_docker.yaml
     with:
-      environment:  ${{ needs.config.outputs.target }}
+      environment:  ${{ needs.config.outputs.github-env }}
       image-tag:    ${{ needs.config.outputs.docker-tag }}
       git-sha:      ${{ needs.config.outputs.git-sha }}
     secrets:
@@ -72,7 +72,7 @@ jobs:
     needs: config
     uses: ./.github/workflows/_deploy.yaml
     with:
-      environment:         ${{ needs.config.outputs.target }}
+      environment:         ${{ needs.config.outputs.github-env }}
       git-sha:             ${{ needs.config.outputs.git-sha }}
       image-tag:           ${{ needs.config.outputs.docker-tag }}
       resource-group:      ${{ needs.config.outputs.resource-group }}

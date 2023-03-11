@@ -17,9 +17,9 @@ env:
 on:
   workflow_call:
     outputs:
-      target:
+      github-env:
         description: 'GitHub Environment for deployment'
-        value: ${{ jobs.setup-variables.outputs.target }}
+        value: ${{ jobs.setup-variables.outputs.github-env }}
       cluster:
         description: 'Name of AKS Cluster resource'
         value: ${{ jobs.setup-variables.outputs.cluster }}
@@ -50,7 +50,7 @@ jobs:
   setup-variables:
     runs-on: ubuntu-latest
     outputs:
-      target:            ${{ steps.resolved.outputs.target }}
+      github-env:        ${{ steps.resolved.outputs.github-env }}
       cluster:           ${{ steps.resolved.outputs.cluster }}
       cluster-namespace: ${{ steps.resolved.outputs.cluster-namespace }}
       resource-group:    ${{ steps.resolved.outputs.resource-group }}
@@ -72,7 +72,7 @@ jobs:
       if: github.ref == 'refs/heads/main' # <== CONFIGURE (1)
       name: 'DEV: set vars'
       run: |
-        echo "target=dev" >> $GITHUB_ENV
+        echo "github-env=dev" >> $GITHUB_ENV
         echo "overlays=dev" >> $GITHUB_ENV
         echo "cluster=${{ env.dev-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.dev-resource-group }}" >> $GITHUB_ENV
@@ -86,7 +86,7 @@ jobs:
       if: github.ref == 'refs/heads/staging' # <== CONFIGURE (1)
       name: 'STAGING: set vars'
       run: |
-        echo "target=staging" >> $GITHUB_ENV
+        echo "github-env=staging" >> $GITHUB_ENV
         echo "overlays=staging" >> $GITHUB_ENV
         echo "cluster=${{ env.staging-cluster }}" >> $GITHUB_ENV
         echo "rg=${{ env.staging-resource-group }}" >> $GITHUB_ENV
@@ -100,7 +100,7 @@ jobs:
     - id: resolved
       name: 'OUTPUTS - resolve'
       run: |
-        echo "target=${{ env.target }}" >> $GITHUB_OUTPUT
+        echo "github-env=${{ env.github-env }}" >> $GITHUB_OUTPUT
         echo "overlays=${{ env.overlays }}" >> $GITHUB_OUTPUT
         echo "cluster=${{ env.cluster }}" >> $GITHUB_OUTPUT
         echo "cluster-namespace=${{ env.cluster-namespace }}" >> $GITHUB_OUTPUT
@@ -112,7 +112,7 @@ jobs:
 
         echo "| Variable | Value |" >> $GITHUB_STEP_SUMMARY
         echo "|:--|:--|" >> $GITHUB_STEP_SUMMARY
-        echo "| target | ${{ env.target }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| github-env | ${{ env.github-env }} |" >> $GITHUB_STEP_SUMMARY
         echo "| overlays | ${{ env.overlays }} |" >> $GITHUB_STEP_SUMMARY
         echo "| cluster | ${{ env.cluster }} |" >> $GITHUB_STEP_SUMMARY
         echo "| cluster-namespace | ${{ env.cluster-namespace }} |" >> $GITHUB_STEP_SUMMARY
