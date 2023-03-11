@@ -65,6 +65,7 @@ jobs:
         IMAGE_TAG: ${{ inputs.image-tag }}
         INGRESS_HOSTNAME: ${{ inputs.hostname }}
       run: |
+        kubectl version --client -o yaml
         kustomize build ${{ inputs.overlays }} | envsubst
         kustomize build ${{ inputs.overlays }} | envsubst | kubectl apply -f -
 
