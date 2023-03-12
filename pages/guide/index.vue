@@ -41,29 +41,31 @@
 
   export default {
     async asyncData({ $content, app, params, error }) {
-			// const isLoaded = store.getters['form/isLoaded']
-			// if (!isLoaded) {
-			// 	const loader = new ContentLoader({ $content: $content })
-			// 	const data = await loader.loadAll()
-			// 	store.commit('form/set', data)
-			// }
-
       const page = await $content('guide/index').fetch()
 
       const categories = []
       for (const c of ContentConfig.categories) {
         const category = await $content(`guide/${c}/index`)
-          .only(['title', 'shortTitle', 'description', 'dir', 'path'])
+          .only([
+            'title',
+            'shortTitle',
+            'description',
+            'dir',
+            'path'
+          ])
           .fetch()
 
         const topics = await $content(`guide/${c}`, { deep: false })
-          .only(['title','shortTitle',  'path'])
+          .only([
+            'title',
+            'shortTitle',
+            'path'
+          ])
           .where({ slug: { $ne: 'index' } })
           .fetch()
+
         category.topics = topics
         categories.push(category)
-        console.log('category', category)
-
       }
       const categoriesGrouped = _.chunk(categories, 2)
 
