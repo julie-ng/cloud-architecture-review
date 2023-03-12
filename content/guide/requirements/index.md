@@ -4,12 +4,12 @@ shortTitle: Requirements
 description: Business-driven requirements will dictate majority of your architecture decisions
 # hero_title: Architecture Guide - Requirements
 # hero_subtitle: Business-driven requirements will dictate majority of your architecture decisions
+# order_idea: # unused
+#   - slug: 'dr'
+#   - slug: 'tenancy'
 sort_order:
-	- slug: 'dr'
-	- slug: 'tenancy'
-order_idea: # unused
-- slug: 'dr'
-- slug: 'tenancy'
+  - slug: 'dr'
+  - slug: 'tenancy'
 ---
 
 Following principles of "Keep in Simple", your architecture should not be more complex than it needs to be. 
