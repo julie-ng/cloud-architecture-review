@@ -2,6 +2,7 @@
 title: Requirements
 shortTitle: Requirements
 description: Business-driven requirements will dictate majority of your architecture decisions
+category_order: 2
 # hero_title: Architecture Guide - Requirements
 # hero_subtitle: Business-driven requirements will dictate majority of your architecture decisions
 # order_idea: # unused

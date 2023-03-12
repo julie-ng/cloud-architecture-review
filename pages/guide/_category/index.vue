@@ -3,8 +3,8 @@
     <app-header/>
 
     <guide-hero
-      :title=content.title
-      :subtitle=content.description
+      :title=page.title
+      :subtitle=page.description
       :color="'is-link'"
     >
     </guide-hero>
@@ -14,16 +14,12 @@
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <li><NuxtLink to="/guide">Architecture Guide</NuxtLink></li>
-          <li class="is-active"><a href="#" aria-current="page">{{ content.title }}</a></li>
+          <li class="is-active"><a href="#" aria-current="page">{{ page.title }}</a></li>
         </ul>
       </nav>
 
       <div class="content-single-col">
-        <!-- <h1>{{ content.title }}</h1>
-        <div class="lead">
-          {{ content.description }}
-        </div> -->
-        <nuxt-content :document="content" />
+        <nuxt-content :document="page" />
       </div>
 
       <section>
@@ -45,13 +41,12 @@
 </template>
 
 <script>
-  import ContentConfig from '~/app/content.config'
+  // import ContentConfig from '~/app/content.config'
   import _ from 'lodash'
 
   export default {
     async asyncData({ $content, params }) {
-      const content = await $content(`guide/${params.category}/index`).fetch()
-
+      const page = await $content(`guide/${params.category}/index`).fetch()
       const topics = await $content(`guide/${params.category}`, { deep: false })
         .without(['body'])
         .where({ slug: { $ne: 'index' } })
@@ -59,7 +54,7 @@
       const topicGrouped = _.chunk(topics, 3)
 
       return {
-        content,
+        page,
         topics,
         topicGrouped
       }
