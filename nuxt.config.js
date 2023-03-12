@@ -1,4 +1,4 @@
-export default {
+export default defineNuxtConfig({
 	// Global page headers: https://go.nuxtjs.dev/config-head
 	head: {
 		title: 'Cloud In Real Life // Architecture',
@@ -32,10 +32,6 @@ export default {
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
 	components: true,
-
-	// Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-	buildModules: [
-	],
 
 	// see https://content.nuxtjs.org/api/configuration/
 	content: {
@@ -77,4 +73,4 @@ export default {
 		commitSha: process.env.APP_BUILD_SHA || '(unset)',
 		repoUrl: process.env.REPO_URL || 'https://github.com/julie-ng/cloud-architecture-review'
 	}
-}
+})
