@@ -4,15 +4,21 @@ export default {
 	baseDir: '/guide/',
 
 	categories: [
+		'governance',
 		'requirements',
 		'networking'
 	],
 
 	sortOrder: {
+		governance: [
+			'subscription-design'
+		],
+
 		requirements: [
 			'tenancy',
 			'dr'
 		],
+
 		networking: [
 			'model',
 			'ingress'
