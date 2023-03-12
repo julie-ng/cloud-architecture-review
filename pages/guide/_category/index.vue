@@ -27,10 +27,14 @@
       </div>
 
       <section>
-        <div v-for="group, i of topicGroups" :key=i class="columns my-2">
-          <div v-for="topic, index of group" :key=topic.title class="column box mx-3">
-            <h3><NuxtLink :to=topic.path>{{ topic.shortTitle }}</NuxtLink></h3>
-            <p>{{ topic.description }}</p>
+        <div v-for="group, i of topicGrouped" :key=i>
+          <div class="tile is-ancestor">
+            <div v-for="topic, index of group" :key=topic.title class="tile is-parent is-4">
+              <div class="tile is-child box">
+                <h3><NuxtLink :to=topic.path>{{ topic.shortTitle }}</NuxtLink></h3>
+                <p>{{ topic.description }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -52,12 +56,12 @@
         .without(['body'])
         .where({ slug: { $ne: 'index' } })
         .fetch()
-      const topicGroups = _.chunk(topics, 3)
+      const topicGrouped = _.chunk(topics, 3)
 
       return {
         content,
         topics,
-        topicGroups
+        topicGrouped
       }
     }
   }
