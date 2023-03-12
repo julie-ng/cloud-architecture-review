@@ -1,4 +1,4 @@
-const DecisionSchema = require('./decision')
+import DecisionSchema from './decision'
 
 const normalizedQuestion = {
 	slug: 'model',

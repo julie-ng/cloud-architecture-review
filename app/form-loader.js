@@ -1,6 +1,6 @@
-const TopicSchema = require('../schemas/topic')
-const FactorSchema = require('../schemas/factor')
-const config = require('../schemas/config')
+import TopicSchema from '../schemas/topic'
+import FactorSchema from '../schemas/factor'
+import config from '../schemas/config'
 
 const CONTENT_DIR = '/guide'
 

@@ -1,4 +1,4 @@
-const TopicSchema = require('./topic')
+import TopicSchema from './topic'
 
 const input = {
 	slug: 'model',

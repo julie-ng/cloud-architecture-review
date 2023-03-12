@@ -3,10 +3,12 @@
 
 const app = require('express')()
 const pino = require('pino-http')()
-const helmet = require('helmet')
-const { loadNuxt, build } = require('nuxt')
-const graceful = require('./shutdown')
-const healthcheck = require('./routes/health')
+
+
+import helmet from 'helmet'
+import { loadNuxt, build } from 'nuxt'
+import graceful from './shutdown'
+import healthcheck from './routes/health'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const PORT = process.env.PORT || '3000'

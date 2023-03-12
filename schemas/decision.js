@@ -1,5 +1,5 @@
-const config = require('./config')
-const _ = require('./helpers')
+import config from './config'
+import _ from './helpers'
 
 /**
  * Decision Schema

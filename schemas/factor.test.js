@@ -1,4 +1,4 @@
-const FactorSchema = require('./factor')
+import FactorSchema from './factor'
 
 const input = {
 	slug: 'kubenet',

@@ -1,5 +1,5 @@
-const config = require('./config')
-const _ = require('./helpers')
+import config from './config'
+import _ from './helpers'
 
 /**
  * FactorSchema - Singleton
@@ -107,4 +107,4 @@ class FactorSchema {
 }
 
 const schema = new FactorSchema()
-module.exports = schema
+export default schema
