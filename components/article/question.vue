@@ -16,8 +16,8 @@
 			></review-radio-input>
 
 			<div class="mt-4">
-				<button class="button is-small is-outlined" @click="removeDecision($store, question)">Remove Answer</button>
-    		<NuxtLink class="button is-link is-small is-outlined is-right" to="/review">Full Review and Results &rarr;</NuxtLink>
+    		<NuxtLink class="button is-link is-small is-right" to="/review">Full Architecture Review and Score &rarr;</NuxtLink>
+				<button class="button is-small is-outlined" @click="removeDecision($store, question)">Reset Answer</button>
 			</div>
 
 		</article>

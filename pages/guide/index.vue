@@ -2,7 +2,7 @@
 	<div>
 		<app-header/>
     <guide-hero
-      :color="'is-primary'"
+      :color="'is-link'"
       :title=content.hero_title
       :subtitle=content.hero_subtitle>
     </guide-hero>

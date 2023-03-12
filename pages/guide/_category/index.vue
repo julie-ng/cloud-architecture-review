@@ -5,7 +5,7 @@
     <guide-hero
       :title=content.title
       :subtitle=content.description
-      :color="'is-primary'"
+      :color="'is-link'"
     >
     </guide-hero>
 

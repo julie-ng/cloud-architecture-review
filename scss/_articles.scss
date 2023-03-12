@@ -37,8 +37,16 @@
 }
 
 .article-question {
-	h2 {
+	h2,
+	p,
+	.message-body {
 		color: var(--body-text-color);
+
+		.factor-container {
+			&:not(.is-selected) {
+				color: var(--body-text-color);
+			}
+		}
 	}
 
 	.factor-container.is-selected {
