@@ -11,30 +11,36 @@
       <div class="content-single-col">
 	      <nuxt-content :document="page" />
       </div>
-
       <section>
+
         <article v-for="group, i of categoriesGrouped" :key=i class="tile is-ancestor">
           <div v-for="category of group" :key=toLowerCase(category.title) class="tile is-parent is-6">
             <div class="tile is-child box">
               <h3 class="mt-3 mb-2">
                 <NuxtLink :to=category.dir>{{ category.title }}</NuxtLink>
               </h3>
-              {{ category.description }}
+              <div>{{ category.description }}</div>
+              <p>
+                <li v-for="t of category.topics" :key=t.shortTitle>
+                  <NuxtLink :to=t.path>{{ t.shortTitle }}</NuxtLink>
+                </li>
+              </p>
             </div>
           </div>
         </article>
+
       </section>
 		</main>
-
 		<app-footer/>
 	</div>
 </template>
 
 <script>
+  import ContentConfig from '~/app/content.config'
   import _ from 'lodash'
 
   export default {
-    async asyncData({ $content, params }) {
+    async asyncData({ $content, app, params, error }) {
 			// const isLoaded = store.getters['form/isLoaded']
 			// if (!isLoaded) {
 			// 	const loader = new ContentLoader({ $content: $content })
@@ -43,20 +49,28 @@
 			// }
 
       const page = await $content('guide/index').fetch()
-      const categories = await $content(`guide`, { deep: true })
-        .without(['body'])
-        .where({
-          slug: { $eq: 'index' },
-          path: { $ne: '/guide/index' }
-        })
-        .sortBy('category_order', 'asc')
-        .fetch()
+
+      const categories = []
+      for (const c of ContentConfig.categories) {
+        const category = await $content(`guide/${c}/index`)
+          .only(['title', 'shortTitle', 'description', 'dir', 'path'])
+          .fetch()
+
+        const topics = await $content(`guide/${c}`, { deep: false })
+          .only(['title','shortTitle',  'path'])
+          .where({ slug: { $ne: 'index' } })
+          .fetch()
+        category.topics = topics
+        categories.push(category)
+        console.log('category', category)
+
+      }
       const categoriesGrouped = _.chunk(categories, 2)
 
       return {
         page,
         categories,
-        categoriesGrouped
+        categoriesGrouped,
       }
     },
 
