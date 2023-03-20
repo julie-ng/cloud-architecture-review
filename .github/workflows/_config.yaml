@@ -94,11 +94,10 @@ jobs:
         echo "url=${{ format(env.url-format, env.staging-hostname) }}" >> $GITHUB_ENV
         echo "docker-tag=staging-${{ env.git-sha }}" >> $GITHUB_ENV
 
-
     # Set Outputs
     # ===========
     - id: resolved
-      name: 'OUTPUTS - resolve'
+      name: 'OUTPUTS - resolved'
       run: |
         echo "github-env=${{ env.github-env }}" >> $GITHUB_OUTPUT
         echo "overlays=${{ env.overlays }}" >> $GITHUB_OUTPUT
@@ -110,6 +109,11 @@ jobs:
         echo "hostname=${{ env.hostname }}" >> $GITHUB_OUTPUT
         echo "git-sha=${{ env.git-sha }}" >> $GITHUB_OUTPUT
 
+    # Echo Summary
+    # =============
+    - id: summary
+      name: 'Echo to GH Step Summary'
+      run: |
         echo "| Variable | Value |" >> $GITHUB_STEP_SUMMARY
         echo "|:--|:--|" >> $GITHUB_STEP_SUMMARY
         echo "| github-env | ${{ env.github-env }} |" >> $GITHUB_STEP_SUMMARY
