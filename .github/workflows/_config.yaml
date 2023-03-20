@@ -114,6 +114,9 @@ jobs:
     - id: summary
       name: 'Echo to GH Step Summary'
       run: |
+        echo "### _config.yaml" >> $GITHUB_STEP_SUMMARY
+        echo "This file sets dev vs prod, etc. variables based on branch names." >> $GITHUB_STEP_SUMMARY
+
         echo "| Variable | Value |" >> $GITHUB_STEP_SUMMARY
         echo "|:--|:--|" >> $GITHUB_STEP_SUMMARY
         echo "| github-env | ${{ env.github-env }} |" >> $GITHUB_STEP_SUMMARY
