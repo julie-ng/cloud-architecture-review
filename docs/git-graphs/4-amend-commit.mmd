@@ -1,0 +1,35 @@
+%%{init: {
+	'logLevel': 'debug',
+	'theme': 'base',
+	'themeVariables': {
+		'commitLabelFontSize': '10px',
+		'commitLabelColor': '#111111',
+		'commitLabelBackground': '#ffffff',
+		'tagLabelFontSize': '10px',
+		'tagLabelColor': '#ffffff',
+		'tagLabelBackground': '#323765',
+		'tagLabelBorder': '#323765',
+		'git0': '#ff4930',
+		'git1': '#f6c65b',
+		'git2': '#02ccd5'
+  },
+	'gitGraph': {
+		'showBranches': true,
+		'showCommitLabel': true
+	}
+}}%%
+gitGraph
+	commit id: "..."
+    commit id: "af2f5e9" tag: "origin/staging"
+    branch staging
+    branch github.com
+    checkout main
+	commit id: "ef40b40"
+	commit id: "8caaadd"
+	commit id: "dd81f00"
+	commit id: "60+ commits..."
+	commit id: "6854a97" tag: "origin/main"
+    checkout staging
+    merge main id: "979a4a8" type: highlight tag: "HEAD"
+    checkout github.com
+	merge main id: "9018387" tag: "origin/staging"
